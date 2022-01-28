@@ -16,12 +16,11 @@ public class User extends BaseEntity {
     private String phone;
     private String birthDate;
     private String email;
+    private String password;
     private String address;
     private String genderId;
     private String nationalityId;
     private String countryId;
-    @Column(length = 255)
-    private String password;
     private boolean isEnable;
 
 //    @ManyToMany(cascade = CascadeType.ALL)
