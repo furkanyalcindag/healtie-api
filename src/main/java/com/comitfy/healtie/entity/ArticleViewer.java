@@ -1,14 +1,22 @@
 package com.comitfy.healtie.entity;
 
-import com.comitfy.healtie.entity.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Data
 public class ArticleViewer extends BaseEntity {
-    private long userId;
-    private long articleId;
+
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "id")
+    private User userId;
+
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "id")
+    private Article article;
+
     private String viewedBy;//article a nereden geldi
 }

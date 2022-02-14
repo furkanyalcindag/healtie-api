@@ -1,6 +1,5 @@
 package com.comitfy.healtie.entity;
 
-import com.comitfy.healtie.entity.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.Entity;

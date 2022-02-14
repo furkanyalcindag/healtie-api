@@ -2,22 +2,25 @@ package com.comitfy.healtie.entity;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Data
 public class Country {
-    private String name;
-    private String code;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Column
+    private String name;
 
-    @Id
-    public Long getId() {
-        return id;
-    }
+    @Column
+    private String code;
+
+
+    @OneToMany(mappedBy = "country")
+    private Set<User> userList;
+
+
 }

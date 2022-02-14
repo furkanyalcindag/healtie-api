@@ -11,23 +11,38 @@ import java.util.Set;
 public class User extends BaseEntity {
     @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String surname;
     private String userType;
+    @Column(nullable = false)
     private String phone;
+    @Column
     private String birthDate;
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private String password;
+    @Column
     private String address;
-    private String genderId;
-    private String nationalityId;
-    private String countryId;
+    @Column
     private boolean isEnable;
 
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable(name = "user_nationality",
-//            joinColumns = @JoinColumn(name = "nationality_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "user_id",
-//                    referencedColumnName = "id"))
-//    private List<Nationality> nationalities;
+    public User() {
+        isEnable = false;
+    }
+
+    @ManyToOne
+    private Country country;
+
+    @ManyToOne
+    private Gender gender;
+
+    @ManyToMany(mappedBy = "viewUsers")
+    private Set<Article> views;
+
+    @ManyToMany(mappedBy = "pinUsers")
+    private Set<Article> pins;
+
+
 
 }
