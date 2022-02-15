@@ -2,15 +2,19 @@ package com.comitfy.healtie.entity;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Data
 public class Doctor extends BaseEntity {
 
+
     private String title;//unvanı
     private String diplomaNo;
+    @OneToOne
+    private User user;
 
 
 
