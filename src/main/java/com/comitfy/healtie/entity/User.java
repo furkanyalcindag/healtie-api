@@ -31,16 +31,16 @@ public class User extends BaseEntity {
         isEnable = false;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Country country;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Gender gender;
 
-    @ManyToMany(mappedBy = "viewUsers")
+    @ManyToMany(mappedBy = "viewUsers",fetch = FetchType.LAZY)
     private Set<Article> views;
 
-    @ManyToMany(mappedBy = "pinUsers")
+    @ManyToMany(mappedBy = "pinUsers",fetch = FetchType.LAZY)
     private Set<Article> pins;
 
 

@@ -3,7 +3,6 @@ package com.comitfy.healtie.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,14 +15,17 @@ public class Article {
     private String keyword;
     private String languageCode;
 
-    @ManyToMany
+    @ManyToOne
+    private Doctor doctor;
+
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "view_user",
             joinColumns = @JoinColumn(name = "article_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> viewUsers;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "pin_user",
             joinColumns = @JoinColumn(name = "article_id"),

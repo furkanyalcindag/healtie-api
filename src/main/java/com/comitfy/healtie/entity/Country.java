@@ -18,8 +18,7 @@ public class Country {
     @Column
     private String code;
 
-
-    @OneToMany(mappedBy = "country")
+    @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
     private Set<User> userList;
 
 
