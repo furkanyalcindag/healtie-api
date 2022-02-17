@@ -22,14 +22,14 @@ public class Article {
     @JoinTable(
             name = "view_user",
             joinColumns = @JoinColumn(name = "article_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
+            inverseJoinColumns = @JoinColumn(name = "users_id"))
     private Set<User> viewUsers;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "pin_user",
             joinColumns = @JoinColumn(name = "article_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
+            inverseJoinColumns = @JoinColumn(name = "users_id"))
     private Set<User> pinUsers;
 
 

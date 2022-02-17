@@ -8,6 +8,7 @@ import java.util.Set;
 
 @Entity
 @Data
+@Table(name = "users")
 public class User extends BaseEntity {
     @Column(nullable = false)
     private String name;
@@ -42,6 +43,9 @@ public class User extends BaseEntity {
 
     @ManyToMany(mappedBy = "pinUsers",fetch = FetchType.LAZY)
     private Set<Article> pins;
+
+    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    private Set<Role> roles;
 
 
 
