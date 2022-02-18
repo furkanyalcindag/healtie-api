@@ -9,18 +9,9 @@ import javax.persistence.Table;
 @Entity
 @Table
 @Data
-public class Language {
+public class Language extends BaseEntity {
     private String name;
     private String code;
     private String flag;
-    private Long id;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Id
-    public Long getId() {
-        return id;
-    }
 }

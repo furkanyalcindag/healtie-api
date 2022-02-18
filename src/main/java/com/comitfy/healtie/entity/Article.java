@@ -7,9 +7,9 @@ import java.util.Set;
 
 @Entity
 @Data
-public class Article {
-    @Id
-    private long id;
+@Table
+public class Article extends BaseEntity {
+
     private String title;
     private long text;
     private String keyword;
@@ -20,14 +20,14 @@ public class Article {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "view_user",
+            name = "view_users",
             joinColumns = @JoinColumn(name = "article_id"),
             inverseJoinColumns = @JoinColumn(name = "users_id"))
     private Set<User> viewUsers;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "pin_user",
+            name = "pin_users",
             joinColumns = @JoinColumn(name = "article_id"),
             inverseJoinColumns = @JoinColumn(name = "users_id"))
     private Set<User> pinUsers;

@@ -8,9 +8,9 @@ import java.util.Set;
 
 @Entity
 @Data
-public class Category {
-    @Id
-    private Long id;
+@Table
+public class Category extends BaseEntity {
+
     private String keyword;
 
 

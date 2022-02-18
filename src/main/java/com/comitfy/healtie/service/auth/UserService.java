@@ -3,9 +3,12 @@ package com.comitfy.healtie.service.auth;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.Set;
 
+import com.comitfy.healtie.entity.Role;
 import com.comitfy.healtie.entity.User;
 import com.comitfy.healtie.model.requestModel.auth.RegisterRequest;
+import com.comitfy.healtie.repository.RoleRepository;
 import com.comitfy.healtie.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +27,15 @@ public class UserService {
 	public UserRepository userRepository;
 
 	@Autowired
+	public RoleRepository roleRepository;
+
+	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 
 	public boolean registerUser(RegisterRequest request) throws Exception {
 		Optional<User> user = userRepository.findByEmail(request.getEmail());
+
 
 		if (user.isEmpty()) {
 			User newUser = new User();
@@ -37,13 +44,17 @@ public class UserService {
 			newUser.setName(request.getFirstName());
 			newUser.setSurname(request.getLastName());
 
-			userRepository.save(newUser);
+			newUser.getRoles().add(roleRepository.findByName("user"));
 
+			userRepository.save(newUser);
 			return true;
 
 		}
 		else {
-			throw new Exception("email is exist = " + request.getEmail());
+			return false;
+
+			//throw new Exception("email is exist = " + request.getEmail());
+
 		}
 
 	}

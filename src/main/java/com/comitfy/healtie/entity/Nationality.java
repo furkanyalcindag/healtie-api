@@ -13,10 +13,9 @@ import java.util.List;
 @Entity
 @Table
 @Data
-public class Nationality {
+public class Nationality extends BaseEntity {
 
-    @Id
-    private Long id;
+
     private String name;
 
 //    @ManyToMany(mappedBy = "nationalities")

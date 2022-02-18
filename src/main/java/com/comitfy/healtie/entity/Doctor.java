@@ -8,11 +8,13 @@ import java.util.UUID;
 
 @Entity
 @Data
+@Table(name = "doctors")
 public class Doctor extends BaseEntity {
 
 
     private String title;//unvanı
     private String diplomaNo;
+
     @OneToOne
     private User user;
 

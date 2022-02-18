@@ -1,18 +1,16 @@
 package com.comitfy.healtie.entity;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class NationalityDescription {
-    private Long id;
+@Table
+@Data
+public class NationalityDescription extends BaseEntity {
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    @Id
-    public Long getId() {
-        return id;
-    }
+    private String name;
 }

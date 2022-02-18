@@ -2,17 +2,14 @@ package com.comitfy.healtie.entity;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Data
-public class Gender {
-    @Id
-    private Long id;
+@Table
+public class Gender extends BaseEntity {
+
 
     @Column
     private String keyword;

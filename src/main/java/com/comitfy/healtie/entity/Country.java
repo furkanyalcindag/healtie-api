@@ -7,10 +7,9 @@ import java.util.Set;
 
 @Entity
 @Data
-public class Country {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+@Table
+public class Country extends BaseEntity {
+
 
     @Column
     private String name;

@@ -3,15 +3,15 @@ package com.comitfy.healtie.entity;
 import lombok.Data;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
+@Table
 @Data
-public class AcademicArticle {
-    @Id
-    private long id;
+public class AcademicArticle extends BaseEntity {
+
     private String title;
     private String publishedPlatform;
     private Date publishedDate;
