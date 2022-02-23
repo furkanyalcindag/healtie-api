@@ -1,5 +1,6 @@
 package com.comitfy.healtie.controller;
 
+import com.comitfy.healtie.service.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,14 +27,12 @@ import com.comitfy.healtie.service.auth.UserService;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-	@Autowired
-	private UserRepository userRepo;
 
 	@Autowired
 	private JWTUtil jwtUtil;
 
 	@Autowired
-	private UserService userService;
+	private RegisterService userService;
 
 	@Autowired
 	private AuthenticationManager authManager;
@@ -44,14 +43,11 @@ public class AuthController {
 	@PostMapping("/register")
 	public ResponseEntity<String> registerHandler(@RequestBody RegisterRequest user) {
 
-		try {
+
 			userService.registerUser(user);
 
 			return new ResponseEntity<String>("Kullanıcı Eklendi", HttpStatus.OK);
-		}
-		catch (Exception e) {
-			return new ResponseEntity<String>("Kullanıcı Eklenemedi", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+
 	}
 
 	@PostMapping("/login")
