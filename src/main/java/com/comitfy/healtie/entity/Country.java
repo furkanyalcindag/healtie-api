@@ -17,8 +17,9 @@ public class Country extends BaseEntity {
     @Column
     private String code;
 
+    /*
     @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
     private Set<User> userList;
-
+*/
 
 }

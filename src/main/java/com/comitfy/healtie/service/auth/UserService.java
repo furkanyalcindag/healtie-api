@@ -1,22 +1,13 @@
 package com.comitfy.healtie.service.auth;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Optional;
-import java.util.Set;
 
-import com.comitfy.healtie.entity.Role;
 import com.comitfy.healtie.entity.User;
 import com.comitfy.healtie.model.requestModel.auth.RegisterRequest;
 import com.comitfy.healtie.repository.RoleRepository;
 import com.comitfy.healtie.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

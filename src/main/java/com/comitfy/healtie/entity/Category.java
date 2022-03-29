@@ -13,7 +13,7 @@ public class Category extends BaseEntity {
 
     private String keyword;
 
-
+/*
     @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="parent_id", nullable = true)
     private Category category;
@@ -21,5 +21,5 @@ public class Category extends BaseEntity {
     @OneToMany(mappedBy="category")
     private Set<Category> subCategory = new HashSet<Category>();
 
-
+*/
 }

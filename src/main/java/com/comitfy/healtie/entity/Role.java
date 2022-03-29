@@ -16,8 +16,8 @@ public class Role extends BaseEntity {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_role",
-            joinColumns = @JoinColumn(name = "roles_id"),
-            inverseJoinColumns = @JoinColumn(name = "users_id"))
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> users;
 
 

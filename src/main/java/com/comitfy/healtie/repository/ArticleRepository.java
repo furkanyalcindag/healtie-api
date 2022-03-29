@@ -11,13 +11,7 @@ import java.util.Set;
 
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
-    List<Article> findAll(Pageable pageable);
 
-    List<Article> findAllByDoctor(Doctor doctor, Pageable pageable);
-
-    List<Article> findAllByPinUsers(Set<User> pinUsers, Pageable pageable);
-
-    Integer countAllById(Long id);
 
 
 }

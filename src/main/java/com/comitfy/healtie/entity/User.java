@@ -3,6 +3,8 @@ package com.comitfy.healtie.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -10,12 +12,15 @@ import java.util.Set;
 @Data
 @Table(name = "users")
 public class User extends BaseEntity {
-    @Column(nullable = false)
+    @Column
     private String name;
-    @Column(nullable = false)
+    @Column
     private String surname;
+    @Column
+    private String firstName;
+    @Column
     private String userType;
-    @Column(nullable = false)
+    @Column
     private String phone;
     @Column
     private String birthDate;
@@ -32,6 +37,7 @@ public class User extends BaseEntity {
         isEnable = false;
     }
 
+    /*
     @ManyToOne(fetch = FetchType.LAZY)
     private Country country;
 
@@ -43,9 +49,9 @@ public class User extends BaseEntity {
 
     @ManyToMany(mappedBy = "pinUsers",fetch = FetchType.LAZY)
     private Set<Article> pins;
-
+*/
     @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
 
 

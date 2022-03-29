@@ -14,7 +14,8 @@ public class Gender extends BaseEntity {
     @Column
     private String keyword;
 
+    /*
     @OneToMany(mappedBy = "gender")
     private Set<User> userList;
-
+*/
 }

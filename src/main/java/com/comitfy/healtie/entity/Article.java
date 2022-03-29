@@ -5,8 +5,8 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.Set;
 
-@Entity
 @Data
+@Entity
 @Table
 public class Article extends BaseEntity {
 
@@ -15,6 +15,7 @@ public class Article extends BaseEntity {
     private String keyword;
     private String languageCode;
 
+    /*
     @ManyToOne
     private Doctor doctor;
 
@@ -31,6 +32,6 @@ public class Article extends BaseEntity {
             joinColumns = @JoinColumn(name = "article_id"),
             inverseJoinColumns = @JoinColumn(name = "users_id"))
     private Set<User> pinUsers;
-
+*/
 
 }
