@@ -1,4 +1,4 @@
-package com.comitfy.healtie.user.entity;
+package com.comitfy.healtie.userModule.entity;
 
 import com.comitfy.healtie.entity.BaseEntity;
 import lombok.Data;

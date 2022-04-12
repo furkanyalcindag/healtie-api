@@ -1,4 +1,4 @@
-package com.comitfy.healtie.user.entity;
+package com.comitfy.healtie.userModule.entity;
 
 import com.comitfy.healtie.entity.BaseEntity;
 import lombok.Data;
@@ -12,9 +12,9 @@ import java.util.Set;
 @Table(name = "crm_group")
 public class CrmGroup extends BaseEntity {
     @Column
-    private String groupId;
+    private String name;
     @Column
-    private String userId;
+    private String description;
 
 
 
