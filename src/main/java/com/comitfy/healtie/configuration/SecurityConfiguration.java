@@ -1,5 +1,8 @@
 package com.comitfy.healtie.configuration;
 
+import com.comitfy.healtie.userModule.repository.UserRepository;
+import com.comitfy.healtie.util.security.JWTFilter;
+import com.comitfy.healtie.util.security.SecurityService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -19,9 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.comitfy.healtie.repository.UserRepository;
-import com.comitfy.healtie.security.JWTFilter;
-import com.comitfy.healtie.security.SecurityService;
+
 
 @Configuration
 @EnableWebSecurity
