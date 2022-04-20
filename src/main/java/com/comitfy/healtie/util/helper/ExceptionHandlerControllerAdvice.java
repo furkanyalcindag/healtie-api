@@ -1,4 +1,4 @@
-package com.comitfy.healtie.helper;
+package com.comitfy.healtie.util.helper;
 
 import com.comitfy.healtie.model.ExceptionResponse;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;

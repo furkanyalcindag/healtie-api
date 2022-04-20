@@ -1,4 +1,4 @@
-package com.comitfy.healtie.helper;
+package com.comitfy.healtie.util.helper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
