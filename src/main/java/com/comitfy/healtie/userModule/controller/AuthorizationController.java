@@ -45,17 +45,13 @@ public class AuthorizationController {
 
     @PostMapping("/login")
     public Map<String, Object> loginHandler(@RequestBody LoginRequest body) {
-        try {
-            UsernamePasswordAuthenticationToken authInputToken =
-                    new UsernamePasswordAuthenticationToken(body.getEmail(), body.getPassword());
+        UsernamePasswordAuthenticationToken authInputToken =
+                new UsernamePasswordAuthenticationToken(body.getEmail(), body.getPassword());
 
-            authManager.authenticate(authInputToken);
+        authManager.authenticate(authInputToken);
 
-            String token = jwtUtil.generateToken(body.getEmail());
+        String token = jwtUtil.generateToken(body.getEmail());
 
-            return Collections.singletonMap("jwt-token", token);
-        } catch (AuthenticationException authExc) {
-            throw new RuntimeException("Invalid Login Credentials");
-        }
+        return Collections.singletonMap("jwt-token", token);
     }
 }
