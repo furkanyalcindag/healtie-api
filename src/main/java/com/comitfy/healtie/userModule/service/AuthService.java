@@ -1,6 +1,7 @@
 package com.comitfy.healtie.userModule.service;
 
 
+import com.comitfy.healtie.userModule.entity.Role;
 import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.userModule.model.requestModel.auth.RegisterRequest;
 import com.comitfy.healtie.userModule.repository.RoleRepository;
@@ -11,6 +12,8 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,7 +40,9 @@ public class AuthService implements IAuthService {
             newUser.setFirstName(request.getFirstName());
             newUser.setLastName(request.getLastName());
 
-            newUser.getRoles().add(roleRepository.findByName("user").get());
+            List<Role> roles = new ArrayList<>();
+            roles.add(roleRepository.findByName("user").get());
+            newUser.setRoles(roles);
 
             userRepository.save(newUser);
             return true;
