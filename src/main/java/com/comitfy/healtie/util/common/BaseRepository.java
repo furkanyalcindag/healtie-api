@@ -2,7 +2,13 @@ package com.comitfy.healtie.util.common;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
+import org.springframework.data.repository.PagingAndSortingRepository;
+
+import java.util.Optional;
+import java.util.UUID;
 
 @NoRepositoryBean
-public interface BaseRepository<T> extends JpaRepository<T,Long> {
+public interface BaseRepository<T> extends PagingAndSortingRepository<T,Long> {
+
+    Optional<T> findByUuid(UUID uuid);
 }

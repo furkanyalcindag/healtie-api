@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "crm_group")
+@Table(name = "group")
 public class Group extends BaseEntity {
     @Column
     private String name;

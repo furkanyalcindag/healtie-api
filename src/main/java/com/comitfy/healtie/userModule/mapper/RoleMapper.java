@@ -1,9 +1,13 @@
 package com.comitfy.healtie.userModule.mapper;
 
+import com.comitfy.healtie.app.dto.LanguageDTO;
+import com.comitfy.healtie.app.entity.Language;
 import com.comitfy.healtie.userModule.dto.RoleDTO;
 import com.comitfy.healtie.userModule.entity.Role;
+import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseMapper;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -31,15 +35,35 @@ public class RoleMapper implements BaseMapper<RoleDTO, Role> {
 
         List<RoleDTO> roleDTOList = new ArrayList<>();
 
-        for (Role role:roles){
+        for (Role role : roles) {
             RoleDTO roleDTO = new RoleDTO();
 
-            BeanUtils.copyProperties(role,roleDTO);
+            BeanUtils.copyProperties(role, roleDTO);
 
             roleDTOList.add(roleDTO);
 
         }
 
         return roleDTOList;
+    }
+
+    @Override
+    public PageDTO<RoleDTO> pageEntityToPageDTO(Page<Role> pageEntity) {
+       /* Page<RoleDTO> dtoPage = pageEntity.map(t -> {
+            RoleDTO dto = new RoleDTO();
+            dto = entityToDTO(t);
+            // Conversion logic
+            return dto;
+            //return new ModelMapper().map(t, BookDto.class);
+        });
+
+        return dtoPage;*/
+
+        PageDTO<RoleDTO> pageDTO = new PageDTO<RoleDTO>();
+        List<Role> entityList = pageEntity.toList();
+        List<RoleDTO> languageDTOList = entityListToDTOList(entityList);
+        pageDTO.setStart(pageEntity, languageDTOList);
+
+        return pageDTO;
     }
 }

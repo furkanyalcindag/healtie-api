@@ -1,13 +1,13 @@
 package com.comitfy.healtie.util.common;
 
+import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public abstract class BaseCrudController<DTO extends BaseDTO, Entity extends BaseEntity,
@@ -29,16 +29,16 @@ public abstract class BaseCrudController<DTO extends BaseDTO, Entity extends Bas
 
 
     @GetMapping("/")
-    public ResponseEntity<List<DTO>> getAll() {
+    public ResponseEntity<PageDTO<DTO>> getAll(@RequestParam int pageNumber, @RequestParam int pageSize) {
 
-        List<DTO> dtoList = getService().findAll();
+        PageDTO<DTO> dtoList = getService().findAll(pageNumber, pageSize);
 
         return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DTO> getById(@PathVariable Long id) {
-        DTO optionalT = getService().findById(id);
+    public ResponseEntity<DTO> getById(@PathVariable UUID id) {
+        DTO optionalT = getService().findByUUID(id);
         if (optionalT == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         } else {
@@ -52,8 +52,8 @@ public abstract class BaseCrudController<DTO extends BaseDTO, Entity extends Bas
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
-        DTO optional = getService().findById(id);
+    public ResponseEntity<String> delete(@PathVariable UUID id) {
+        DTO optional = getService().findByUUID(id);
 
         if (optional == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -64,8 +64,8 @@ public abstract class BaseCrudController<DTO extends BaseDTO, Entity extends Bas
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody DTO body) {
-        DTO optional = getService().findById(id);
+    public ResponseEntity<String> update(@PathVariable UUID id, @RequestBody DTO body) {
+        DTO optional = getService().findByUUID(id);
 
         if (optional == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND);

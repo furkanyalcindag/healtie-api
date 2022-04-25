@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "crm_user")
+@Table(name = "user")
 public class User extends BaseEntity {
     @Column
     private String username;

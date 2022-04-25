@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "crm_role")
+@Table(name = "role")
 public class Role extends BaseEntity {
     @Column
     private String name;
