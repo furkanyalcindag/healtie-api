@@ -1,6 +1,7 @@
 package com.comitfy.healtie.userModule.controller;
 
 import com.comitfy.healtie.userModule.dto.RoleDTO;
+import com.comitfy.healtie.userModule.dto.requestDTO.RoleRequestDTO;
 import com.comitfy.healtie.userModule.entity.Role;
 import com.comitfy.healtie.userModule.mapper.RoleMapper;
 import com.comitfy.healtie.userModule.repository.RoleRepository;
@@ -10,14 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class RoleController extends BaseCrudController<RoleDTO, Role, RoleRepository, RoleMapper, RoleService> {
+public class RoleController extends BaseCrudController<RoleDTO, RoleRequestDTO, Role, RoleRepository, RoleMapper, RoleService> {
 
     @Autowired
     RoleService roleService;
 
     @Autowired
     RoleMapper roleMapper;
-
 
 
     @Override

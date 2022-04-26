@@ -5,12 +5,13 @@ import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
 @Data
-@Table(name = "user")
+@Table(name = "users")
 public class User extends BaseEntity {
     @Column
     private String username;
@@ -25,15 +26,15 @@ public class User extends BaseEntity {
     @Column
     private boolean isEnable;
 
-    @JoinTable(name = "user_group",joinColumns = @JoinColumn(name="user_id"))
+    /*@JoinTable(name = "user_group",joinColumns = @JoinColumn(name="user_id"))
     @JoinColumn(name = "group_id")
     @OneToMany(fetch = FetchType.LAZY)
-    private List<Group> group;
+    private List<Group> group;*/
 
-    @JoinTable(name = "user_role",joinColumns = @JoinColumn(name="user_id"))
-    @JoinColumn(name = "role_id")
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Role> roles;
+
+    @ManyToMany
+    private Set<Role> roles;
+
 
     public User() {
         isEnable = false;

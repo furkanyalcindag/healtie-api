@@ -1,12 +1,10 @@
 package com.comitfy.healtie.app.entity;
 
+import com.comitfy.healtie.app.model.enums.LanguageEnum;
 import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
@@ -14,6 +12,16 @@ import java.util.Set;
 @Data
 public class Category extends BaseEntity {
 
-    @OneToMany(mappedBy="category", fetch = FetchType.EAGER)
-    private Set<CategoryTranslation> translations;
+    @Column
+    private String name;
+
+
+    @Column
+    private LanguageEnum languageEnum;
+
+    @ManyToMany
+    private Set<Category> parent;
+
+    private boolean isTop;
+
 }

@@ -1,6 +1,7 @@
 package com.comitfy.healtie.userModule.service;
 
 import com.comitfy.healtie.userModule.dto.RoleDTO;
+import com.comitfy.healtie.userModule.dto.requestDTO.RoleRequestDTO;
 import com.comitfy.healtie.userModule.entity.Role;
 import com.comitfy.healtie.userModule.mapper.RoleMapper;
 import com.comitfy.healtie.userModule.repository.RoleRepository;
@@ -9,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RoleService extends BaseService<RoleDTO, Role, RoleRepository, RoleMapper> {
+public class RoleService extends BaseService<RoleDTO, RoleRequestDTO, Role, RoleRepository, RoleMapper> {
 
 
     @Autowired

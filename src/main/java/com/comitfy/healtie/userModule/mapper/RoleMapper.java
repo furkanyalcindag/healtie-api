@@ -3,6 +3,7 @@ package com.comitfy.healtie.userModule.mapper;
 import com.comitfy.healtie.app.dto.LanguageDTO;
 import com.comitfy.healtie.app.entity.Language;
 import com.comitfy.healtie.userModule.dto.RoleDTO;
+import com.comitfy.healtie.userModule.dto.requestDTO.RoleRequestDTO;
 import com.comitfy.healtie.userModule.entity.Role;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseMapper;
@@ -14,20 +15,44 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class RoleMapper implements BaseMapper<RoleDTO, Role> {
+public class RoleMapper implements BaseMapper<RoleDTO, RoleRequestDTO, Role> {
     @Override
     public RoleDTO entityToDTO(Role entity) {
-        return null;
+        RoleDTO roleDTO = new RoleDTO();
+
+        BeanUtils.copyProperties(entity, roleDTO);
+        return roleDTO;
     }
 
     @Override
     public Role dtoToEntity(RoleDTO dto) {
-        return null;
+
+        Role role = new Role();
+        role.setName(dto.getName());
+        return role;
+    }
+
+    @Override
+    public Role requestDTOToEntity(RoleRequestDTO dto) {
+        Role role = new Role();
+        role.setName(dto.getName());
+        return role;
     }
 
     @Override
     public List<Role> dtoListToEntityList(List<RoleDTO> roleDTOS) {
-        return null;
+        List<Role> roleList = new ArrayList<>();
+
+        for (RoleDTO roleDTO : roleDTOS) {
+            Role role = new Role();
+
+            BeanUtils.copyProperties(roleDTO, role);
+
+            roleList.add(role);
+
+        }
+
+        return roleList;
     }
 
     @Override

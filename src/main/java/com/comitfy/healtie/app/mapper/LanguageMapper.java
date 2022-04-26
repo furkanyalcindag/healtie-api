@@ -1,20 +1,18 @@
 package com.comitfy.healtie.app.mapper;
 
-import ch.qos.logback.core.pattern.Converter;
 import com.comitfy.healtie.app.dto.LanguageDTO;
+import com.comitfy.healtie.app.dto.requestDTO.LanguageRequestDTO;
 import com.comitfy.healtie.app.entity.Language;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 @Component
-public class LanguageMapper implements BaseMapper<LanguageDTO, Language> {
+public class LanguageMapper implements BaseMapper<LanguageDTO, LanguageRequestDTO, Language> {
     @Override
     public LanguageDTO entityToDTO(Language entity) {
         LanguageDTO languageDTO = new LanguageDTO();
@@ -22,6 +20,14 @@ public class LanguageMapper implements BaseMapper<LanguageDTO, Language> {
         languageDTO.setName(entity.getName());
         languageDTO.setUuid(entity.getUuid());
         return languageDTO;
+    }
+
+    @Override
+    public Language requestDTOToEntity(LanguageRequestDTO dto) {
+        Language language = new Language();
+        language.setName(dto.getName());
+        language.setCode(dto.getCode());
+        return language;
     }
 
     @Override
@@ -60,7 +66,7 @@ public class LanguageMapper implements BaseMapper<LanguageDTO, Language> {
         PageDTO<LanguageDTO> pageDTO = new PageDTO<LanguageDTO>();
         List<Language> entityList = pageEntity.toList();
         List<LanguageDTO> languageDTOList = entityListToDTOList(entityList);
-        pageDTO.setStart(pageEntity,languageDTOList);
+        pageDTO.setStart(pageEntity, languageDTOList);
 
         return pageDTO;
     }

@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public abstract class BaseCrudController<DTO extends BaseDTO, Entity extends BaseEntity,
-        Repository extends BaseRepository<Entity>, Mapper extends BaseMapper<DTO, Entity>,
-        Service extends BaseService<DTO, Entity, Repository, Mapper>> {
+public abstract class BaseCrudController<DTO extends BaseDTO, RequestDTO extends BaseDTO, Entity extends BaseEntity,
+        Repository extends BaseRepository<Entity>, Mapper extends BaseMapper<DTO, RequestDTO, Entity>,
+        Service extends BaseService<DTO, RequestDTO, Entity, Repository, Mapper>> {
 
 
     protected abstract Service getService();
@@ -29,7 +29,7 @@ public abstract class BaseCrudController<DTO extends BaseDTO, Entity extends Bas
 
 
     @GetMapping("/")
-    public ResponseEntity<PageDTO<DTO>> getAll(@RequestParam int pageNumber, @RequestParam int pageSize) {
+    public ResponseEntity<PageDTO<DTO>> getAll(@RequestHeader(value = "accept-language", required = true) String language, @RequestParam int pageNumber, @RequestParam int pageSize) {
 
         PageDTO<DTO> dtoList = getService().findAll(pageNumber, pageSize);
 
@@ -37,7 +37,7 @@ public abstract class BaseCrudController<DTO extends BaseDTO, Entity extends Bas
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DTO> getById(@PathVariable UUID id) {
+    public ResponseEntity<DTO> getById(@RequestHeader(value = "accept-language", required = true) String acceptLanguage, @PathVariable UUID id) {
         DTO optionalT = getService().findByUUID(id);
         if (optionalT == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -47,24 +47,26 @@ public abstract class BaseCrudController<DTO extends BaseDTO, Entity extends Bas
     }
 
     @PostMapping("/")
-    public ResponseEntity<DTO> save(@RequestBody DTO body) {
+    public ResponseEntity<RequestDTO> save(@RequestHeader(value = "accept-language", required = true) String acceptLanguage, @RequestBody RequestDTO body) {
         return new ResponseEntity<>(getService().save(body), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable UUID id) {
+    public ResponseEntity<String> delete(@RequestHeader(value = "accept-language", required = true) String acceptLanguage, @PathVariable UUID id) {
         DTO optional = getService().findByUUID(id);
 
         if (optional == null) {
+
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         } else {
+            getService().delete(optional.getUuid());
             return new ResponseEntity<>("Object with the id " + id + " was deleted.", HttpStatus.NO_CONTENT);
         }
 
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> update(@PathVariable UUID id, @RequestBody DTO body) {
+    public ResponseEntity<String> update(@RequestHeader(value = "accept-language", required = true) String acceptLanguage, @PathVariable UUID id, @RequestBody RequestDTO body) {
         DTO optional = getService().findByUUID(id);
 
         if (optional == null) {

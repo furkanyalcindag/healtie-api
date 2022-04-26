@@ -8,9 +8,6 @@ import java.util.UUID;
 @Data
 public class RoleDTO extends BaseDTO {
 
-
     private String name;
-    private UUID uuid;
-
 
 }
