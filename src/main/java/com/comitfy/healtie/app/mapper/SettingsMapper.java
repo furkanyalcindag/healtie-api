@@ -1,10 +1,7 @@
 package com.comitfy.healtie.app.mapper;
 
 import com.comitfy.healtie.app.dto.SettingsDTO;
-import com.comitfy.healtie.app.dto.requestDTO.CategoryRequestDTO;
 import com.comitfy.healtie.app.dto.requestDTO.SettingsRequestDTO;
-import com.comitfy.healtie.app.entity.Category;
-import com.comitfy.healtie.app.entity.Language;
 import com.comitfy.healtie.app.entity.Settings;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseMapper;
@@ -13,8 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Component
 public class SettingsMapper implements BaseMapper<SettingsDTO, SettingsRequestDTO, Settings> {
