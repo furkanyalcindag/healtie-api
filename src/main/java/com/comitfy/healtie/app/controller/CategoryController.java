@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("controller")
+@RequestMapping("category")
 public class CategoryController extends BaseCrudController<CategoryDTO, CategoryRequestDTO, Category, CategoryRepository, CategoryMapper, CategoryService> {
 
     @Autowired
