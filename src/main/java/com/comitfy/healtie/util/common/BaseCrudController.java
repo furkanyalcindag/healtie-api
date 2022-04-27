@@ -1,5 +1,6 @@
 package com.comitfy.healtie.util.common;
 
+import com.comitfy.healtie.app.model.enums.LanguageEnum;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import org.springframework.http.HttpStatus;
@@ -48,6 +49,7 @@ public abstract class BaseCrudController<DTO extends BaseDTO, RequestDTO extends
 
     @PostMapping("/")
     public ResponseEntity<RequestDTO> save(@RequestHeader(value = "accept-language", required = true) String acceptLanguage, @RequestBody RequestDTO body) {
+        body.setLanguageEnum(LanguageEnum.valueOf(acceptLanguage));
         return new ResponseEntity<>(getService().save(body), HttpStatus.CREATED);
     }
 
@@ -72,6 +74,7 @@ public abstract class BaseCrudController<DTO extends BaseDTO, RequestDTO extends
         if (optional == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND);
         } else {
+            body.setLanguageEnum(LanguageEnum.valueOf(acceptLanguage));
             getService().update(id, body);
             return new ResponseEntity<>("Object with the id " + id + " was updated.", HttpStatus.OK);
         }

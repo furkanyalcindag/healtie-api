@@ -40,6 +40,13 @@ public class RoleMapper implements BaseMapper<RoleDTO, RoleRequestDTO, Role> {
     }
 
     @Override
+    public Role requestDTOToExistEntity(Role entity, RoleRequestDTO dto) {
+
+        entity.setName(dto.getName());
+        return entity;
+    }
+
+    @Override
     public List<Role> dtoListToEntityList(List<RoleDTO> roleDTOS) {
         List<Role> roleList = new ArrayList<>();
 

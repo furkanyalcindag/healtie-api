@@ -1,10 +1,8 @@
 package com.comitfy.healtie.app.mapper;
 
 import com.comitfy.healtie.app.dto.CategoryDTO;
-import com.comitfy.healtie.app.dto.LanguageDTO;
 import com.comitfy.healtie.app.dto.requestDTO.CategoryRequestDTO;
 import com.comitfy.healtie.app.entity.Category;
-import com.comitfy.healtie.app.entity.Language;
 import com.comitfy.healtie.app.repository.CategoryRepository;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseMapper;
@@ -50,6 +48,19 @@ public class CategoryMapper implements BaseMapper<CategoryDTO, CategoryRequestDT
     @Override
     public Category requestDTOToEntity(CategoryRequestDTO dto) {
         Category category = new Category();
+        category.setName(dto.getName());
+        category.setLanguageEnum(dto.getLanguageEnum());
+        for (UUID úuid : dto.getParentList()) {
+            Optional<Category> category1 = categoryRepository.findByUuid(úuid);
+
+            category1.ifPresent(value -> category.getParent().add(value));
+        }
+
+        return category;
+    }
+
+    @Override
+    public Category requestDTOToExistEntity(Category category, CategoryRequestDTO dto) {
         category.setName(dto.getName());
         category.setLanguageEnum(dto.getLanguageEnum());
         for (UUID úuid : dto.getParentList()) {

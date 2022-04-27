@@ -15,7 +15,6 @@ public class CategoryRequestDTO extends BaseDTO {
     @JsonIgnore
     private LanguageEnum languageEnum;
     private List<UUID> parentList;
-
     private boolean isTop;
 
 }

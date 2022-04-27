@@ -52,11 +52,9 @@ public abstract class BaseService<DTO extends BaseDTO, RequestDTO extends BaseDT
 
     RequestDTO update(UUID id, RequestDTO dto) {
         Optional<Entity> entity = getRepository().findByUuid(id);
-        Entity entity1 = getMapper().requestDTOToEntity(dto);
+
         if (entity.isPresent()) {
-            entity1.setId(entity.get().getId());
-            entity1.setUuid(entity.get().getUuid());
-            BeanUtils.copyProperties(entity1, entity.get());
+            Entity entity1 = getMapper().requestDTOToExistEntity(entity.get(), dto);
             getRepository().save(entity1);
             return dto;
         } else {
