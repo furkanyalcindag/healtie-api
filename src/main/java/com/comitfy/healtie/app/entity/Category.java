@@ -17,6 +17,7 @@ public class Category extends BaseEntity {
 
 
     @Column
+    @Enumerated(EnumType.STRING)
     private LanguageEnum languageEnum;
 
     @ManyToMany

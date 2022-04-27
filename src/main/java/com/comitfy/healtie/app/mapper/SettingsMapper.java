@@ -40,6 +40,13 @@ public class SettingsMapper implements BaseMapper<SettingsDTO, SettingsRequestDT
 
     }
 
+    @Override
+    public Settings requestDTOToExistEntity(Settings entity, SettingsRequestDTO dto) {
+        entity.setKey(dto.getKey());
+        entity.setValue(dto.getValue());
+        return entity;
+    }
+
 
     @Override
     public List<Settings> dtoListToEntityList(List<SettingsDTO> settingsDTOS) {
