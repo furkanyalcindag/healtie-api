@@ -12,7 +12,6 @@ public class ArticleDTO extends BaseDTO {
 
     private String name;
     private String title;
-    private LanguageEnum languageEnum;
 
     @ElementCollection
     private List<String> tag;

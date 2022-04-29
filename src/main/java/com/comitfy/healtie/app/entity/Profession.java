@@ -5,27 +5,19 @@ import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table
 @Data
-public class Article extends BaseEntity {
-    @Column
-    private String name;
+public class Profession extends BaseEntity {
 
     @Column
-    private String title;
-
-    @ElementCollection
-    private List<String> tag;
+    private String keyword;
 
     @Column
     @Enumerated(EnumType.STRING)
     private LanguageEnum languageEnum;
-
-    @ManyToMany
-    private List<Category> categoryList;
 
 
 }
