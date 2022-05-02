@@ -31,4 +31,5 @@ public class ProfessionController extends BaseCrudController<ProfessionDTO, Prof
     protected ProfessionMapper getMapper() {
         return professionMapper;
     }
+
 }

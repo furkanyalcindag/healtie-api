@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("professionTranslation")
+@RequestMapping("profession-translation")
 public class ProfessionTranslationController extends BaseCrudController<ProfessionTranslationDTO, ProfessionTranslationRequestDTO, ProfessionTranslation, ProfessionTranslationRepository, ProfessionTranslationMapper, ProfessionTranslationService> {
 
     @Autowired

@@ -16,11 +16,11 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
     @Override
     public DoctorDTO entityToDTO(Doctor entity) {
         DoctorDTO doctorDTO = new DoctorDTO();
-        doctorDTO.setFirstName(entity.getFirstName());
-        doctorDTO.setLastName(entity.getLastName());
+        doctorDTO.setFirstName(entity.getUser().getFirstName());
+        doctorDTO.setLastName(entity.getUser().getLastName());
         doctorDTO.setTitle(entity.getTitle());
         doctorDTO.setDiplomaNo(entity.getDiplomaNo());
-        doctorDTO.setEmail(entity.getEmail());
+        doctorDTO.setEmail(entity.getUser().getEmail());
         doctorDTO.setAddress(entity.getAddress());
         doctorDTO.setPhone(entity.getPhone());
         return doctorDTO;
@@ -30,12 +30,12 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
     @Override
     public Doctor dtoToEntity(DoctorDTO dto) {
         Doctor doctor = new Doctor();
-        doctor.setFirstName(dto.getFirstName());
-        doctor.setLastName(dto.getLastName());
+        doctor.getUser().setFirstName(dto.getFirstName());
+        doctor.getUser().setLastName(dto.getLastName());
         doctor.setTitle(dto.getTitle());
         doctor.setDiplomaNo(dto.getDiplomaNo());
         doctor.setAddress(dto.getAddress());
-        doctor.setEmail(dto.getEmail());
+        doctor.getUser().setEmail(dto.getEmail());
         doctor.setPhone(dto.getPhone());
         return doctor;
 
@@ -44,24 +44,24 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
     @Override
     public Doctor requestDTOToEntity(DoctorRequestDTO dto) {
         Doctor doctor = new Doctor();
-        doctor.setFirstName(dto.getFirstName());
-        doctor.setLastName(dto.getLastName());
+        doctor.getUser().setFirstName(dto.getFirstName());
+        doctor.getUser().setLastName(dto.getLastName());
         doctor.setTitle(dto.getTitle());
         doctor.setDiplomaNo(dto.getDiplomaNo());
         doctor.setAddress(dto.getAddress());
-        doctor.setEmail(dto.getEmail());
+        doctor.getUser().setEmail(dto.getEmail());
         doctor.setPhone(dto.getPhone());
         return doctor;
     }
 
     @Override
     public Doctor requestDTOToExistEntity(Doctor doctor, DoctorRequestDTO dto) {
-        doctor.setFirstName(dto.getFirstName());
-        doctor.setLastName(dto.getLastName());
+        doctor.getUser().setFirstName(dto.getFirstName());
+        doctor.getUser().setLastName(dto.getLastName());
         doctor.setTitle(dto.getTitle());
         doctor.setDiplomaNo(dto.getDiplomaNo());
         doctor.setAddress(dto.getAddress());
-        doctor.setEmail(dto.getEmail());
+        doctor.getUser().setEmail(dto.getEmail());
         doctor.setPhone(dto.getPhone());
         return doctor;
     }

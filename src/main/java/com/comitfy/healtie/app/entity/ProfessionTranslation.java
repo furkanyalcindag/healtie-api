@@ -18,5 +18,8 @@ public class ProfessionTranslation extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private LanguageEnum languageEnum;
 
+    @ManyToOne
+    private Profession profession;
+
 
 }

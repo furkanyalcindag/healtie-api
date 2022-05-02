@@ -18,7 +18,8 @@ public class ProfessionMapper implements BaseMapper<ProfessionDTO, ProfessionReq
 
         ProfessionDTO professionDTO = new ProfessionDTO();
         professionDTO.setKeyword(entity.getKeyword());
-        professionDTO.setLanguageEnum(entity.getLanguageEnum());
+        professionDTO.setUuid(entity.getUuid());
+
 
         return professionDTO;
     }
@@ -29,7 +30,7 @@ public class ProfessionMapper implements BaseMapper<ProfessionDTO, ProfessionReq
         Profession profession = new Profession();
         profession.setKeyword(dto.getKeyword());
         profession.setUuid(dto.getUuid());
-        profession.setLanguageEnum(dto.getLanguageEnum());
+
         return profession;
     }
 
@@ -38,7 +39,7 @@ public class ProfessionMapper implements BaseMapper<ProfessionDTO, ProfessionReq
 
         Profession profession = new Profession();
         profession.setKeyword(dto.getKeyword());
-        profession.setLanguageEnum(dto.getLanguageEnum());
+
 
         return profession;
     }
@@ -47,7 +48,6 @@ public class ProfessionMapper implements BaseMapper<ProfessionDTO, ProfessionReq
     public Profession requestDTOToExistEntity(Profession profession, ProfessionRequestDTO dto) {
 
         profession.setKeyword(dto.getKeyword());
-        profession.setLanguageEnum(dto.getLanguageEnum());
         return profession;
     }
 

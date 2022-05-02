@@ -1,12 +1,12 @@
 package com.comitfy.healtie.app.mapper;
 
-import com.comitfy.healtie.app.dto.ProfessionDTO;
 import com.comitfy.healtie.app.dto.ProfessionTranslationDTO;
 import com.comitfy.healtie.app.dto.requestDTO.ProfessionTranslationRequestDTO;
-import com.comitfy.healtie.app.entity.Profession;
 import com.comitfy.healtie.app.entity.ProfessionTranslation;
+import com.comitfy.healtie.app.service.ProfessionService;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +15,10 @@ import java.util.List;
 
 @Component
 public class ProfessionTranslationMapper implements BaseMapper<ProfessionTranslationDTO, ProfessionTranslationRequestDTO, ProfessionTranslation> {
+
+    @Autowired
+    ProfessionService professionService;
+
     @Override
     public ProfessionTranslationDTO entityToDTO(ProfessionTranslation entity) {
         ProfessionTranslationDTO professionTranslationDTO=new ProfessionTranslationDTO();
@@ -37,7 +41,7 @@ public class ProfessionTranslationMapper implements BaseMapper<ProfessionTransla
         ProfessionTranslation professionTranslation=new ProfessionTranslation();
         professionTranslation.setName(dto.getName());
         professionTranslation.setLanguageEnum(dto.getLanguageEnum());
-        professionTranslation.setUuid(dto.getUuid());
+        professionTranslation.setProfession(professionService.getRepository().findByUuid(dto.getUuid()).get());
         return professionTranslation;
     }
 
@@ -45,7 +49,7 @@ public class ProfessionTranslationMapper implements BaseMapper<ProfessionTransla
     public ProfessionTranslation requestDTOToExistEntity(ProfessionTranslation professionTranslation, ProfessionTranslationRequestDTO dto) {
         professionTranslation.setName(dto.getName());
         professionTranslation.setLanguageEnum(dto.getLanguageEnum());
-        professionTranslation.setUuid(dto.getUuid());
+        //professionTranslation.setUuid(dto.getUuid());
         return professionTranslation;
     }
 

@@ -5,6 +5,7 @@ import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,10 +15,5 @@ public class Profession extends BaseEntity {
 
     @Column
     private String keyword;
-
-    @Column
-    @Enumerated(EnumType.STRING)
-    private LanguageEnum languageEnum;
-
 
 }
