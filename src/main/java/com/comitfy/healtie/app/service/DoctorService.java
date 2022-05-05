@@ -27,4 +27,9 @@ public class DoctorService extends BaseService<DoctorDTO, DoctorRequestDTO, Doct
     public DoctorMapper getMapper() {
         return doctorMapper;
     }
+
+
+/*    public void saveOrUpdate(Doctor doctor){
+        doctorRepository.save(doctor);
+    }*/
 }
