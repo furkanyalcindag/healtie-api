@@ -23,7 +23,7 @@ public class AcademicInfo extends BaseEntity {
     @Column
     private Date graduateYear;
 
-    @ManyToOne()
+    @ManyToOne(cascade =CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn
     private Doctor doctor;
 

@@ -5,7 +5,6 @@ import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import java.util.List;
 
 @Entity
@@ -19,9 +18,6 @@ public class Doctor extends BaseEntity {
     @Column(unique = true)
     private String diplomaNo;
 
-    @OneToOne
-    private User user;
-
     @Column
     private String address;
 
@@ -32,9 +28,17 @@ public class Doctor extends BaseEntity {
     private String clinicName;
 
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private User user;
 
-    @OneToMany(mappedBy = "doctor")
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AcademicInfo> academicInfoList;
-
+    public void addAcademicInfo(AcademicInfo academicInfo){
+        academicInfoList.add(academicInfo);
+        academicInfo.setDoctor(this);
+    }
 
 }
+
+
+
