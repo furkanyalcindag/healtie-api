@@ -3,11 +3,13 @@ package com.comitfy.healtie.app.mapper;
 import com.comitfy.healtie.app.dto.AcademicInfoDTO;
 import com.comitfy.healtie.app.dto.requestDTO.AcademicInfoRequestDTO;
 import com.comitfy.healtie.app.entity.AcademicInfo;
+import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
+import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.List;
 
