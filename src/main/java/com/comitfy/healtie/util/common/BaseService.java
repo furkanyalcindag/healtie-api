@@ -32,7 +32,7 @@ public abstract class BaseService<DTO extends BaseDTO, RequestDTO extends BaseDT
         return optionalEntity.map(entity -> getMapper().entityToDTO(entity)).orElse(null);
     }
 
-    RequestDTO save(RequestDTO dto) {
+  public  RequestDTO save(RequestDTO dto) {
         Entity entity = getMapper().requestDTOToEntity(dto);
         getRepository().save(entity);
         return dto;
