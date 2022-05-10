@@ -26,6 +26,9 @@ public class Article extends BaseEntity {
 
     @ManyToMany
     private List<Category> categoryList;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn()
+    private Doctor doctor;
 
 
 }

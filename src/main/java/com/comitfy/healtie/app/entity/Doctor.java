@@ -34,13 +34,11 @@ public class Doctor extends BaseEntity {
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AcademicInfo> academicInfoList;
 
-    @OneToMany(mappedBy = "doctor",cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Certificate> certificateList;
 
-/*    public void addAcademicInfo(AcademicInfo academicInfo) {
-        academicInfoList.add(academicInfo);
-        academicInfo.setDoctor(this);
-    }*/
+    @OneToMany(mappedBy = "doctor",cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private List<Article> articleList;
 
 }
 
