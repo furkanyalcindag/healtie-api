@@ -12,5 +12,5 @@ import java.util.List;
 
 @Repository
 public interface AcademicInfoRepository extends BaseRepository<AcademicInfo> {
-    //List<AcademicInfo> findAllAcademicInfoByDoctorId(@Param("id")Long id);
+
 }

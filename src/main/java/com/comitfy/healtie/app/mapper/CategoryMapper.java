@@ -25,6 +25,7 @@ public class CategoryMapper implements BaseMapper<CategoryDTO, CategoryRequestDT
 
         CategoryDTO categoryDTO = new CategoryDTO();
         categoryDTO.setName(entity.getName());
+        categoryDTO.setUuid(entity.getUuid());
         //categoryDTO.setParentList(entity.getParent());
 
         return categoryDTO;

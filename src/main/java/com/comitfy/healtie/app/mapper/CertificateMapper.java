@@ -26,6 +26,7 @@ public class CertificateMapper implements BaseMapper<CertificateDTO, Certificate
         certificateDTO.setCertificateNo(entity.getCertificateNo());
         certificateDTO.setTakenFrom(entity.getTakenFrom());
         certificateDTO.setTakenDate(entity.getTakenDate());
+        certificateDTO.setUuid(entity.getUuid());
         return certificateDTO;
     }
 

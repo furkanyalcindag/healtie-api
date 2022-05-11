@@ -41,7 +41,7 @@ public abstract class BaseService<DTO extends BaseDTO, RequestDTO extends BaseDT
             /*Entity e = optionalEntity.get();
             e.setDeleted(true);
             getRepository().save(e);*/
-            getRepository().delete(e);
+            getRepository().save(e);
         }
 
     }

@@ -19,8 +19,6 @@ public class ProfessionMapper implements BaseMapper<ProfessionDTO, ProfessionReq
         ProfessionDTO professionDTO = new ProfessionDTO();
         professionDTO.setKeyword(entity.getKeyword());
         professionDTO.setUuid(entity.getUuid());
-
-
         return professionDTO;
     }
 
