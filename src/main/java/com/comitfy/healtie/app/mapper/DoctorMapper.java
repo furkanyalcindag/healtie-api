@@ -21,6 +21,7 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
         doctorDTO.setAddress(entity.getAddress());
         doctorDTO.setPhone(entity.getPhone());
         doctorDTO.setClinicName(entity.getClinicName());
+        doctorDTO.setUuid(entity.getUuid());
 
         return doctorDTO;
 

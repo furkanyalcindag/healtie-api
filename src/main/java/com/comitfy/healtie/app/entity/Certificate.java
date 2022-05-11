@@ -9,23 +9,21 @@ import java.util.Date;
 @Entity
 @Table
 @Data
-public class AcademicInfo extends BaseEntity {
+public class Certificate extends BaseEntity {
 
     @Column
-    private String schoolName;
+    private String name;
+
+    @Column(unique = true)
+    private String certificateNo;
 
     @Column
-    private String profession;
+    private String takenFrom;
 
     @Column
-    private Date startYear;
-
-    @Column
-    private Date graduateYear;
+    private Date takenDate;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn
     private Doctor doctor;
-
-
 }
