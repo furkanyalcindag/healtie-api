@@ -25,6 +25,7 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
         articleDTO.setName(entity.getName());
         articleDTO.setTitle(entity.getTitle());
         articleDTO.setTag(entity.getTag());
+        articleDTO.setUuid(entity.getUuid());
         return articleDTO;
     }
 

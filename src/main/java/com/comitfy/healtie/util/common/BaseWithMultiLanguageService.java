@@ -1,5 +1,6 @@
 package com.comitfy.healtie.util.common;
 
+import com.comitfy.healtie.app.model.enums.LanguageEnum;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import org.springframework.data.domain.PageRequest;
@@ -9,7 +10,7 @@ import org.springframework.data.domain.Sort;
 import java.util.Optional;
 import java.util.UUID;
 
-public abstract class BaseService<DTO extends BaseDTO, RequestDTO extends BaseDTO, Entity extends BaseEntity, Repository extends BaseRepository<Entity>, Mapper extends BaseMapper<DTO, RequestDTO, Entity>> {
+public abstract class BaseWithMultiLanguageService<DTO extends BaseDTO, RequestDTO extends BaseDTO, Entity extends BaseEntity, Repository extends BaseWithMultiLanguageRepository<Entity>, Mapper extends BaseMapper<DTO, RequestDTO, Entity>> {
 
 
     public abstract Repository getRepository();
@@ -17,12 +18,12 @@ public abstract class BaseService<DTO extends BaseDTO, RequestDTO extends BaseDT
     public abstract Mapper getMapper();
 
 
-    PageDTO<DTO> findAll(int page, int size) {
+    public PageDTO<DTO> findAll(int page, int size, LanguageEnum languageEnum) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
-        return getMapper().pageEntityToPageDTO(getRepository().findAll(pageable));
+        return getMapper().pageEntityToPageDTO(getRepository().findAllByLanguageEnum(pageable,languageEnum));
     }
 
-    DTO findByUUID(UUID uuid) {
+    public DTO findByUUID(UUID uuid) {
         Optional<Entity> optionalEntity = getRepository().findByUuid(uuid);
         return optionalEntity.map(entity -> getMapper().entityToDTO(entity)).orElse(null);
     }

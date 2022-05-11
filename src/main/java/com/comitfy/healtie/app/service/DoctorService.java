@@ -9,6 +9,9 @@ import com.comitfy.healtie.util.common.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
 public class DoctorService extends BaseService<DoctorDTO, DoctorRequestDTO, Doctor, DoctorRepository, DoctorMapper> {
 
@@ -29,7 +32,4 @@ public class DoctorService extends BaseService<DoctorDTO, DoctorRequestDTO, Doct
     }
 
 
-/*    public void saveOrUpdate(Doctor doctor){
-        doctorRepository.save(doctor);
-    }*/
 }

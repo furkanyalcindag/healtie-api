@@ -24,6 +24,7 @@ public class ProfessionTranslationMapper implements BaseMapper<ProfessionTransla
         ProfessionTranslationDTO professionTranslationDTO=new ProfessionTranslationDTO();
         professionTranslationDTO.setName(entity.getName());
         professionTranslationDTO.setLanguageEnum(entity.getLanguageEnum());
+        professionTranslationDTO.setUuid(entity.getUuid());
         return professionTranslationDTO;
     }
 
