@@ -36,7 +36,7 @@ public class CertificateService extends BaseService<CertificateDTO, CertificateR
         return certificateMapper;
     }
 
-    public CertificateRequestDTO saveFromDoctor(UUID id, CertificateRequestDTO dto) {
+    public CertificateRequestDTO saveCertificateByDoctor(UUID id, CertificateRequestDTO dto) {
         Optional<Doctor> doctor = doctorRepository.findByUuid(id);
         if (doctor.isPresent()) {
             Certificate certificate = getMapper().requestDTOToEntity(dto);

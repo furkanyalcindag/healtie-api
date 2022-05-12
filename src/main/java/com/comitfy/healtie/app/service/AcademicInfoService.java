@@ -37,7 +37,7 @@ public class AcademicInfoService extends BaseService<AcademicInfoDTO, AcademicIn
     }
 
 
-    public AcademicInfoRequestDTO saveFromDoctor(UUID id,AcademicInfoRequestDTO dto) {
+    public AcademicInfoRequestDTO saveAcademicInfoByDoctor(UUID id,AcademicInfoRequestDTO dto) {
         Optional<Doctor> doctor = doctorRepository.findByUuid(id);
         if (doctor.isPresent()) {
             AcademicInfo academicInfo = getMapper().requestDTOToEntity(dto);

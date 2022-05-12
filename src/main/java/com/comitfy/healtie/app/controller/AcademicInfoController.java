@@ -5,7 +5,6 @@ import com.comitfy.healtie.app.dto.requestDTO.AcademicInfoRequestDTO;
 import com.comitfy.healtie.app.entity.AcademicInfo;
 import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.app.mapper.AcademicInfoMapper;
-import com.comitfy.healtie.app.model.enums.LanguageEnum;
 import com.comitfy.healtie.app.repository.AcademicInfoRepository;
 import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.app.service.AcademicInfoService;
@@ -52,7 +51,7 @@ public class AcademicInfoController extends BaseCrudController<AcademicInfoDTO, 
         if (optional == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<>(academicInfoService.saveFromDoctor(doctorId, academicInfoRequestDTO), HttpStatus.OK);
+            return new ResponseEntity<>(academicInfoService.saveAcademicInfoByDoctor(doctorId, academicInfoRequestDTO), HttpStatus.OK);
         }
     }
 
@@ -74,42 +73,6 @@ public class AcademicInfoController extends BaseCrudController<AcademicInfoDTO, 
 }
 
 
- /*   Certificate certificate = getMapper().requestDTOToEntity(dto);
-            certificate.setDoctor(doctor.get());*/
 
-//   return new ResponseEntity<>(getService().save(academicInfoRequestDTO), HttpStatus.CREATED);
-//  academicInfoRequestDTO.setDoctor();
-// return new ResponseEntity<>(HttpStatus.OK);
-
-
-     /*  @PutMapping("/{id}")
-    public ResponseEntity<String> update(@RequestHeader(value = "accept-language", required = true) String acceptLanguage, @PathVariable UUID id, @RequestBody RequestDTO body) {
-        DTO optional = getService().findByUUID(id);
-
-        if (optional == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND);
-        } else {
-            body.setLanguageEnum(LanguageEnum.valueOf(acceptLanguage));
-            getService().update(id, body);
-            return new ResponseEntity<>("Object with the id " + id + " was updated.", HttpStatus.OK);
-        }*/
-
-
-/*    @PostMapping("/doctorId")
-    public AcademicInfo createAcademicInfo(@PathVariable(value = "doctorId") UUID uuid, @RequestParam AcademicInfo academicInfo) {
-        List<AcademicInfo> academicInfoList = new ArrayList<>();
-        academicInfoList.add(academicInfo);
-        academicInfo.setDoctor(this);
-    }*/
-
-
-/*    @GetMapping("/{id}")
-    public ResponseEntity<Optional<AcademicInfo>> findAllAcademicInfoByDoctorId(@PathVariable(value = "id") Long doctorID) {
-        Optional<AcademicInfo> academicInfo = academicInfoRepository.findById(doctorID);
-        if (academicInfo == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().body(academicInfo);
-    }*/
 
 

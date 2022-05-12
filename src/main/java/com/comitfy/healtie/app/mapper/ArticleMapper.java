@@ -4,6 +4,7 @@ import com.comitfy.healtie.app.dto.ArticleDTO;
 import com.comitfy.healtie.app.dto.requestDTO.ArticleRequestDTO;
 import com.comitfy.healtie.app.entity.Article;
 import com.comitfy.healtie.app.repository.ArticleRepository;
+import com.comitfy.healtie.app.repository.CategoryRepository;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
 
     @Autowired
     ArticleRepository articleRepository;
+
+    @Autowired
+    CategoryRepository categoryRepository;
 
     @Override
     public ArticleDTO entityToDTO(Article entity) {
@@ -49,6 +53,7 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
         return article;
 
     }
+
     @Override
     public Article requestDTOToExistEntity(Article article, ArticleRequestDTO dto) {
         article.setName(dto.getName());
@@ -57,7 +62,6 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
         article.setTag(dto.getTag());
         return article;
     }
-
 
 
     @Override
