@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, Article> {
@@ -40,6 +42,13 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
         article.setTitle(dto.getTitle());
         article.setLanguageEnum(dto.getLanguageEnum());
         article.setTag(dto.getTag());
+        for (ArticleDTO articleDTO : dto.getLikeList()) {
+            Article article1 = new Article();
+            article1.setName(articleDTO.getName());
+            article1.setTitle(articleDTO.getTitle());
+            article1.setLanguageEnum(articleDTO.getLanguageEnum());
+            article.getLike().add(article1);
+        }
         return article;
     }
 
@@ -50,8 +59,11 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
         article.setTitle(dto.getTitle());
         article.setLanguageEnum(dto.getLanguageEnum());
         article.setTag(dto.getTag());
+        for (UUID uuid : dto.getLikeList()) {
+            Optional<Article> article1 = articleRepository.findByUuid(uuid);
+            article1.ifPresent(value -> article.getLike().add(value));
+        }
         return article;
-
     }
 
     @Override
@@ -59,6 +71,10 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
         article.setName(dto.getName());
         article.setTitle(dto.getTitle());
         article.setLanguageEnum(dto.getLanguageEnum());
+        for (UUID uuid : dto.getLikeList()) {
+            Optional<Article> article1 = articleRepository.findByUuid(uuid);
+            article1.ifPresent(value -> article.getLike().add(value));
+        }
         article.setTag(dto.getTag());
         return article;
     }

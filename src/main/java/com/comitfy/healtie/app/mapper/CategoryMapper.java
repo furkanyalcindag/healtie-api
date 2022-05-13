@@ -20,6 +20,7 @@ public class CategoryMapper implements BaseMapper<CategoryDTO, CategoryRequestDT
 
     @Autowired
     CategoryRepository categoryRepository;
+
     @Override
     public CategoryDTO entityToDTO(Category entity) {
 
@@ -102,10 +103,9 @@ public class CategoryMapper implements BaseMapper<CategoryDTO, CategoryRequestDT
         PageDTO<CategoryDTO> pageDTO = new PageDTO<CategoryDTO>();
         List<Category> entityList = pageEntity.toList();
         List<CategoryDTO> categoryDTOList = entityListToDTOList(entityList);
-        pageDTO.setStart(pageEntity,categoryDTOList);
+        pageDTO.setStart(pageEntity, categoryDTOList);
 
         return pageDTO;
-
 
     }
 }

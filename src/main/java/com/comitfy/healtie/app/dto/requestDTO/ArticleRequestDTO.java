@@ -8,12 +8,18 @@ import lombok.Data;
 
 import javax.persistence.ElementCollection;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
 public class ArticleRequestDTO extends BaseDTO {
     private String name;
     private String title;
+
+    private boolean isLiked;
+
+    private List<UUID> likeList;
+
 
     @ElementCollection
     private List<String> tag;

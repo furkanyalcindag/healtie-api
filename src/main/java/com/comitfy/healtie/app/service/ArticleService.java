@@ -6,6 +6,7 @@ import com.comitfy.healtie.app.entity.Article;
 import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.app.mapper.ArticleMapper;
 import com.comitfy.healtie.app.repository.ArticleRepository;
+import com.comitfy.healtie.app.repository.CategoryRepository;
 import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseService;
@@ -31,6 +32,9 @@ public class ArticleService extends BaseService<ArticleDTO, ArticleRequestDTO, A
     @Autowired
     DoctorRepository doctorRepository;
 
+    @Autowired
+    CategoryRepository categoryRepository;
+
     @Override
     public ArticleRepository getRepository() {
         return articleRepository;
@@ -52,16 +56,6 @@ public class ArticleService extends BaseService<ArticleDTO, ArticleRequestDTO, A
         }
     }
 
-  /*  public PageDTO<ArticleDTO> getArticleByCategory(UUID id, int page, int size) {
-        Optional<Doctor> doctor = doctorRepository.findByUuid(id);
-        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
-        if (doctor.isPresent()) {
-            return getMapper().pageEntityToPageDTO(articleRepository.findAllByDoctor(pageable, doctor.get()));
-        } else {
-            return null;
-        }
-    }*/
-
     public ArticleRequestDTO saveArticleByDoctor(UUID id, ArticleRequestDTO dto) {
         Optional<Doctor> doctor = doctorRepository.findByUuid(id);
         if (doctor.isPresent()) {
@@ -73,4 +67,18 @@ public class ArticleService extends BaseService<ArticleDTO, ArticleRequestDTO, A
             return null;
         }
     }
+
+/*
+    public PageDTO<ArticleDTO> getArticleByCategory(UUID id, int page, int size) {
+        Optional<Category> category = categoryRepository.findByUuid(id);
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+        if (category.isPresent()) {
+            return getMapper().pageEntityToPageDTO(articleRepository.findAllByCategory(pageable, category.get()));
+        } else {
+            return null;
+        }
+    }
+*/
+
+
 }

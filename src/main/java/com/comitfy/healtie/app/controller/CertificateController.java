@@ -8,6 +8,7 @@ import com.comitfy.healtie.app.mapper.CertificateMapper;
 import com.comitfy.healtie.app.repository.CertificateRepository;
 import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.app.service.CertificateService;
+import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseCrudController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,6 +49,17 @@ public class CertificateController extends BaseCrudController<CertificateDTO, Ce
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(certificateService.saveCertificateByDoctor(doctorId, certificateRequestDTO), HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("doctor/{doctorId}")
+    public ResponseEntity<PageDTO<CertificateDTO>> getByDoctorId(@RequestHeader(value = "accept-language", required = true) String acceptLanguage,
+                                                                 @PathVariable UUID doctorId, @RequestParam int pageNumber, @RequestParam int pageSize) {
+        Optional<Doctor> optional = doctorRepository.findByUuid(doctorId);
+        if (optional == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(certificateService.getCertificateByDoctor(doctorId, pageNumber, pageSize), HttpStatus.OK);
         }
     }
 

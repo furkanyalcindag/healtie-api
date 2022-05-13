@@ -1,6 +1,7 @@
 package com.comitfy.healtie.app.controller;
 
 import com.comitfy.healtie.app.dto.AcademicInfoDTO;
+import com.comitfy.healtie.app.dto.ArticleDTO;
 import com.comitfy.healtie.app.dto.requestDTO.AcademicInfoRequestDTO;
 import com.comitfy.healtie.app.entity.AcademicInfo;
 import com.comitfy.healtie.app.entity.Doctor;
@@ -8,6 +9,7 @@ import com.comitfy.healtie.app.mapper.AcademicInfoMapper;
 import com.comitfy.healtie.app.repository.AcademicInfoRepository;
 import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.app.service.AcademicInfoService;
+import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseCrudController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,6 +54,16 @@ public class AcademicInfoController extends BaseCrudController<AcademicInfoDTO, 
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(academicInfoService.saveAcademicInfoByDoctor(doctorId, academicInfoRequestDTO), HttpStatus.OK);
+        }
+    }
+    @GetMapping("doctor/{doctorId}")
+    public ResponseEntity<PageDTO<AcademicInfoDTO>> getByDoctorId(@RequestHeader(value = "accept-language", required = true) String acceptLanguage,
+                                                                  @PathVariable UUID doctorId, @RequestParam int pageNumber, @RequestParam int pageSize) {
+        Optional<Doctor> optional=doctorRepository.findByUuid(doctorId);
+        if (optional==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }else{
+            return new ResponseEntity<>(academicInfoService.getAcademicInfoByDoctor(doctorId,pageNumber,pageSize),HttpStatus.OK);
         }
     }
 

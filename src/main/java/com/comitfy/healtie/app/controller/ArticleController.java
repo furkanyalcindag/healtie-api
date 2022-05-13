@@ -3,7 +3,6 @@ package com.comitfy.healtie.app.controller;
 import com.comitfy.healtie.app.dto.ArticleDTO;
 import com.comitfy.healtie.app.dto.requestDTO.ArticleRequestDTO;
 import com.comitfy.healtie.app.entity.Article;
-import com.comitfy.healtie.app.entity.Category;
 import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.app.mapper.ArticleMapper;
 import com.comitfy.healtie.app.repository.ArticleRepository;
@@ -12,11 +11,17 @@ import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.app.service.ArticleService;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseCrudController;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -82,5 +87,19 @@ public class ArticleController extends BaseCrudController<ArticleDTO, ArticleReq
             return new ResponseEntity<>(articleService.saveArticleByDoctor(doctorId, articleRequestDTO), HttpStatus.OK);
         }
     }
+
+    @GetMapping("/jwt/decode")
+    public String decodeJwt() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username="";
+        if (principal instanceof UserDetails) {
+             username = ((UserDetails)principal).getUsername();
+        } else {
+             username = principal.toString();
+        }
+
+        return username;
+    }
+
 
 }
