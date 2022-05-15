@@ -7,8 +7,12 @@ import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.app.mapper.AcademicInfoMapper;
 import com.comitfy.healtie.app.repository.AcademicInfoRepository;
 import com.comitfy.healtie.app.repository.DoctorRepository;
+import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -36,8 +40,17 @@ public class AcademicInfoService extends BaseService<AcademicInfoDTO, AcademicIn
         return academicInfoMapper;
     }
 
+    public PageDTO<AcademicInfoDTO> getAcademicInfoByDoctor(UUID id, int page, int size) {
+        Optional<Doctor> doctor = doctorRepository.findByUuid(id);
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+        if (doctor.isPresent()) {
+            return getMapper().pageEntityToPageDTO(academicInfoRepository.findAllByDoctor(pageable, doctor.get()));
+        } else {
+            return null;
+        }
+    }
 
-    public AcademicInfoRequestDTO saveFromDoctor(UUID id,AcademicInfoRequestDTO dto) {
+    public AcademicInfoRequestDTO saveAcademicInfoByDoctor(UUID id, AcademicInfoRequestDTO dto) {
         Optional<Doctor> doctor = doctorRepository.findByUuid(id);
         if (doctor.isPresent()) {
             AcademicInfo academicInfo = getMapper().requestDTOToEntity(dto);
@@ -50,7 +63,7 @@ public class AcademicInfoService extends BaseService<AcademicInfoDTO, AcademicIn
     }
 
 
-    }
+}
 
    /* public RequestDTO update(UUID id, RequestDTO dto) {
         Optional<Entity> entity = getRepository().findByUuid(id);

@@ -17,14 +17,15 @@ public abstract class BaseService<DTO extends BaseDTO, RequestDTO extends BaseDT
     public abstract Mapper getMapper();
 
 
-    PageDTO<DTO> findAll(int page, int size) {
+    public PageDTO<DTO> findAll(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
         return getMapper().pageEntityToPageDTO(getRepository().findAll(pageable));
     }
 
-    DTO findByUUID(UUID uuid) {
+    public DTO findByUUID(UUID uuid) {
         Optional<Entity> optionalEntity = getRepository().findByUuid(uuid);
         return optionalEntity.map(entity -> getMapper().entityToDTO(entity)).orElse(null);
+
     }
 
     public RequestDTO save(RequestDTO dto) {
@@ -33,7 +34,7 @@ public abstract class BaseService<DTO extends BaseDTO, RequestDTO extends BaseDT
         return dto;
     }
 
-    void delete(UUID uuid) {
+    public void delete(UUID uuid) {
         Optional<Entity> optionalEntity = getRepository().findByUuid(uuid);
         if (optionalEntity.isPresent()) {
             Entity e = optionalEntity.get();
@@ -56,8 +57,6 @@ public abstract class BaseService<DTO extends BaseDTO, RequestDTO extends BaseDT
         } else {
             return null;
         }
-
-
     }
 
 
