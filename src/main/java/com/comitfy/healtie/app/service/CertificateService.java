@@ -7,8 +7,12 @@ import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.app.mapper.CertificateMapper;
 import com.comitfy.healtie.app.repository.CertificateRepository;
 import com.comitfy.healtie.app.repository.DoctorRepository;
+import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -36,7 +40,17 @@ public class CertificateService extends BaseService<CertificateDTO, CertificateR
         return certificateMapper;
     }
 
-    public CertificateRequestDTO saveFromDoctor(UUID id, CertificateRequestDTO dto) {
+    public PageDTO<CertificateDTO> getCertificateByDoctor(UUID id, int page, int size) {
+        Optional<Doctor> doctor = doctorRepository.findByUuid(id);
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+        if (doctor.isPresent()) {
+            return getMapper().pageEntityToPageDTO(certificateRepository.findAllByDoctor(pageable, doctor.get()));
+        } else {
+            return null;
+        }
+    }
+
+    public CertificateRequestDTO saveCertificateByDoctor(UUID id, CertificateRequestDTO dto) {
         Optional<Doctor> doctor = doctorRepository.findByUuid(id);
         if (doctor.isPresent()) {
             Certificate certificate = getMapper().requestDTOToEntity(dto);

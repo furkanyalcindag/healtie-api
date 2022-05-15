@@ -15,13 +15,14 @@ public class Category extends BaseEntity {
     @Column
     private String name;
 
-
     @Column
     @Enumerated(EnumType.STRING)
     private LanguageEnum languageEnum;
-
     @ManyToMany
     private Set<Category> parent;
+
+    @ManyToMany
+    private Set<Article> articleList;
 
     private boolean isTop;
 

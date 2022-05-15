@@ -5,6 +5,7 @@ import com.comitfy.healtie.util.common.BaseDTO;
 import lombok.Data;
 
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -14,6 +15,8 @@ public class CategoryDTO extends BaseDTO {
 
    private LanguageEnum languageEnum;
 
-   private Set<CategoryDTO> parentList;
+   private List<CategoryDTO> parentList;
+
+   private List<ArticleDTO> articleDTOSet;
 
 }
