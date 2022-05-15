@@ -1,16 +1,20 @@
 package com.comitfy.healtie.app.controller;
 
 import com.comitfy.healtie.app.dto.ArticleDTO;
+import com.comitfy.healtie.app.dto.DoctorDTO;
 import com.comitfy.healtie.app.dto.requestDTO.ArticleRequestDTO;
 import com.comitfy.healtie.app.entity.Article;
 import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.app.mapper.ArticleMapper;
+import com.comitfy.healtie.app.model.enums.LanguageEnum;
 import com.comitfy.healtie.app.repository.ArticleRepository;
 import com.comitfy.healtie.app.repository.CategoryRepository;
 import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.app.service.ArticleService;
+import com.comitfy.healtie.app.service.DoctorService;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseCrudController;
+import com.comitfy.healtie.util.common.BaseWithMultiLanguageCrudController;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -27,7 +31,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("article")
-public class ArticleController extends BaseCrudController<ArticleDTO, ArticleRequestDTO, Article, ArticleRepository, ArticleMapper, ArticleService> {
+public class ArticleController extends BaseWithMultiLanguageCrudController<ArticleDTO, ArticleRequestDTO, Article, ArticleRepository, ArticleMapper, ArticleService> {
 
     @Autowired
     ArticleService articleService;
@@ -44,6 +48,9 @@ public class ArticleController extends BaseCrudController<ArticleDTO, ArticleReq
     @Autowired
     ArticleRepository articleRepository;
 
+    @Autowired
+    DoctorService doctorService;
+
     @Override
     protected ArticleService getService() {
         return articleService;
@@ -55,13 +62,13 @@ public class ArticleController extends BaseCrudController<ArticleDTO, ArticleReq
     }
 
     @GetMapping("doctor/{doctorId}")
-    public ResponseEntity<PageDTO<ArticleDTO>> getByDoctorId(@RequestHeader(value = "accept-language", required = true) String acceptLanguage,
+    public ResponseEntity<PageDTO<ArticleDTO>> getByDoctorId(@RequestHeader(value = "accept-language", required = true) String language,
                                                              @PathVariable UUID doctorId, @RequestParam int pageNumber, @RequestParam int pageSize) {
-        Optional<Doctor> optional = doctorRepository.findByUuid(doctorId);
+        Optional<Doctor> optional = doctorService.getRepository().findByUuid(doctorId);
         if (optional == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<>(articleService.getArticleByDoctor(doctorId, pageNumber, pageSize), HttpStatus.OK);
+            return new ResponseEntity<>(articleService.getArticleByDoctor(doctorId, pageNumber, pageSize, LanguageEnum.valueOf(language)), HttpStatus.OK);
         }
     }
 
@@ -80,7 +87,7 @@ public class ArticleController extends BaseCrudController<ArticleDTO, ArticleReq
     @PostMapping("/{doctorId}")
     public ResponseEntity<ArticleRequestDTO> save(@RequestHeader(value = "accept-language", required = true) String acceptLanguage,
                                                   @PathVariable UUID doctorId, @RequestBody ArticleRequestDTO articleRequestDTO) {
-        Optional<Doctor> optional = doctorRepository.findByUuid(doctorId);
+        DoctorDTO optional = doctorService.findByUUID(doctorId);
         if (optional == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {

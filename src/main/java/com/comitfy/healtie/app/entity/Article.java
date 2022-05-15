@@ -45,4 +45,7 @@ public class Article extends BaseEntity {
     private Set<Article> like;
 //private Set<User> like; buna göre yapp
 
+
+
+
 }
