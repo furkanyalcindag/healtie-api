@@ -51,4 +51,14 @@ public class Article extends BaseEntity {
         this.userLikes.add(user);
     }
 
+    @ManyToMany
+    private Set<User> userSave;
+
+    public void removeSave(User user){
+        this.userSave.remove(user);
+    }
+    public void addSave(User user){
+        this.userSave.add(user);
+    }
+
 }

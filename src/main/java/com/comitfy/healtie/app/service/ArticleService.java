@@ -3,6 +3,7 @@ package com.comitfy.healtie.app.service;
 import com.comitfy.healtie.app.dto.ArticleDTO;
 import com.comitfy.healtie.app.dto.requestDTO.ArticleLikeRequestDTO;
 import com.comitfy.healtie.app.dto.requestDTO.ArticleRequestDTO;
+import com.comitfy.healtie.app.dto.requestDTO.ArticleSaveRequestDTO;
 import com.comitfy.healtie.app.entity.Article;
 import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.app.mapper.ArticleMapper;
@@ -12,7 +13,6 @@ import com.comitfy.healtie.app.repository.CategoryRepository;
 import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.PageDTO;
-import com.comitfy.healtie.util.common.BaseService;
 import com.comitfy.healtie.util.common.BaseWithMultiLanguageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -79,10 +79,16 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
         } else {
             article.removeLike(user);
         }
-
         articleRepository.save(article);
+    }
 
-
+    public void saveOrNotSaveArticle(ArticleSaveRequestDTO articleSaveRequestDTO, Article article, User user) {
+        if (articleSaveRequestDTO.isSave()) {
+            article.addSave(user);
+        } else {
+            article.removeSave(user);
+        }
+        articleRepository.save(article);
     }
 
 /*
