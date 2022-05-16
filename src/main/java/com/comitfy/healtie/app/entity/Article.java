@@ -20,9 +20,6 @@ public class Article extends BaseEntity {
     @Column
     private String title;
 
-    @Column
-    private boolean isLiked;
-
 
     @ElementCollection
     private List<String> tag;
@@ -33,19 +30,35 @@ public class Article extends BaseEntity {
 
   /*  @ManyToMany
     private Set<Category> categoryList;*/
-
+/*
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AcademicInfo> academicInfoList;
-
+*/
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn()
     private Doctor doctor;
 
     @ManyToMany
-    private Set<Article> like;
-//private Set<User> like; buna göre yapp
+    private Set<User> userLikes;
 
 
+    public void removeLike(User user) {
+        this.userLikes.remove(user);
+    }
 
+
+    public void addLike(User user) {
+        this.userLikes.add(user);
+    }
+
+    @ManyToMany
+    private Set<User> userSave;
+
+    public void removeSave(User user){
+        this.userSave.remove(user);
+    }
+    public void addSave(User user){
+        this.userSave.add(user);
+    }
 
 }

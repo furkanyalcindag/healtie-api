@@ -16,9 +16,9 @@ public class ArticleRequestDTO extends BaseDTO {
     private String name;
     private String title;
 
-    private boolean isLiked;
+/*    private boolean isLiked;
 
-    private List<UUID> likeList;
+    private List<UUID> likeList;*/
 
 
     @ElementCollection

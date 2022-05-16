@@ -28,6 +28,12 @@ public abstract class BaseWithMultiLanguageService<DTO extends BaseDTO, RequestD
         return optionalEntity.map(entity -> getMapper().entityToDTO(entity)).orElse(null);
     }
 
+    public Entity findEntityByUUID(UUID uuid) {
+        Optional<Entity> optionalEntity = getRepository().findByUuid(uuid);
+        return optionalEntity.orElse(null);
+    }
+
+
     public RequestDTO save(RequestDTO dto) {
         Entity entity = getMapper().requestDTOToEntity(dto);
         getRepository().save(entity);
