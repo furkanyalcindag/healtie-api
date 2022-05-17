@@ -49,6 +49,7 @@ public abstract class BaseWithMultiLanguageCrudController<DTO extends BaseDTO, R
 
     @PostMapping("/")
     public ResponseEntity<RequestDTO> save(@RequestHeader(value = "accept-language", required = true) String acceptLanguage, @RequestBody RequestDTO body) {
+
         body.setLanguageEnum(LanguageEnum.valueOf(body.getLanguage()));
         return new ResponseEntity<>(getService().save(body), HttpStatus.CREATED);
     }
