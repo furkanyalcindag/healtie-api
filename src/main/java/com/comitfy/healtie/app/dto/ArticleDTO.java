@@ -15,10 +15,12 @@ public class ArticleDTO extends BaseDTO {
 
     private String name;
     private String title;
-    private String isLiked;
+    private int likeCount;
+    private int saveCount;
+
   //  private List<Category> categoryList;
 
-    private List<ArticleDTO> likeList;
+
 
     @ElementCollection
     private List<String> tag;

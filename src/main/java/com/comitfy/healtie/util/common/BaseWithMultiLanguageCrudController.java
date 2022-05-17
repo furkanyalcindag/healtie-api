@@ -49,7 +49,8 @@ public abstract class BaseWithMultiLanguageCrudController<DTO extends BaseDTO, R
 
     @PostMapping("/")
     public ResponseEntity<RequestDTO> save(@RequestHeader(value = "accept-language", required = true) String acceptLanguage, @RequestBody RequestDTO body) {
-        body.setLanguageEnum(LanguageEnum.valueOf(acceptLanguage));
+
+        body.setLanguageEnum(LanguageEnum.valueOf(body.getLanguage()));
         return new ResponseEntity<>(getService().save(body), HttpStatus.CREATED);
     }
 
@@ -74,7 +75,7 @@ public abstract class BaseWithMultiLanguageCrudController<DTO extends BaseDTO, R
         if (optional == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND);
         } else {
-            body.setLanguageEnum(LanguageEnum.valueOf(acceptLanguage));
+            body.setLanguageEnum(LanguageEnum.valueOf(body.getLanguage()));
             getService().update(id, body);
             return new ResponseEntity<>("Object with the id " + id + " was updated.", HttpStatus.OK);
         }

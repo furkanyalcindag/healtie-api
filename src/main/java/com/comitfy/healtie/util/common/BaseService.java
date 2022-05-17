@@ -28,6 +28,11 @@ public abstract class BaseService<DTO extends BaseDTO, RequestDTO extends BaseDT
 
     }
 
+    public Entity findEntityByUUID(UUID uuid) {
+        Optional<Entity> optionalEntity = getRepository().findByUuid(uuid);
+        return optionalEntity.orElse(null);
+    }
+
     public RequestDTO save(RequestDTO dto) {
         Entity entity = getMapper().requestDTOToEntity(dto);
         getRepository().save(entity);
