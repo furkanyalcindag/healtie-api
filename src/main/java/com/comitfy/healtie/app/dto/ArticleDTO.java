@@ -15,8 +15,8 @@ public class ArticleDTO extends BaseDTO {
 
     private String name;
     private String title;
-    private int likeCount;
-    private int saveCount;
+    private long likeCount;
+    private long saveCount;
 
   //  private List<Category> categoryList;
 

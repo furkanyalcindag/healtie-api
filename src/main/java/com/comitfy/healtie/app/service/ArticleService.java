@@ -50,11 +50,35 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
     }
 
 
+    @Override
+    public PageDTO<ArticleDTO> findAll(int page, int size, LanguageEnum languageEnum) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+
+        PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByLanguageEnum(pageable, languageEnum));
+
+        for (int i = 0; i < pageDTO.getData().size(); i++) {
+            pageDTO.getData().get(i).setLikeCount(getRepository().getCountOfArticleLike(pageDTO.getData().get(i).getUuid()));
+
+            pageDTO.getData().get(i).setSaveCount(getRepository().getCountOfArticleSave(pageDTO.getData().get(i).getUuid()));
+
+        }
+        return pageDTO;
+    }
+
     public PageDTO<ArticleDTO> getArticleByDoctor(UUID id, int page, int size, LanguageEnum languageEnum) {
         Optional<Doctor> doctor = doctorRepository.findByUuid(id);
         Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
         if (doctor.isPresent()) {
-            return getMapper().pageEntityToPageDTO(articleRepository.findAllByDoctorAndLanguageEnum(pageable, doctor.get(), languageEnum));
+
+            PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByDoctorAndLanguageEnum(pageable, doctor.get(), languageEnum));
+            for (int i = 0; i < pageDTO.getData().size(); i++) {
+                pageDTO.getData().get(i).setLikeCount(getRepository().getCountOfArticleLike(pageDTO.getData().get(i).getUuid()));
+
+                pageDTO.getData().get(i).setSaveCount(getRepository().getCountOfArticleSave(pageDTO.getData().get(i).getUuid()));
+
+            }
+
+            return pageDTO;
         } else {
             return null;
         }
