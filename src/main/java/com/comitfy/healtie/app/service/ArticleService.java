@@ -5,6 +5,7 @@ import com.comitfy.healtie.app.dto.requestDTO.ArticleLikeRequestDTO;
 import com.comitfy.healtie.app.dto.requestDTO.ArticleRequestDTO;
 import com.comitfy.healtie.app.dto.requestDTO.ArticleSaveRequestDTO;
 import com.comitfy.healtie.app.entity.Article;
+import com.comitfy.healtie.app.entity.Category;
 import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.app.mapper.ArticleMapper;
 import com.comitfy.healtie.app.model.enums.LanguageEnum;
@@ -50,11 +51,35 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
     }
 
 
+    @Override
+    public PageDTO<ArticleDTO> findAll(int page, int size, LanguageEnum languageEnum) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+
+        PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByLanguageEnum(pageable, languageEnum));
+
+        for (int i = 0; i < pageDTO.getData().size(); i++) {
+            pageDTO.getData().get(i).setLikeCount(getRepository().getCountOfArticleLike(pageDTO.getData().get(i).getUuid()));
+
+            pageDTO.getData().get(i).setSaveCount(getRepository().getCountOfArticleSave(pageDTO.getData().get(i).getUuid()));
+
+        }
+        return pageDTO;
+    }
+
     public PageDTO<ArticleDTO> getArticleByDoctor(UUID id, int page, int size, LanguageEnum languageEnum) {
         Optional<Doctor> doctor = doctorRepository.findByUuid(id);
         Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
         if (doctor.isPresent()) {
-            return getMapper().pageEntityToPageDTO(articleRepository.findAllByDoctorAndLanguageEnum(pageable, doctor.get(), languageEnum));
+
+            PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByDoctorAndLanguageEnum(pageable, doctor.get(), languageEnum));
+            for (int i = 0; i < pageDTO.getData().size(); i++) {
+                pageDTO.getData().get(i).setLikeCount(getRepository().getCountOfArticleLike(pageDTO.getData().get(i).getUuid()));
+
+                pageDTO.getData().get(i).setSaveCount(getRepository().getCountOfArticleSave(pageDTO.getData().get(i).getUuid()));
+
+            }
+
+            return pageDTO;
         } else {
             return null;
         }
@@ -91,17 +116,16 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
         articleRepository.save(article);
     }
 
-/*
-    public PageDTO<ArticleDTO> getArticleByCategory(UUID id, int page, int size) {
+
+    public PageDTO<ArticleDTO> getArticleByCategory(UUID id, int page, int size, LanguageEnum languageEnum) {
         Optional<Category> category = categoryRepository.findByUuid(id);
         Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
         if (category.isPresent()) {
-            return getMapper().pageEntityToPageDTO(articleRepository.findAllByCategory(pageable, category.get()));
+            return getMapper().pageEntityToPageDTO(articleRepository.findAllByCategoryAndLanguageEnum(pageable, category.get(), languageEnum));
         } else {
             return null;
         }
     }
-*/
 
 
 }

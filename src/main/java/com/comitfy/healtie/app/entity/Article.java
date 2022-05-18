@@ -42,6 +42,10 @@ public class Article extends BaseEntity {
     private Set<User> userLikes;
 
 
+    @ManyToMany
+    private Set<User> userSaves;
+
+
     public void removeLike(User user) {
         this.userLikes.remove(user);
     }
@@ -51,14 +55,13 @@ public class Article extends BaseEntity {
         this.userLikes.add(user);
     }
 
-    @ManyToMany
-    private Set<User> userSave;
+
 
     public void removeSave(User user){
-        this.userSave.remove(user);
+        this.userSaves.remove(user);
     }
     public void addSave(User user){
-        this.userSave.add(user);
+        this.userSaves.add(user);
     }
 
 }
