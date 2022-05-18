@@ -19,7 +19,7 @@ public interface ArticleRepository extends BaseWithMultiLanguageRepository<Artic
 
     Page<Article> findAllByDoctorAndLanguageEnum(Pageable pageable, Doctor doctor, LanguageEnum languageEnum);
 
-    //Page<Article> findAllByCategory(Pageable pageable, Category category);
+    Page<Article> findAllByCategoryAndLanguageEnum(Pageable pageable, Category category, LanguageEnum languageEnum);
 
     @Query("SELECT COUNT(likes) FROM Article article " +
             "inner join article.userLikes likes  WHERE article.uuid=?1")

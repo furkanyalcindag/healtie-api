@@ -5,6 +5,7 @@ import com.comitfy.healtie.app.dto.requestDTO.ArticleLikeRequestDTO;
 import com.comitfy.healtie.app.dto.requestDTO.ArticleRequestDTO;
 import com.comitfy.healtie.app.dto.requestDTO.ArticleSaveRequestDTO;
 import com.comitfy.healtie.app.entity.Article;
+import com.comitfy.healtie.app.entity.Category;
 import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.app.mapper.ArticleMapper;
 import com.comitfy.healtie.app.model.enums.LanguageEnum;
@@ -115,17 +116,16 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
         articleRepository.save(article);
     }
 
-/*
-    public PageDTO<ArticleDTO> getArticleByCategory(UUID id, int page, int size) {
+
+    public PageDTO<ArticleDTO> getArticleByCategory(UUID id, int page, int size, LanguageEnum languageEnum) {
         Optional<Category> category = categoryRepository.findByUuid(id);
         Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
         if (category.isPresent()) {
-            return getMapper().pageEntityToPageDTO(articleRepository.findAllByCategory(pageable, category.get()));
+            return getMapper().pageEntityToPageDTO(articleRepository.findAllByCategoryAndLanguageEnum(pageable, category.get(), languageEnum));
         } else {
             return null;
         }
     }
-*/
 
 
 }

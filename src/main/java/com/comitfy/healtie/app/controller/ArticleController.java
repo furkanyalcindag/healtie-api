@@ -6,6 +6,7 @@ import com.comitfy.healtie.app.dto.requestDTO.ArticleLikeRequestDTO;
 import com.comitfy.healtie.app.dto.requestDTO.ArticleRequestDTO;
 import com.comitfy.healtie.app.dto.requestDTO.ArticleSaveRequestDTO;
 import com.comitfy.healtie.app.entity.Article;
+import com.comitfy.healtie.app.entity.Category;
 import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.app.mapper.ArticleMapper;
 import com.comitfy.healtie.app.model.enums.LanguageEnum;
@@ -74,16 +75,14 @@ public class ArticleController extends BaseWithMultiLanguageCrudController<Artic
         }
     }
 
-/*    @GetMapping("category/{categoryId}")
-    public ResponseEntity<PageDTO<ArticleDTO>> getByCategoryId(@RequestHeader(value = "accept-language", required = true) String acceptLanguage,
+    @GetMapping("get-all-by-category/{categoryId}")
+    public ResponseEntity<PageDTO<ArticleDTO>> getByCategoryId(@RequestHeader(value = "accept-language", required = true) String language,
                                                                @PathVariable UUID categoryId, @RequestParam int pageNumber, @RequestParam int pageSize) {
-        Optional<Category> optional = categoryRepository.findByUuid(categoryId);
-        if (optional == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(articleService.getArticleByCategory(categoryId, pageNumber, pageSize), HttpStatus.OK);
-        }
-    }*/
+        PageDTO<ArticleDTO> pageDTO = articleService.getArticleByCategory(categoryId, pageNumber, pageSize, LanguageEnum.valueOf(language));
+
+        return new ResponseEntity<>(pageDTO, HttpStatus.OK);
+
+    }
 
 
     @PostMapping("/{doctorId}")
