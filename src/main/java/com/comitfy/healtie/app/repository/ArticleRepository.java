@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Repository
@@ -19,7 +20,7 @@ public interface ArticleRepository extends BaseWithMultiLanguageRepository<Artic
 
     Page<Article> findAllByDoctorAndLanguageEnum(Pageable pageable, Doctor doctor, LanguageEnum languageEnum);
 
-    Page<Article> findAllByCategoryAndLanguageEnum(Pageable pageable, Category category, LanguageEnum languageEnum);
+    Page<Article> findAllByCategoryListInAndLanguageEnum(Pageable pageable, Set<Category> category, LanguageEnum languageEnum);
 
     @Query("SELECT COUNT(likes) FROM Article article " +
             "inner join article.userLikes likes  WHERE article.uuid=?1")

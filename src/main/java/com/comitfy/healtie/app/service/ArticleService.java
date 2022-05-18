@@ -21,7 +21,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -121,7 +123,9 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
         Optional<Category> category = categoryRepository.findByUuid(id);
         Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
         if (category.isPresent()) {
-            return getMapper().pageEntityToPageDTO(articleRepository.findAllByCategoryAndLanguageEnum(pageable, category.get(), languageEnum));
+            Set<Category> categorySet = new HashSet<>();
+            categorySet.add(category.get());
+            return getMapper().pageEntityToPageDTO(articleRepository.findAllByCategoryListInAndLanguageEnum(pageable, categorySet, languageEnum));
         } else {
             return null;
         }
