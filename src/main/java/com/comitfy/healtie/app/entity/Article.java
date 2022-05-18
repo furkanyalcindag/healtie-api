@@ -28,12 +28,10 @@ public class Article extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private LanguageEnum languageEnum;
 
-  /*  @ManyToMany
-    private Set<Category> categoryList;*/
-/*
-    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<AcademicInfo> academicInfoList;
-*/
+    @ManyToMany
+    private Set<Category> categoryList;
+
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn()
     private Doctor doctor;
@@ -56,11 +54,11 @@ public class Article extends BaseEntity {
     }
 
 
-
-    public void removeSave(User user){
+    public void removeSave(User user) {
         this.userSaves.remove(user);
     }
-    public void addSave(User user){
+
+    public void addSave(User user) {
         this.userSaves.add(user);
     }
 
