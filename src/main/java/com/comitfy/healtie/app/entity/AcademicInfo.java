@@ -9,6 +9,12 @@ import java.util.Date;
 @Entity
 @Table
 @Data
+@AttributeOverride(
+        name = "uuid",
+        column = @Column(
+                name = "academic_info_uuid"
+        )
+)
 public class AcademicInfo extends BaseEntity {
 
     @Column

@@ -1,5 +1,6 @@
 package com.comitfy.healtie.app.dto.requestDTO;
 
+import com.comitfy.healtie.app.dto.TagDTO;
 import com.comitfy.healtie.app.entity.Category;
 import com.comitfy.healtie.app.model.enums.LanguageEnum;
 import com.comitfy.healtie.util.common.BaseDTO;
@@ -13,18 +14,14 @@ import java.util.UUID;
 
 @Data
 public class ArticleRequestDTO extends BaseDTO {
-    private String name;
+    private String description;
     private String title;
 
-/*    private boolean isLiked;
-
-    private List<UUID> likeList;*/
 
 
-    @ElementCollection
-    private List<String> tag;
+    private Set<TagDTO> tags;
     @JsonIgnore
     private LanguageEnum languageEnum;
 
-    //private List<Category> categoryList;
+    private List<UUID> categoryList;
 }

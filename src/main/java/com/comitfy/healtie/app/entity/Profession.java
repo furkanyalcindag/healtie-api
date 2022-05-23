@@ -11,6 +11,12 @@ import java.util.Set;
 @Entity
 @Table
 @Data
+@AttributeOverride(
+        name = "uuid",
+        column = @Column(
+                name = "doctor_uuid"
+        )
+)
 public class Profession extends BaseEntity {
 
     @Column

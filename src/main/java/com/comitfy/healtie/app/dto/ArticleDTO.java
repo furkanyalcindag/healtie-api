@@ -13,18 +13,16 @@ import java.util.UUID;
 @Data
 public class ArticleDTO extends BaseDTO {
 
-    private String name;
+    private String description;
     private String title;
     private long likeCount;
     private long saveCount;
+    private long isLiked;
 
-  //  private List<Category> categoryList;
+    //  private List<Category> categoryList;
 
 
-
-    @ElementCollection
-    private List<String> tag;
-
+    private Set<TagDTO> tags;
 
 
 }

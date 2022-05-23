@@ -33,10 +33,10 @@ public abstract class BaseService<DTO extends BaseDTO, RequestDTO extends BaseDT
         return optionalEntity.orElse(null);
     }
 
-    public RequestDTO save(RequestDTO dto) {
-        Entity entity = getMapper().requestDTOToEntity(dto);
+    public DTO save(RequestDTO requestDTO) {
+        Entity entity = getMapper().requestDTOToEntity(requestDTO);
         getRepository().save(entity);
-        return dto;
+        return getMapper().entityToDTO(entity);
     }
 
     public void delete(UUID uuid) {

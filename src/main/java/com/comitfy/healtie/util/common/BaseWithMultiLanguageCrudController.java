@@ -13,7 +13,8 @@ import java.util.stream.Collectors;
 
 public abstract class BaseWithMultiLanguageCrudController<DTO extends BaseDTO, RequestDTO extends BaseDTO, Entity extends BaseEntity,
         Repository extends BaseWithMultiLanguageRepository<Entity>, Mapper extends BaseMapper<DTO, RequestDTO, Entity>,
-        Service extends BaseWithMultiLanguageService<DTO, RequestDTO, Entity, Repository, Mapper>> {
+        Specifitation extends BaseSpecification<Entity>,
+        Service extends BaseWithMultiLanguageService<DTO, RequestDTO, Entity, Repository, Mapper, Specifitation>> {
 
 
     protected abstract Service getService();
@@ -28,11 +29,18 @@ public abstract class BaseWithMultiLanguageCrudController<DTO extends BaseDTO, R
         }
     }
 
+    @PostMapping("get-all-by-filter")
+    public ResponseEntity<PageDTO<DTO>> getAll(@RequestHeader(value = "accept-language", required = true) String language, @RequestBody BaseFilterRequestDTO filter) {
+
+        PageDTO<DTO> dtoList = getService().findAll(filter, LanguageEnum.valueOf(language));
+
+        return new ResponseEntity<>(dtoList, HttpStatus.OK);
+    }
 
     @GetMapping("/")
     public ResponseEntity<PageDTO<DTO>> getAll(@RequestHeader(value = "accept-language", required = true) String language, @RequestParam int pageNumber, @RequestParam int pageSize) {
 
-        PageDTO<DTO> dtoList = getService().findAll(pageNumber, pageSize,LanguageEnum.valueOf(language));
+        PageDTO<DTO> dtoList = getService().findAll(pageNumber, pageSize, LanguageEnum.valueOf(language));
 
         return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
@@ -48,7 +56,7 @@ public abstract class BaseWithMultiLanguageCrudController<DTO extends BaseDTO, R
     }
 
     @PostMapping("/")
-    public ResponseEntity<RequestDTO> save(@RequestHeader(value = "accept-language", required = true) String acceptLanguage, @RequestBody RequestDTO body) {
+    public ResponseEntity<DTO> save(@RequestHeader(value = "accept-language", required = true) String acceptLanguage, @RequestBody RequestDTO body) {
 
         body.setLanguageEnum(LanguageEnum.valueOf(body.getLanguage()));
         return new ResponseEntity<>(getService().save(body), HttpStatus.CREATED);

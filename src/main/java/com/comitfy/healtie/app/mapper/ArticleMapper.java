@@ -1,22 +1,25 @@
 package com.comitfy.healtie.app.mapper;
 
 import com.comitfy.healtie.app.dto.ArticleDTO;
+import com.comitfy.healtie.app.dto.TagDTO;
 import com.comitfy.healtie.app.dto.requestDTO.ArticleRequestDTO;
 import com.comitfy.healtie.app.entity.Article;
+import com.comitfy.healtie.app.entity.Category;
+import com.comitfy.healtie.app.entity.Tag;
 import com.comitfy.healtie.app.repository.ArticleRepository;
 import com.comitfy.healtie.app.repository.CategoryRepository;
+import com.comitfy.healtie.app.repository.TagRepository;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Component
+@Transactional
 public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, Article> {
 
     @Autowired
@@ -25,12 +28,23 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
     @Autowired
     CategoryRepository categoryRepository;
 
+    @Autowired
+    TagRepository tagRepository;
+
     @Override
     public ArticleDTO entityToDTO(Article entity) {
         ArticleDTO articleDTO = new ArticleDTO();
-        articleDTO.setName(entity.getName());
+        articleDTO.setDescription(entity.getDescription());
         articleDTO.setTitle(entity.getTitle());
-        articleDTO.setTag(entity.getTag());
+        Set<TagDTO> tagDTOS = new HashSet<>();
+        for (Tag tag : entity.getTags()) {
+
+            TagDTO tagDTO = new TagDTO();
+            tagDTO.setName(tag.getName());
+            tagDTO.setUuid(tag.getUuid());
+            tagDTOS.add(tagDTO);
+        }
+        articleDTO.setTags(tagDTOS);
         articleDTO.setUuid(entity.getUuid());
         articleDTO.setLanguageEnum(entity.getLanguageEnum());
         return articleDTO;
@@ -39,10 +53,17 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
     @Override
     public Article dtoToEntity(ArticleDTO dto) {
         Article article = new Article();
-        article.setName(dto.getName());
+        article.setDescription(dto.getDescription());
         article.setTitle(dto.getTitle());
         article.setLanguageEnum(dto.getLanguageEnum());
-        article.setTag(dto.getTag());
+        Set<Tag> tags = new HashSet<>();
+        for (TagDTO tagDTO : dto.getTags()) {
+
+            Tag tag = new Tag();
+            tag.setName(tagDTO.getName());
+            tags.add(tag);
+        }
+        article.setTags(tags);
 
         return article;
     }
@@ -50,20 +71,55 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
     @Override
     public Article requestDTOToEntity(ArticleRequestDTO dto) {
         Article article = new Article();
-        article.setName(dto.getName());
+        article.setDescription(dto.getDescription());
         article.setTitle(dto.getTitle());
         article.setLanguageEnum(dto.getLanguageEnum());
-        article.setTag(dto.getTag());
+
+        Set<Tag> tags = new HashSet<>();
+        for (TagDTO tagDTO : dto.getTags()) {
+
+            Optional<Tag> optional = tagRepository.findByNameEquals(tagDTO.getName());
+            Tag tag;
+            if(optional.isPresent()){
+                tag = optional.get();
+            }
+            else{
+                tag = new Tag();
+                tag.setName(tagDTO.getName());
+                tagRepository.save(tag);
+            }
+            tags.add(tag);
+        }
+        article.setTags(tags);
+        article.setCategoryList(new HashSet<>());
+        for (UUID uuid : dto.getCategoryList()) {
+            Optional<Category> category1 = categoryRepository.findByUuid(uuid);
+
+            category1.ifPresent(value -> article.getCategoryList().add(value));
+        }
 
         return article;
     }
 
     @Override
     public Article requestDTOToExistEntity(Article article, ArticleRequestDTO dto) {
-        article.setName(dto.getName());
+        article.setDescription(dto.getDescription());
         article.setTitle(dto.getTitle());
         article.setLanguageEnum(dto.getLanguageEnum());
-        article.setTag(dto.getTag());
+        Set<Tag> tags = new HashSet<>();
+        for (TagDTO tagDTO : dto.getTags()) {
+
+            Optional<Tag> optional = tagRepository.findByNameEquals(tagDTO.getName());
+            Tag tag;
+            if(optional.isPresent()){
+                tag = optional.get();
+            }
+            else{
+                tag = new Tag();
+                tag.setName(tagDTO.getName());
+            }
+            tags.add(tag);
+        }
         return article;
     }
 

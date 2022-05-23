@@ -18,6 +18,6 @@ public class CategoryRequestDTO extends BaseDTO {
     private LanguageEnum languageEnum;
     private List<UUID> parentList;
     private boolean isTop;
-    private List<Article> articleSet;
+
 
 }

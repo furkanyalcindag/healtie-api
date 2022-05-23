@@ -12,17 +12,18 @@ import java.util.Set;
 @Entity
 @Table
 @Data
+@AttributeOverride(name = "uuid", column = @Column(name = "article_uuid"))
 public class Article extends BaseEntity {
 
-    @Column
-    private String name;
 
     @Column
     private String title;
 
+    @Column
+    private String description;
 
-    @ElementCollection
-    private List<String> tag;
+    @ManyToMany
+    private Set<Tag> tags;
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -60,6 +61,10 @@ public class Article extends BaseEntity {
 
     public void addSave(User user) {
         this.userSaves.add(user);
+    }
+
+    public void addTag(Tag tag) {
+        this.tags.add(tag);
     }
 
 }

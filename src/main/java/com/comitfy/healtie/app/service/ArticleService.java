@@ -12,23 +12,23 @@ import com.comitfy.healtie.app.model.enums.LanguageEnum;
 import com.comitfy.healtie.app.repository.ArticleRepository;
 import com.comitfy.healtie.app.repository.CategoryRepository;
 import com.comitfy.healtie.app.repository.DoctorRepository;
+import com.comitfy.healtie.app.specification.ArticleSpecification;
 import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.PageDTO;
+import com.comitfy.healtie.util.common.BaseSpecification;
 import com.comitfy.healtie.util.common.BaseWithMultiLanguageService;
+import com.comitfy.healtie.util.common.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 
 @Service
-public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, ArticleRequestDTO, Article, ArticleRepository, ArticleMapper> {
+public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, ArticleRequestDTO, Article, ArticleRepository, ArticleMapper, ArticleSpecification> {
 
     @Autowired
     ArticleRepository articleRepository;
@@ -42,6 +42,9 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
     @Autowired
     CategoryRepository categoryRepository;
 
+    @Autowired
+    ArticleSpecification articleSpecification;
+
     @Override
     public ArticleRepository getRepository() {
         return articleRepository;
@@ -52,12 +55,19 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
         return articleMapper;
     }
 
-
     @Override
-    public PageDTO<ArticleDTO> findAll(int page, int size, LanguageEnum languageEnum) {
+    public ArticleSpecification getSpecification() {
+        return articleSpecification;
+    }
+
+
+    /*@Override
+    public PageDTO<ArticleDTO> findAll(int page, int size, List<SearchCriteria> searchCriteriaList) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
 
-        PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByLanguageEnum(pageable, languageEnum));
+        getSpecification().setCriterias(searchCriteriaList);
+
+        PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAll(getSpecification(),pageable));
 
         for (int i = 0; i < pageDTO.getData().size(); i++) {
             pageDTO.getData().get(i).setLikeCount(getRepository().getCountOfArticleLike(pageDTO.getData().get(i).getUuid()));
@@ -66,7 +76,7 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
 
         }
         return pageDTO;
-    }
+    }*/
 
     public PageDTO<ArticleDTO> getArticleByDoctor(UUID id, int page, int size, LanguageEnum languageEnum) {
         Optional<Doctor> doctor = doctorRepository.findByUuid(id);

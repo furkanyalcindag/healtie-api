@@ -9,6 +9,12 @@ import java.util.Date;
 @Entity
 @Table
 @Data
+@AttributeOverride(
+        name = "uuid",
+        column = @Column(
+                name = "certificate_uuid"
+        )
+)
 public class Certificate extends BaseEntity {
 
     @Column
