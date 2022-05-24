@@ -9,6 +9,12 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table
+@AttributeOverride(
+        name = "uuid",
+        column = @Column(
+                name = "profession_translation_uuid"
+        )
+)
 public class ProfessionTranslation extends BaseEntity {
 
     @Column

@@ -10,6 +10,12 @@ import java.util.Set;
 @Entity
 @Table
 @Data
+@AttributeOverride(
+        name = "uuid",
+        column = @Column(
+                name = "category_uuid"
+        )
+)
 public class Category extends BaseEntity {
 
     @Column

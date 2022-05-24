@@ -27,6 +27,7 @@ public class CategoryMapper implements BaseMapper<CategoryDTO, CategoryRequestDT
         CategoryDTO categoryDTO = new CategoryDTO();
         categoryDTO.setName(entity.getName());
         categoryDTO.setUuid(entity.getUuid());
+        categoryDTO.setLanguage(entity.getLanguageEnum().name());
         //categoryDTO.setParentList(entity.getParent());
 
         return categoryDTO;
@@ -52,8 +53,8 @@ public class CategoryMapper implements BaseMapper<CategoryDTO, CategoryRequestDT
         Category category = new Category();
         category.setName(dto.getName());
         category.setLanguageEnum(dto.getLanguageEnum());
-        for (UUID úuid : dto.getParentList()) {
-            Optional<Category> category1 = categoryRepository.findByUuid(úuid);
+        for (UUID uuid : dto.getParentList()) {
+            Optional<Category> category1 = categoryRepository.findByUuid(uuid);
 
             category1.ifPresent(value -> category.getParent().add(value));
         }

@@ -10,6 +10,12 @@ import java.util.List;
 @Entity
 @Table
 @Data
+@AttributeOverride(
+        name = "uuid",
+        column = @Column(
+                name = "doctor_uuid"
+        )
+)
 public class Doctor extends BaseEntity {
 
     @Column

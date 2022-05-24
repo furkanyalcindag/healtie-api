@@ -48,9 +48,9 @@ public abstract class BaseCrudTranslationController<DTO extends BaseDTO, Request
     }
 
     @PostMapping("/")
-    public ResponseEntity<RequestDTO> save(@RequestHeader(value = "accept-language", required = true) String acceptLanguage, @RequestBody RequestDTO body) {
+    public ResponseEntity<DTO> save(@RequestHeader(value = "accept-language", required = true) String acceptLanguage, @RequestBody RequestDTO body) {
         body.setLanguageEnum(LanguageEnum.valueOf(acceptLanguage));
-        return new ResponseEntity<>(getService().save(body), HttpStatus.CREATED);
+        return new ResponseEntity<DTO>(getService().save(body), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")

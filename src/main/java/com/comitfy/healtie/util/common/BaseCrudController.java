@@ -48,7 +48,7 @@ public abstract class BaseCrudController<DTO extends BaseDTO, RequestDTO extends
     }
 
     @PostMapping("/")
-    public ResponseEntity<RequestDTO> save(@RequestHeader(value = "accept-language", required = true) String acceptLanguage, @RequestBody RequestDTO body) {
+    public ResponseEntity<DTO> save(@RequestHeader(value = "accept-language", required = true) String acceptLanguage, @RequestBody RequestDTO body) {
         body.setLanguageEnum(LanguageEnum.valueOf(acceptLanguage));
         return new ResponseEntity<>(getService().save(body), HttpStatus.CREATED);
     }
