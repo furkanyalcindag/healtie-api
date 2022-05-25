@@ -32,6 +32,9 @@ public class Article extends BaseEntity {
     @ManyToMany
     private Set<Category> categoryList;
 
+    @OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private List<Comment> commentList;
+
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn()

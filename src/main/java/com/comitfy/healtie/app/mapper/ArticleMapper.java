@@ -80,16 +80,16 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
 
             Optional<Tag> optional = tagRepository.findByNameEquals(tagDTO.getName());
             Tag tag;
-            if(optional.isPresent()){
+            if (optional.isPresent()) {
                 tag = optional.get();
-            }
-            else{
+            } else {
                 tag = new Tag();
                 tag.setName(tagDTO.getName());
                 tagRepository.save(tag);
             }
             tags.add(tag);
         }
+
         article.setTags(tags);
         article.setCategoryList(new HashSet<>());
         for (UUID uuid : dto.getCategoryList()) {
@@ -111,15 +111,15 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
 
             Optional<Tag> optional = tagRepository.findByNameEquals(tagDTO.getName());
             Tag tag;
-            if(optional.isPresent()){
+            if (optional.isPresent()) {
                 tag = optional.get();
-            }
-            else{
+            } else {
                 tag = new Tag();
                 tag.setName(tagDTO.getName());
             }
             tags.add(tag);
         }
+
         return article;
     }
 
