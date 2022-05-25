@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Component
 public class CategoryMapper implements BaseMapper<CategoryDTO, CategoryRequestDTO, Category> {
@@ -53,6 +50,9 @@ public class CategoryMapper implements BaseMapper<CategoryDTO, CategoryRequestDT
         Category category = new Category();
         category.setName(dto.getName());
         category.setLanguageEnum(dto.getLanguageEnum());
+
+        Set<Category> parentList = new HashSet<>();
+        category.setParent(parentList);
         for (UUID uuid : dto.getParentList()) {
             Optional<Category> category1 = categoryRepository.findByUuid(uuid);
 

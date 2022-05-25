@@ -7,6 +7,7 @@ import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.app.mapper.CertificateMapper;
 import com.comitfy.healtie.app.repository.CertificateRepository;
 import com.comitfy.healtie.app.repository.DoctorRepository;
+import com.comitfy.healtie.app.specification.CertificateSpecification;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class CertificateService extends BaseService<CertificateDTO, CertificateRequestDTO, Certificate, CertificateRepository, CertificateMapper> {
+public class CertificateService extends BaseService<CertificateDTO, CertificateRequestDTO, Certificate, CertificateRepository, CertificateMapper, CertificateSpecification> {
 
     @Autowired
     CertificateRepository certificateRepository;
@@ -30,6 +31,9 @@ public class CertificateService extends BaseService<CertificateDTO, CertificateR
     @Autowired
     DoctorRepository doctorRepository;
 
+    @Autowired
+    CertificateSpecification certificateSpecification;
+
     @Override
     public CertificateRepository getRepository() {
         return certificateRepository;
@@ -38,6 +42,11 @@ public class CertificateService extends BaseService<CertificateDTO, CertificateR
     @Override
     public CertificateMapper getMapper() {
         return certificateMapper;
+    }
+
+    @Override
+    public CertificateSpecification getSpecification() {
+        return certificateSpecification;
     }
 
     public PageDTO<CertificateDTO> getCertificateByDoctor(UUID id, int page, int size) {

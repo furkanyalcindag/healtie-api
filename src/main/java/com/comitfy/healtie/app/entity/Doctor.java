@@ -1,5 +1,6 @@
 package com.comitfy.healtie.app.entity;
 
+import com.comitfy.healtie.app.model.enums.LanguageEnum;
 import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import lombok.Data;
@@ -23,6 +24,10 @@ public class Doctor extends BaseEntity {
 
     @Column(unique = true)
     private String diplomaNo;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private LanguageEnum languageEnum;
 
     @Column
     private String address;

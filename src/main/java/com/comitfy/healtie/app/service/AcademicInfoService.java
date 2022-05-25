@@ -7,6 +7,7 @@ import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.app.mapper.AcademicInfoMapper;
 import com.comitfy.healtie.app.repository.AcademicInfoRepository;
 import com.comitfy.healtie.app.repository.DoctorRepository;
+import com.comitfy.healtie.app.specification.AcademicInfoSpecification;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class AcademicInfoService extends BaseService<AcademicInfoDTO, AcademicInfoRequestDTO, AcademicInfo, AcademicInfoRepository, AcademicInfoMapper> {
+public class AcademicInfoService extends BaseService<AcademicInfoDTO, AcademicInfoRequestDTO, AcademicInfo, AcademicInfoRepository, AcademicInfoMapper, AcademicInfoSpecification> {
 
     @Autowired
     AcademicInfoRepository academicInfoRepository;
@@ -30,6 +31,9 @@ public class AcademicInfoService extends BaseService<AcademicInfoDTO, AcademicIn
     @Autowired
     DoctorRepository doctorRepository;
 
+    @Autowired
+    AcademicInfoSpecification academicInfoSpecification;
+
     @Override
     public AcademicInfoRepository getRepository() {
         return academicInfoRepository;
@@ -38,6 +42,11 @@ public class AcademicInfoService extends BaseService<AcademicInfoDTO, AcademicIn
     @Override
     public AcademicInfoMapper getMapper() {
         return academicInfoMapper;
+    }
+
+    @Override
+    public AcademicInfoSpecification getSpecification() {
+        return academicInfoSpecification;
     }
 
     public PageDTO<AcademicInfoDTO> getAcademicInfoByDoctor(UUID id, int page, int size) {
@@ -62,40 +71,5 @@ public class AcademicInfoService extends BaseService<AcademicInfoDTO, AcademicIn
         }
     }
 
-
 }
 
-   /* public RequestDTO update(UUID id, RequestDTO dto) {
-        Optional<Entity> entity = getRepository().findByUuid(id);
-
-        if (entity.isPresent()) {
-            Entity entity1 = getMapper().requestDTOToExistEntity(entity.get(), dto);
-            getRepository().save(entity1);
-            return dto;
-        } else {
-            return null;
-        }
-
-
-    }*/
-
-
-/*    List<AcademicInfo> academicInfoList = new ArrayList<>();
-        academicInfoList.add(academicInfo);
-        academicInfo.setDoctor(this);*/
-
-/*    public RequestDTO save(UUID id, RequestDTO dto) {
-        Optional<Entity> entity = getRepository().findByUuid(id);
-        if (entity.isPresent()) {
-            Entity entity1 = getMapper().requestDTOToEntity(dto);
-            getRepository().save(entity1);
-            return dto;
-        } else {
-            return null;
-        }
-    }*/
-
- /*  public ResponseEntity<AcademicInfoRequestDTO> add(AcademicInfoRequestDTO academicInfoRequestDTO) {
-        getRepository().save(aca);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }*/

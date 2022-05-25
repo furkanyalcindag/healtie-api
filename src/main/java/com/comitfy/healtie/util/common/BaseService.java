@@ -1,5 +1,6 @@
 package com.comitfy.healtie.util.common;
 
+import com.comitfy.healtie.app.model.enums.LanguageEnum;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import org.springframework.data.domain.PageRequest;
@@ -9,12 +10,25 @@ import org.springframework.data.domain.Sort;
 import java.util.Optional;
 import java.util.UUID;
 
-public abstract class BaseService<DTO extends BaseDTO, RequestDTO extends BaseDTO, Entity extends BaseEntity, Repository extends BaseRepository<Entity>, Mapper extends BaseMapper<DTO, RequestDTO, Entity>> {
+public abstract class BaseService<DTO extends BaseDTO, RequestDTO extends BaseDTO, Entity extends BaseEntity, Repository extends BaseRepository<Entity>, Mapper extends BaseMapper<DTO, RequestDTO, Entity>, Specification extends BaseSpecification<Entity>> {
 
 
     public abstract Repository getRepository();
 
     public abstract Mapper getMapper();
+
+    public abstract Specification getSpecification();
+
+
+
+    public PageDTO<DTO> findAll(BaseFilterRequestDTO filterRequestDTO, LanguageEnum languageEnum) {
+        Pageable pageable = PageRequest.of(filterRequestDTO.getPageNumber(), filterRequestDTO.getPageSize(), Sort.by("id"));
+
+        getSpecification().setCriterias(filterRequestDTO.getFilters());
+        //return getMapper().pageEntityToPageDTO(getRepository().findAllByLanguageEnum(pageable,languageEnum));
+        return getMapper().pageEntityToPageDTO(getRepository().findAll(getSpecification(), pageable));
+
+    }
 
 
     public PageDTO<DTO> findAll(int page, int size) {
