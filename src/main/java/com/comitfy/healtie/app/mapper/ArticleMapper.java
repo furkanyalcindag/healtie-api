@@ -36,6 +36,8 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
         ArticleDTO articleDTO = new ArticleDTO();
         articleDTO.setDescription(entity.getDescription());
         articleDTO.setTitle(entity.getTitle());
+        articleDTO.setSaveCount(entity.getUserSaves().size());
+        articleDTO.setLikeCount(entity.getUserLikes().size());
         Set<TagDTO> tagDTOS = new HashSet<>();
         for (Tag tag : entity.getTags()) {
 

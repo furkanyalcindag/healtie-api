@@ -15,6 +15,7 @@ import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.app.specification.ArticleSpecification;
 import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.PageDTO;
+import com.comitfy.healtie.util.common.BaseFilterRequestDTO;
 import com.comitfy.healtie.util.common.BaseSpecification;
 import com.comitfy.healtie.util.common.BaseWithMultiLanguageService;
 import com.comitfy.healtie.util.common.SearchCriteria;
@@ -77,6 +78,9 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
         }
         return pageDTO;
     }*/
+
+
+
 
     public PageDTO<ArticleDTO> getArticleByDoctor(UUID id, int page, int size, LanguageEnum languageEnum) {
         Optional<Doctor> doctor = doctorRepository.findByUuid(id);
