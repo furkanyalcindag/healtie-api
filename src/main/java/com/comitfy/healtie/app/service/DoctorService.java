@@ -6,12 +6,13 @@ import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.app.mapper.DoctorMapper;
 import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.app.specification.DoctorSpecification;
+import com.comitfy.healtie.util.common.BaseService;
 import com.comitfy.healtie.util.common.BaseWithMultiLanguageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DoctorService extends BaseWithMultiLanguageService<DoctorDTO, DoctorRequestDTO, Doctor, DoctorRepository, DoctorMapper, DoctorSpecification> {
+public class DoctorService extends BaseService<DoctorDTO, DoctorRequestDTO, Doctor, DoctorRepository, DoctorMapper, DoctorSpecification> {
 
     @Autowired
     DoctorRepository doctorRepository;

@@ -6,6 +6,7 @@ import com.comitfy.healtie.app.entity.ProfessionTranslation;
 import com.comitfy.healtie.app.mapper.ProfessionTranslationMapper;
 import com.comitfy.healtie.app.repository.ProfessionTranslationRepository;
 import com.comitfy.healtie.app.service.ProfessionTranslationService;
+import com.comitfy.healtie.app.specification.ProfessionTranslationSpecification;
 import com.comitfy.healtie.util.common.BaseCrudController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("profession-translation")
-public class ProfessionTranslationController extends BaseCrudController<ProfessionTranslationDTO, ProfessionTranslationRequestDTO, ProfessionTranslation, ProfessionTranslationRepository, ProfessionTranslationMapper, ProfessionTranslationService> {
+public class ProfessionTranslationController extends BaseCrudController<ProfessionTranslationDTO, ProfessionTranslationRequestDTO, ProfessionTranslation, ProfessionTranslationRepository, ProfessionTranslationMapper, ProfessionTranslationSpecification, ProfessionTranslationService> {
 
     @Autowired
     ProfessionTranslationService professionTranslationService;

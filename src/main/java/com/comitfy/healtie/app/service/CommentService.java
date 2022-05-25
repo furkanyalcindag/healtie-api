@@ -7,6 +7,7 @@ import com.comitfy.healtie.app.entity.Comment;
 import com.comitfy.healtie.app.mapper.CommentMapper;
 import com.comitfy.healtie.app.repository.ArticleRepository;
 import com.comitfy.healtie.app.repository.CommentRepository;
+import com.comitfy.healtie.app.specification.CommentSpecification;
 import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseService;
@@ -20,7 +21,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class CommentService extends BaseService<CommentDTO, CommentRequestDTO, Comment, CommentRepository, CommentMapper> {
+public class CommentService extends BaseService<CommentDTO, CommentRequestDTO, Comment, CommentRepository, CommentMapper, CommentSpecification> {
 
     @Autowired
     CommentRepository commentRepository;
@@ -31,6 +32,9 @@ public class CommentService extends BaseService<CommentDTO, CommentRequestDTO, C
     @Autowired
     ArticleRepository articleRepository;
 
+    @Autowired
+    CommentSpecification commentSpecification;
+
     @Override
     public CommentRepository getRepository() {
         return commentRepository;
@@ -39,6 +43,11 @@ public class CommentService extends BaseService<CommentDTO, CommentRequestDTO, C
     @Override
     public CommentMapper getMapper() {
         return commentMapper;
+    }
+
+    @Override
+    public CommentSpecification getSpecification() {
+        return commentSpecification;
     }
 
 

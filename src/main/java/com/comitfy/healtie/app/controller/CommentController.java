@@ -8,6 +8,7 @@ import com.comitfy.healtie.app.mapper.CommentMapper;
 import com.comitfy.healtie.app.repository.CommentRepository;
 import com.comitfy.healtie.app.service.ArticleService;
 import com.comitfy.healtie.app.service.CommentService;
+import com.comitfy.healtie.app.specification.CommentSpecification;
 import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseCrudController;
@@ -22,7 +23,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("comment")
-public class CommentController extends BaseCrudController<CommentDTO, CommentRequestDTO, Comment, CommentRepository, CommentMapper, CommentService> {
+public class CommentController extends BaseCrudController<CommentDTO, CommentRequestDTO, Comment, CommentRepository, CommentMapper, CommentSpecification, CommentService> {
 
     @Autowired
     ArticleService articleService;

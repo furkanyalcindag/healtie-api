@@ -9,6 +9,7 @@ import com.comitfy.healtie.app.mapper.AcademicInfoMapper;
 import com.comitfy.healtie.app.repository.AcademicInfoRepository;
 import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.app.service.AcademicInfoService;
+import com.comitfy.healtie.app.specification.AcademicInfoSpecification;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseCrudController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("academicInfo")
-public class AcademicInfoController extends BaseCrudController<AcademicInfoDTO, AcademicInfoRequestDTO, AcademicInfo, AcademicInfoRepository, AcademicInfoMapper, AcademicInfoService> {
+public class AcademicInfoController extends BaseCrudController<AcademicInfoDTO, AcademicInfoRequestDTO, AcademicInfo, AcademicInfoRepository, AcademicInfoMapper, AcademicInfoSpecification,AcademicInfoService> {
 
     @Autowired
     AcademicInfoService academicInfoService;

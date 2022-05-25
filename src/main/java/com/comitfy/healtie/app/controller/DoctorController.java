@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("doctor")
-public class DoctorController extends BaseWithMultiLanguageCrudController<DoctorDTO, DoctorRequestDTO, Doctor, DoctorRepository,DoctorMapper, DoctorSpecification,DoctorService> {
+public class DoctorController extends BaseCrudController<DoctorDTO, DoctorRequestDTO, Doctor, DoctorRepository,DoctorMapper, DoctorSpecification,DoctorService> {
 
     @Autowired
     DoctorMapper doctorMapper;

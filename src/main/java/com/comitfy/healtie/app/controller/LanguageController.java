@@ -6,6 +6,7 @@ import com.comitfy.healtie.app.entity.Language;
 import com.comitfy.healtie.app.mapper.LanguageMapper;
 import com.comitfy.healtie.app.repository.LanguageRepository;
 import com.comitfy.healtie.app.service.LanguageService;
+import com.comitfy.healtie.app.specification.LanguageSpecification;
 import com.comitfy.healtie.util.common.BaseCrudController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("language")
-public class LanguageController extends BaseCrudController<LanguageDTO, LanguageRequestDTO, Language, LanguageRepository, LanguageMapper, LanguageService> {
+public class LanguageController extends BaseCrudController<LanguageDTO, LanguageRequestDTO, Language, LanguageRepository, LanguageMapper, LanguageSpecification, LanguageService> {
 
     @Autowired
     LanguageMapper languageMapper;

@@ -9,6 +9,7 @@ import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -20,6 +21,9 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
     @Autowired
     DoctorRepository doctorRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     @Override
     public DoctorDTO entityToDTO(Doctor entity) {
         DoctorDTO doctorDTO = new DoctorDTO();
@@ -30,6 +34,9 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
         doctorDTO.setClinicName(entity.getClinicName());
         doctorDTO.setUuid(entity.getUuid());
         doctorDTO.setLanguageEnum(entity.getLanguageEnum());
+        doctorDTO.setFirstName(entity.getUser().getFirstName());
+        doctorDTO.setLastName((entity.getUser().getLastName()));
+        doctorDTO.setEmail(entity.getUser().getEmail());
 
         return doctorDTO;
 
@@ -63,7 +70,7 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
         user.setEmail(dto.getEmail());
-        user.setPassword(dto.getPassword());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
 
         doctor.setUser(user);
 

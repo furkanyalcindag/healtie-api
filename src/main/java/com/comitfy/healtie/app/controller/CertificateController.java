@@ -8,6 +8,7 @@ import com.comitfy.healtie.app.mapper.CertificateMapper;
 import com.comitfy.healtie.app.repository.CertificateRepository;
 import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.app.service.CertificateService;
+import com.comitfy.healtie.app.specification.CertificateSpecification;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseCrudController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("certificate")
-public class CertificateController extends BaseCrudController<CertificateDTO, CertificateRequestDTO, Certificate, CertificateRepository, CertificateMapper, CertificateService> {
+public class CertificateController extends BaseCrudController<CertificateDTO, CertificateRequestDTO, Certificate, CertificateRepository, CertificateMapper, CertificateSpecification, CertificateService> {
 
     @Autowired
     CertificateService certificateService;

@@ -13,7 +13,8 @@ import java.util.stream.Collectors;
 
 public abstract class BaseCrudController<DTO extends BaseDTO, RequestDTO extends BaseDTO, Entity extends BaseEntity,
         Repository extends BaseRepository<Entity>, Mapper extends BaseMapper<DTO, RequestDTO, Entity>,
-        Service extends BaseService<DTO, RequestDTO, Entity, Repository, Mapper>> {
+        Specifitation extends BaseSpecification<Entity>,
+        Service extends BaseService<DTO, RequestDTO, Entity, Repository, Mapper,Specifitation>> {
 
 
     protected abstract Service getService();
@@ -28,6 +29,14 @@ public abstract class BaseCrudController<DTO extends BaseDTO, RequestDTO extends
         }
     }
 
+
+    @PostMapping("get-all-by-filter")
+    public ResponseEntity<PageDTO<DTO>> getAll(@RequestHeader(value = "accept-language", required = true) String language, @RequestBody BaseFilterRequestDTO filter) {
+
+        PageDTO<DTO> dtoList = getService().findAll(filter, LanguageEnum.valueOf(language));
+
+        return new ResponseEntity<>(dtoList, HttpStatus.OK);
+    }
 
     @GetMapping("/")
     public ResponseEntity<PageDTO<DTO>> getAll(@RequestHeader(value = "accept-language", required = true) String language, @RequestParam int pageNumber, @RequestParam int pageSize) {

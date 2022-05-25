@@ -6,7 +6,6 @@ import com.comitfy.healtie.util.common.BaseWithMultiLanguageRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-
-public interface DoctorRepository extends BaseWithMultiLanguageRepository<Doctor> {
+public interface DoctorRepository extends BaseRepository<Doctor> {
 
 }
