@@ -62,40 +62,5 @@ public class AcademicInfoService extends BaseService<AcademicInfoDTO, AcademicIn
         }
     }
 
-
 }
 
-   /* public RequestDTO update(UUID id, RequestDTO dto) {
-        Optional<Entity> entity = getRepository().findByUuid(id);
-
-        if (entity.isPresent()) {
-            Entity entity1 = getMapper().requestDTOToExistEntity(entity.get(), dto);
-            getRepository().save(entity1);
-            return dto;
-        } else {
-            return null;
-        }
-
-
-    }*/
-
-
-/*    List<AcademicInfo> academicInfoList = new ArrayList<>();
-        academicInfoList.add(academicInfo);
-        academicInfo.setDoctor(this);*/
-
-/*    public RequestDTO save(UUID id, RequestDTO dto) {
-        Optional<Entity> entity = getRepository().findByUuid(id);
-        if (entity.isPresent()) {
-            Entity entity1 = getMapper().requestDTOToEntity(dto);
-            getRepository().save(entity1);
-            return dto;
-        } else {
-            return null;
-        }
-    }*/
-
- /*  public ResponseEntity<AcademicInfoRequestDTO> add(AcademicInfoRequestDTO academicInfoRequestDTO) {
-        getRepository().save(aca);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }*/

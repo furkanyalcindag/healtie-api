@@ -42,17 +42,7 @@ public class CommentService extends BaseService<CommentDTO, CommentRequestDTO, C
     }
 
 
-    public PageDTO<CommentDTO> getCommentByArticle(UUID id, int page, int size) {
-        Optional<Article> article = articleRepository.findByUuid(id);
-        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
-        if (article.isPresent()) {
-            return getMapper().pageEntityToPageDTO(commentRepository.findAllByArticle(pageable, article.get()));
-        } else {
-            return null;
-        }
-    }
-
-    public CommentRequestDTO saveCommentByArticle(UUID id, CommentRequestDTO dto,Article article,User user) {
+    public CommentRequestDTO saveCommentByArticle(UUID id, CommentRequestDTO dto, Article article, User user) {
         Optional<Article> article1 = articleRepository.findByUuid(id);
         if (article1.isPresent()) {
             Comment comment = getMapper().requestDTOToEntity(dto);
@@ -64,37 +54,15 @@ public class CommentService extends BaseService<CommentDTO, CommentRequestDTO, C
             return null;
         }
     }
-/*
-    public void commentArticle(CommentRequestDTO commentRequestDTO, Comment comment, User user){
 
-        if (commentRequestDTO.isComment()){
-            comment.setUser(user);
-        }else {
-            comment.setUser(user);
+    /*    public PageDTO<CommentDTO> getCommentByArticle(UUID id, int page, int size) {
+        Optional<Article> article = articleRepository.findByUuid(id);
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+        if (article.isPresent()) {
+            return getMapper().pageEntityToPageDTO(commentRepository.findAllByArticle(pageable, article.get()));
+        } else {
+            return null;
         }
-        commentRepository.save(comment);
     }*/
-
-
-    /*public void likeOrDislikeArticle(ArticleLikeRequestDTO articleLikeRequestDTO, Article article, User user) {
-
-        if (articleLikeRequestDTO.isLike()) {
-            article.addLike(user);
-        } else {
-            article.removeLike(user);
-        }
-        articleRepository.save(article);
-    }
-
-    public void saveOrNotSaveArticle(ArticleSaveRequestDTO articleSaveRequestDTO, Article article, User user) {
-        if (articleSaveRequestDTO.isSave()) {
-            article.addSave(user);
-        } else {
-            article.removeSave(user);
-        }
-        articleRepository.save(article);
-    }
-*/
-
 
 }

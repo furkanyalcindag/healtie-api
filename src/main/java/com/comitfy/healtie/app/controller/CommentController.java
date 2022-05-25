@@ -52,7 +52,6 @@ public class CommentController extends BaseCrudController<CommentDTO, CommentReq
 
         Article article = articleService.findEntityByUUID(articleId);
         User user = helperService.getUserFromSession();
-        //commentService.saveCommentByArticle(articleId,commentRequestDTO,article,user);
         return new ResponseEntity<>(commentService.saveCommentByArticle(articleId, commentRequestDTO, article, user), HttpStatus.OK);
     }
 

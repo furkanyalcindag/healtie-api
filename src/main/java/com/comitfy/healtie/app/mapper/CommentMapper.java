@@ -4,6 +4,7 @@ import com.comitfy.healtie.app.dto.CommentDTO;
 import com.comitfy.healtie.app.dto.requestDTO.CommentRequestDTO;
 import com.comitfy.healtie.app.entity.Comment;
 import com.comitfy.healtie.app.repository.CommentRepository;
+import com.comitfy.healtie.app.service.CommentService;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class CommentMapper implements BaseMapper<CommentDTO, CommentRequestDTO, 
     @Autowired
     CommentRepository commentRepository;
 
+    @Autowired
+    CommentService commentService;
+
     @Override
     public CommentDTO entityToDTO(Comment entity) {
         CommentDTO commentDTO = new CommentDTO();
@@ -32,24 +36,23 @@ public class CommentMapper implements BaseMapper<CommentDTO, CommentRequestDTO, 
         Comment comment = new Comment();
         comment.setContent(dto.getContent());
 
-
-    /*    for (CommentDTO commentDTO : dto.getParentList()) {
-            Comment comment1 = new Comment();
-            comment1.setContent(commentDTO.getContent());
-            comment.getParent().add(comment1);
-        }*/
         return comment;
     }
 
     @Override
     public Comment requestDTOToEntity(CommentRequestDTO dto) {
+
         Comment comment = new Comment();
         comment.setContent(dto.getContent());
-        /*for (UUID uuid : dto.getParentList()) {
-            Optional<Comment> comment1 = commentRepository.findByUuid(uuid);
-            comment1.ifPresent(value -> comment.getParent().add(value));
-        }*/
+
+     /*   Comment parent = new Comment();
+        comment.setParent(parent);
+
+      Optional<Comment> comment1 = commentRepository.findByUuid(dto.getUuid());
+        comment.setParent(comment1.get());*/
+
         return comment;
+
     }
 
     @Override
