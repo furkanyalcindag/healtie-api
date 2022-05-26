@@ -11,6 +11,12 @@ import java.util.Set;
 @Entity
 @Table
 @Data
+@AttributeOverride(
+        name = "uuid",
+        column = @Column(
+                name = "comment_uuid"
+        )
+)
 public class Comment extends BaseEntity {
 
     private String content;

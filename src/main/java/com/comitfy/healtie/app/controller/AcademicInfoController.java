@@ -1,7 +1,7 @@
 package com.comitfy.healtie.app.controller;
 
 import com.comitfy.healtie.app.dto.AcademicInfoDTO;
-import com.comitfy.healtie.app.dto.ArticleDTO;
+import com.comitfy.healtie.app.dto.DoctorDTO;
 import com.comitfy.healtie.app.dto.requestDTO.AcademicInfoRequestDTO;
 import com.comitfy.healtie.app.entity.AcademicInfo;
 import com.comitfy.healtie.app.entity.Doctor;
@@ -9,6 +9,7 @@ import com.comitfy.healtie.app.mapper.AcademicInfoMapper;
 import com.comitfy.healtie.app.repository.AcademicInfoRepository;
 import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.app.service.AcademicInfoService;
+import com.comitfy.healtie.app.service.DoctorService;
 import com.comitfy.healtie.app.specification.AcademicInfoSpecification;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseCrudController;
@@ -22,13 +23,22 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("academicInfo")
-public class AcademicInfoController extends BaseCrudController<AcademicInfoDTO, AcademicInfoRequestDTO, AcademicInfo, AcademicInfoRepository, AcademicInfoMapper, AcademicInfoSpecification,AcademicInfoService> {
+public class AcademicInfoController extends BaseCrudController<AcademicInfoDTO, AcademicInfoRequestDTO, AcademicInfo, AcademicInfoRepository, AcademicInfoMapper, AcademicInfoSpecification, AcademicInfoService> {
 
     @Autowired
     AcademicInfoService academicInfoService;
 
     @Autowired
     AcademicInfoMapper academicInfoMapper;
+
+    @Autowired
+    AcademicInfoRepository academicInfoRepository;
+
+    @Autowired
+    DoctorRepository doctorRepository;
+
+    @Autowired
+    DoctorService doctorService;
 
     @Override
     protected AcademicInfoService getService() {
@@ -40,47 +50,28 @@ public class AcademicInfoController extends BaseCrudController<AcademicInfoDTO, 
         return academicInfoMapper;
     }
 
-    @Autowired
-    AcademicInfoRepository academicInfoRepository;
-
-    @Autowired
-    DoctorRepository doctorRepository;
-
 
     @PostMapping("/{doctorId}")
-    public ResponseEntity<AcademicInfoRequestDTO> save(@RequestHeader(value = "accept-language", required = true) String acceptLanguage,
-                                                       @PathVariable UUID doctorId, @RequestBody AcademicInfoRequestDTO academicInfoRequestDTO) {
-        Optional<Doctor> optional = doctorRepository.findByUuid(doctorId);
+    public ResponseEntity<AcademicInfoRequestDTO> saveByDoctorId(@RequestHeader(value = "accept-language", required = true) String acceptLanguage,
+                                                                 @PathVariable UUID doctorId, @RequestBody AcademicInfoRequestDTO academicInfoRequestDTO) {
+        DoctorDTO optional = doctorService.findByUUID(doctorId);
         if (optional == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(academicInfoService.saveAcademicInfoByDoctor(doctorId, academicInfoRequestDTO), HttpStatus.OK);
         }
     }
+
     @GetMapping("doctor/{doctorId}")
     public ResponseEntity<PageDTO<AcademicInfoDTO>> getByDoctorId(@RequestHeader(value = "accept-language", required = true) String acceptLanguage,
                                                                   @PathVariable UUID doctorId, @RequestParam int pageNumber, @RequestParam int pageSize) {
-        Optional<Doctor> optional=doctorRepository.findByUuid(doctorId);
-        if (optional==null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }else{
-            return new ResponseEntity<>(academicInfoService.getAcademicInfoByDoctor(doctorId,pageNumber,pageSize),HttpStatus.OK);
-        }
-    }
-
-
-/*   @PutMapping("/{doctorId}")
-    public ResponseEntity<String> update(@RequestHeader(value = "accept-language", required = true) String acceptLanguage,
-                                         @PathVariable UUID doctorId, @RequestBody AcademicInfoRequestDTO academicInfoRequestDTO) {
-        Optional<Doctor> optional = doctorRepository.findByUuid(doctorId);
+        Optional<Doctor> optional = doctorService.getRepository().findByUuid(doctorId);
         if (optional == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            academicInfoRequestDTO.setLanguageEnum(LanguageEnum.valueOf(acceptLanguage));
-            getService().update(doctorId, academicInfoRequestDTO);
-            return new ResponseEntity<>("Doctor with the id " + doctorId + " was updated.", HttpStatus.OK);
+            return new ResponseEntity<>(academicInfoService.getAcademicInfoByDoctor(doctorId, pageNumber, pageSize), HttpStatus.OK);
         }
-    }*/
+    }
 
 
 }
