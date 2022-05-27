@@ -34,5 +34,17 @@ public class Comment extends BaseEntity {
     @JoinColumn()
     private Article article;
 
+    @ManyToMany
+    private Set<User> userLikes;
+
+    public void removeLike(User user) {
+        this.userLikes.remove(user);
+    }
+
+
+    public void addLike(User user) {
+        this.userLikes.add(user);
+    }
+
 
 }
