@@ -19,8 +19,11 @@ public class Article extends BaseEntity {
     @Column
     private String title;
 
-    @Column
+
+    @Column(length = 100000)
+    @Lob
     private String description;
+
 
     @ManyToMany
     private Set<Tag> tags;
