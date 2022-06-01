@@ -1,6 +1,7 @@
 package com.comitfy.healtie.app.service;
 
 import com.comitfy.healtie.app.dto.CommentDTO;
+import com.comitfy.healtie.app.dto.requestDTO.CommentLikeRequestDTO;
 import com.comitfy.healtie.app.dto.requestDTO.CommentRequestDTO;
 import com.comitfy.healtie.app.entity.Article;
 import com.comitfy.healtie.app.entity.Comment;
@@ -9,12 +10,8 @@ import com.comitfy.healtie.app.repository.ArticleRepository;
 import com.comitfy.healtie.app.repository.CommentRepository;
 import com.comitfy.healtie.app.specification.CommentSpecification;
 import com.comitfy.healtie.userModule.entity.User;
-import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -64,14 +61,36 @@ public class CommentService extends BaseService<CommentDTO, CommentRequestDTO, C
         }
     }
 
-    /*    public PageDTO<CommentDTO> getCommentByArticle(UUID id, int page, int size) {
-        Optional<Article> article = articleRepository.findByUuid(id);
+    public void likeOrDislikeComment(CommentLikeRequestDTO commentLikeRequestDTO, Comment comment, User user) {
+        if (commentLikeRequestDTO.isLike()) {
+            comment.addLike(user);
+        } else {
+            comment.removeLike(user);
+        }
+        commentRepository.save(comment);
+    }
+
+/*
+
+
+    public PageDTO<ArticleDTO> getArticleByDoctor(UUID id, int page, int size, LanguageEnum languageEnum) {
+        Optional<Doctor> doctor = doctorRepository.findByUuid(id);
         Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
-        if (article.isPresent()) {
-            return getMapper().pageEntityToPageDTO(commentRepository.findAllByArticle(pageable, article.get()));
+        if (doctor.isPresent()) {
+
+            PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByDoctorAndLanguageEnum(pageable, doctor.get(), languageEnum));
+            for (int i = 0; i < pageDTO.getData().size(); i++) {
+                pageDTO.getData().get(i).setLikeCount(getRepository().getCountOfArticleLike(pageDTO.getData().get(i).getUuid()));
+
+                pageDTO.getData().get(i).setSaveCount(getRepository().getCountOfArticleSave(pageDTO.getData().get(i).getUuid()));
+
+            }
+
+            return pageDTO;
         } else {
             return null;
         }
-    }*/
+    }
+*/
 
 }

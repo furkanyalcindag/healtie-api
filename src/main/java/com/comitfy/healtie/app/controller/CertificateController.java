@@ -1,6 +1,7 @@
 package com.comitfy.healtie.app.controller;
 
 import com.comitfy.healtie.app.dto.CertificateDTO;
+import com.comitfy.healtie.app.dto.DoctorDTO;
 import com.comitfy.healtie.app.dto.requestDTO.CertificateRequestDTO;
 import com.comitfy.healtie.app.entity.Certificate;
 import com.comitfy.healtie.app.entity.Doctor;
@@ -8,6 +9,7 @@ import com.comitfy.healtie.app.mapper.CertificateMapper;
 import com.comitfy.healtie.app.repository.CertificateRepository;
 import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.app.service.CertificateService;
+import com.comitfy.healtie.app.service.DoctorService;
 import com.comitfy.healtie.app.specification.CertificateSpecification;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseCrudController;
@@ -32,6 +34,9 @@ public class CertificateController extends BaseCrudController<CertificateDTO, Ce
     @Autowired
     DoctorRepository doctorRepository;
 
+    @Autowired
+    DoctorService doctorService;
+
     @Override
     protected CertificateService getService() {
         return certificateService;
@@ -43,9 +48,9 @@ public class CertificateController extends BaseCrudController<CertificateDTO, Ce
     }
 
     @PostMapping("/{doctorId}")
-    public ResponseEntity<CertificateRequestDTO> save(@RequestHeader(value = "accept-language", required = true) String acceptLanguage,
-                                                      @PathVariable UUID doctorId, @RequestBody CertificateRequestDTO certificateRequestDTO) {
-        Optional<Doctor> optional = doctorRepository.findByUuid(doctorId);
+    public ResponseEntity<CertificateRequestDTO> saveByDoctorId(@RequestHeader(value = "accept-language", required = true) String acceptLanguage,
+                                                                @PathVariable UUID doctorId, @RequestBody CertificateRequestDTO certificateRequestDTO) {
+        DoctorDTO optional = doctorService.findByUUID(doctorId);
         if (optional == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
@@ -56,7 +61,7 @@ public class CertificateController extends BaseCrudController<CertificateDTO, Ce
     @GetMapping("doctor/{doctorId}")
     public ResponseEntity<PageDTO<CertificateDTO>> getByDoctorId(@RequestHeader(value = "accept-language", required = true) String acceptLanguage,
                                                                  @PathVariable UUID doctorId, @RequestParam int pageNumber, @RequestParam int pageSize) {
-        Optional<Doctor> optional = doctorRepository.findByUuid(doctorId);
+        Optional<Doctor> optional = doctorService.getRepository().findByUuid(doctorId);
         if (optional == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
@@ -64,16 +69,4 @@ public class CertificateController extends BaseCrudController<CertificateDTO, Ce
         }
     }
 
- /*   @PutMapping("/{doctorId}")
-    public ResponseEntity<String> update(@RequestHeader(value = "accept-language", required = true) String acceptLanguage,
-                                         @PathVariable UUID doctorId, @RequestBody CertificateRequestDTO certificateRequestDTO) {
-        Optional<Doctor> optional = doctorRepository.findByUuid(doctorId);
-        if (optional == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            certificateRequestDTO.setLanguageEnum(LanguageEnum.valueOf(acceptLanguage));
-            getService().update(doctorId, certificateRequestDTO);
-            return new ResponseEntity<>("Doctor with the id " + doctorId + " was updated.", HttpStatus.OK);
-        }
-    }*/
 }

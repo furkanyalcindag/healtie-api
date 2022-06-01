@@ -11,6 +11,12 @@ import java.util.Set;
 @Entity
 @Table
 @Data
+@AttributeOverride(
+        name = "uuid",
+        column = @Column(
+                name = "comment_uuid"
+        )
+)
 public class Comment extends BaseEntity {
 
     private String content;
@@ -27,6 +33,18 @@ public class Comment extends BaseEntity {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn()
     private Article article;
+
+    @ManyToMany
+    private Set<User> userLikes;
+
+    public void removeLike(User user) {
+        this.userLikes.remove(user);
+    }
+
+
+    public void addLike(User user) {
+        this.userLikes.add(user);
+    }
 
 
 }

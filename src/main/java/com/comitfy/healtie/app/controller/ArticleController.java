@@ -6,7 +6,6 @@ import com.comitfy.healtie.app.dto.requestDTO.ArticleLikeRequestDTO;
 import com.comitfy.healtie.app.dto.requestDTO.ArticleRequestDTO;
 import com.comitfy.healtie.app.dto.requestDTO.ArticleSaveRequestDTO;
 import com.comitfy.healtie.app.entity.Article;
-import com.comitfy.healtie.app.entity.Category;
 import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.app.mapper.ArticleMapper;
 import com.comitfy.healtie.app.model.enums.LanguageEnum;
@@ -23,8 +22,6 @@ import com.comitfy.healtie.util.common.HelperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -32,7 +29,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("article")
-public class ArticleController extends BaseWithMultiLanguageCrudController<ArticleDTO, ArticleRequestDTO, Article, ArticleRepository, ArticleMapper, ArticleSpecification,ArticleService> {
+public class ArticleController extends BaseWithMultiLanguageCrudController<ArticleDTO, ArticleRequestDTO, Article, ArticleRepository, ArticleMapper, ArticleSpecification, ArticleService> {
 
     @Autowired
     ArticleService articleService;
@@ -87,8 +84,8 @@ public class ArticleController extends BaseWithMultiLanguageCrudController<Artic
 
 
     @PostMapping("/{doctorId}")
-    public ResponseEntity<ArticleRequestDTO> save(@RequestHeader(value = "accept-language", required = true) String acceptLanguage,
-                                                  @PathVariable UUID doctorId, @RequestBody ArticleRequestDTO articleRequestDTO) {
+    public ResponseEntity<ArticleRequestDTO> saveByDoctorId(@RequestHeader(value = "accept-language", required = true) String acceptLanguage,
+                                                            @PathVariable UUID doctorId, @RequestBody ArticleRequestDTO articleRequestDTO) {
         DoctorDTO optional = doctorService.findByUUID(doctorId);
         if (optional == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -115,20 +112,5 @@ public class ArticleController extends BaseWithMultiLanguageCrudController<Artic
         articleService.saveOrNotSaveArticle(articleSaveRequestDTO, article, user);
         return new ResponseEntity<>("Başarılı", HttpStatus.OK);
     }
-
-
-    @GetMapping("/jwt/decode")
-    public String decodeJwt() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = "";
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails) principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
-
-        return username;
-    }
-
 
 }
