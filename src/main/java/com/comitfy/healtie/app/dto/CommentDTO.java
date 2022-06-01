@@ -12,5 +12,9 @@ public class CommentDTO extends BaseDTO {
 
     private String content;
 
-    private CommentDTO parentDTO;
+    private CommentDTO parent;
+
+    private long likeCount;
+
+
 }
