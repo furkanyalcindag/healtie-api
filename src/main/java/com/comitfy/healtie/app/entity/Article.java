@@ -16,12 +16,12 @@ import java.util.Set;
 public class Article extends BaseEntity {
 
 
+
     @Column
     private String title;
 
 
-    @Column(length = 100000)
-    @Lob
+    @Column(columnDefinition = "Text",length = 100000)
     private String description;
 
 
