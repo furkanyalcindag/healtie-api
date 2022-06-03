@@ -38,6 +38,9 @@ public class Doctor extends BaseEntity {
     @Column
     private String clinicName;
 
+    @Column(columnDefinition = "Text",length = 100000)
+    private String about;
+
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private User user;
@@ -48,7 +51,7 @@ public class Doctor extends BaseEntity {
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Certificate> certificateList;
 
-    @OneToMany(mappedBy = "doctor",cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Article> articleList;
 
 }

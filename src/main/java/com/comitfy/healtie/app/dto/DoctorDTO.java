@@ -11,6 +11,7 @@ public class DoctorDTO extends BaseDTO {
     private String diplomaNo;
     private String address;
     private String phone;
+    private String about;
     private String clinicName;
     private LanguageEnum languageEnum;
     private String firstName;

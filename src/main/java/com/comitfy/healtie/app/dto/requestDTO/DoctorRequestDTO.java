@@ -17,6 +17,7 @@ public class DoctorRequestDTO extends BaseDTO {
     private String address;
     private String phone;
     private String clinicName;
+    private String about;
 
     @JsonIgnore
     private LanguageEnum languageEnum;
