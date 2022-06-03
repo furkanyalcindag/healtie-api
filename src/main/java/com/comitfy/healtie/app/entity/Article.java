@@ -16,11 +16,14 @@ import java.util.Set;
 public class Article extends BaseEntity {
 
 
+
     @Column
     private String title;
 
-    @Column
+
+    @Column(columnDefinition = "Text",length = 100000)
     private String description;
+
 
     @ManyToMany
     private Set<Tag> tags;

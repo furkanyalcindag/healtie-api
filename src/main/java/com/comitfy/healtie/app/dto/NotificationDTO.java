@@ -11,4 +11,5 @@ public class NotificationDTO extends BaseDTO {
     private String link;
     private boolean isSend;
     private String base64;
+
 }

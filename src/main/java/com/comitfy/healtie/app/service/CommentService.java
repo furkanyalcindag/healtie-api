@@ -6,12 +6,17 @@ import com.comitfy.healtie.app.dto.requestDTO.CommentRequestDTO;
 import com.comitfy.healtie.app.entity.Article;
 import com.comitfy.healtie.app.entity.Comment;
 import com.comitfy.healtie.app.mapper.CommentMapper;
+import com.comitfy.healtie.app.model.enums.LanguageEnum;
 import com.comitfy.healtie.app.repository.ArticleRepository;
 import com.comitfy.healtie.app.repository.CommentRepository;
 import com.comitfy.healtie.app.specification.CommentSpecification;
 import com.comitfy.healtie.userModule.entity.User;
+import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -70,27 +75,20 @@ public class CommentService extends BaseService<CommentDTO, CommentRequestDTO, C
         commentRepository.save(comment);
     }
 
-/*
-
-
-    public PageDTO<ArticleDTO> getArticleByDoctor(UUID id, int page, int size, LanguageEnum languageEnum) {
-        Optional<Doctor> doctor = doctorRepository.findByUuid(id);
+    public PageDTO<CommentDTO> getCommentByArticle(UUID id, int page, int size, LanguageEnum languageEnum) {
+        Optional<Article> article = articleRepository.findByUuid(id);
         Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
-        if (doctor.isPresent()) {
-
-            PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByDoctorAndLanguageEnum(pageable, doctor.get(), languageEnum));
+        if (article.isPresent()) {
+            PageDTO<CommentDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByArticle(pageable, article.get()));
             for (int i = 0; i < pageDTO.getData().size(); i++) {
-                pageDTO.getData().get(i).setLikeCount(getRepository().getCountOfArticleLike(pageDTO.getData().get(i).getUuid()));
-
-                pageDTO.getData().get(i).setSaveCount(getRepository().getCountOfArticleSave(pageDTO.getData().get(i).getUuid()));
-
+                pageDTO.getData().get(i).setLikeCount(getRepository().getCountOfCommentLike(pageDTO.getData().get(i).getUuid()));
             }
-
             return pageDTO;
         } else {
             return null;
         }
+
+
     }
-*/
 
 }

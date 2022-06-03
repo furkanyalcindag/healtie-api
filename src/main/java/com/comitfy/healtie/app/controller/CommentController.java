@@ -6,11 +6,13 @@ import com.comitfy.healtie.app.dto.requestDTO.CommentRequestDTO;
 import com.comitfy.healtie.app.entity.Article;
 import com.comitfy.healtie.app.entity.Comment;
 import com.comitfy.healtie.app.mapper.CommentMapper;
+import com.comitfy.healtie.app.model.enums.LanguageEnum;
 import com.comitfy.healtie.app.repository.CommentRepository;
 import com.comitfy.healtie.app.service.ArticleService;
 import com.comitfy.healtie.app.service.CommentService;
 import com.comitfy.healtie.app.specification.CommentSpecification;
 import com.comitfy.healtie.userModule.entity.User;
+import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseCrudController;
 import com.comitfy.healtie.util.common.HelperService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -63,5 +66,18 @@ public class CommentController extends BaseCrudController<CommentDTO, CommentReq
         commentService.likeOrDislikeComment(commentLikeRequestDTO, comment, user);
         return new ResponseEntity<>("Başarılı", HttpStatus.OK);
     }
-    
+
+    @GetMapping("article/{articleId}")
+    public ResponseEntity<PageDTO<CommentDTO>> getByArticleId(@RequestHeader(value = "accept-language", required = true) String language,
+                                                              @PathVariable UUID articleId, @RequestParam int pageNumber, @RequestParam int pageSize) {
+        Optional<Article> optional = articleService.getRepository().findByUuid(articleId);
+        if (optional == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(commentService.getCommentByArticle(articleId, pageNumber, pageSize, LanguageEnum.valueOf(language)), HttpStatus.OK);
+        }
+    }
+
+
+
 }
