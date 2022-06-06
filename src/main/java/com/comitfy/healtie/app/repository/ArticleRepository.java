@@ -1,5 +1,6 @@
 package com.comitfy.healtie.app.repository;
 
+import com.comitfy.healtie.app.entity.AcademicInfo;
 import com.comitfy.healtie.app.entity.Article;
 import com.comitfy.healtie.app.entity.Category;
 import com.comitfy.healtie.app.entity.Doctor;
@@ -19,6 +20,8 @@ import java.util.UUID;
 public interface ArticleRepository extends BaseWithMultiLanguageRepository<Article> {
 
     Page<Article> findAllByDoctorAndLanguageEnum(Pageable pageable, Doctor doctor, LanguageEnum languageEnum);
+
+    Page<Article> findAllByDoctor(Pageable pageable, Doctor doctor);
 
     Page<Article> findAllByCategoryListInAndLanguageEnum(Pageable pageable, Set<Category> category, LanguageEnum languageEnum);
 

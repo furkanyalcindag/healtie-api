@@ -88,6 +88,7 @@ public class ArticleController extends BaseWithMultiLanguageCrudController<Artic
                                                             @PathVariable UUID doctorId, @RequestBody ArticleRequestDTO articleRequestDTO) {
         DoctorDTO optional = doctorService.findByUUID(doctorId);
         if (optional == null) {
+
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(articleService.saveArticleByDoctor(doctorId, articleRequestDTO), HttpStatus.OK);
