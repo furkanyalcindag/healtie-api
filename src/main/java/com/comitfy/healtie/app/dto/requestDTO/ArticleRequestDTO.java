@@ -9,6 +9,7 @@ import lombok.Data;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Lob;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -20,7 +21,7 @@ public class ArticleRequestDTO extends BaseDTO {
 
     private String description;
     private String title;
-    private Date publishedDate;
+    private LocalDate publishedDate;
 
     private Set<TagDTO> tags;
     @JsonIgnore

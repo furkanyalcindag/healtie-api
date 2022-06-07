@@ -1,12 +1,11 @@
 package com.comitfy.healtie.app.entity;
 
+import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import lombok.Data;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
@@ -22,5 +21,10 @@ public class Gender extends BaseEntity {
     @Column
     private String gender;
 
+    @OneToMany(mappedBy = "gender", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Doctor> doctorList;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private User user;
 
 }

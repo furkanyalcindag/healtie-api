@@ -1,6 +1,7 @@
 package com.comitfy.healtie.userModule.entity;
 
 
+import com.comitfy.healtie.app.entity.Gender;
 import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import lombok.Data;
 
@@ -27,10 +28,17 @@ public class User extends BaseEntity {
     @Column
     private boolean isEnable;
 
+
+
+
+
     /*@JoinTable(name = "user_group",joinColumns = @JoinColumn(name="user_id"))
     @JoinColumn(name = "group_id")
     @OneToMany(fetch = FetchType.LAZY)
     private List<Group> group;*/
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Gender gender;
 
 
     @ManyToMany

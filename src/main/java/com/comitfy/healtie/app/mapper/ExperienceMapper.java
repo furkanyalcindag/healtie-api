@@ -8,14 +8,18 @@ import com.comitfy.healtie.util.common.BaseMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Component
 public class ExperienceMapper implements BaseMapper<ExperienceDTO, ExperienceRequestDTO, Experience> {
     @Override
     public ExperienceDTO entityToDTO(Experience entity) {
         ExperienceDTO experienceDTO = new ExperienceDTO();
+        experienceDTO.setTitle(entity.getTitle());
         experienceDTO.setDescription(entity.getDescription());
         experienceDTO.setWorkedPlace(entity.getWorkedPlace());
         experienceDTO.setStartDate(entity.getStartDate());
@@ -27,16 +31,19 @@ public class ExperienceMapper implements BaseMapper<ExperienceDTO, ExperienceReq
     @Override
     public Experience dtoToEntity(ExperienceDTO dto) {
         Experience experience = new Experience();
+        experience.setTitle(dto.getTitle());
         experience.setWorkedPlace(dto.getWorkedPlace());
         experience.setDescription(dto.getDescription());
         experience.setStartDate(dto.getStartDate());
         experience.setEndDate(dto.getEndDate());
+
         return experience;
     }
 
     @Override
     public Experience requestDTOToEntity(ExperienceRequestDTO dto) {
         Experience experience = new Experience();
+        experience.setTitle(dto.getTitle());
         experience.setWorkedPlace(dto.getWorkedPlace());
         experience.setDescription(dto.getDescription());
         experience.setStartDate(dto.getStartDate());
@@ -46,10 +53,12 @@ public class ExperienceMapper implements BaseMapper<ExperienceDTO, ExperienceReq
 
     @Override
     public Experience requestDTOToExistEntity(Experience experience, ExperienceRequestDTO dto) {
+        experience.setTitle(dto.getTitle());
         experience.setWorkedPlace(dto.getWorkedPlace());
         experience.setDescription(dto.getDescription());
         experience.setStartDate(dto.getStartDate());
         experience.setEndDate(dto.getEndDate());
+
         return experience;
     }
 
