@@ -5,9 +5,11 @@ import com.comitfy.healtie.app.dto.TagDTO;
 import com.comitfy.healtie.app.dto.requestDTO.ArticleRequestDTO;
 import com.comitfy.healtie.app.entity.Article;
 import com.comitfy.healtie.app.entity.Category;
+import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.app.entity.Tag;
 import com.comitfy.healtie.app.repository.ArticleRepository;
 import com.comitfy.healtie.app.repository.CategoryRepository;
+import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.app.repository.TagRepository;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseMapper;
@@ -26,6 +28,8 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
     ArticleRepository articleRepository;
 
     @Autowired
+    DoctorRepository doctorRepository;
+    @Autowired
     CategoryRepository categoryRepository;
 
     @Autowired
@@ -36,6 +40,8 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
         ArticleDTO articleDTO = new ArticleDTO();
         articleDTO.setDescription(entity.getDescription());
         articleDTO.setTitle(entity.getTitle());
+        articleDTO.setPublishedDate(entity.getPublishedDate());
+       // articleDTO.setAuthor(entity.getAuthor());
         if (entity.getUserSaves() != null) {
             articleDTO.setSaveCount(entity.getUserSaves().size());
         }
@@ -43,6 +49,11 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
         if (entity.getUserLikes() != null) {
             articleDTO.setLikeCount(entity.getUserLikes().size());
         }
+        if (entity.getDoctor() != null){
+            articleDTO.setAuthor(entity.getDoctor().getUser().getFirstName()+" "+ entity.getDoctor().getUser().getLastName());
+        }
+
+
         Set<TagDTO> tagDTOS = new HashSet<>();
         for (Tag tag : entity.getTags()) {
 
@@ -62,6 +73,7 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
         Article article = new Article();
         article.setDescription(dto.getDescription());
         article.setTitle(dto.getTitle());
+        article.setPublishedDate(dto.getPublishedDate());
         article.setLanguageEnum(dto.getLanguageEnum());
         Set<Tag> tags = new HashSet<>();
         for (TagDTO tagDTO : dto.getTags()) {
@@ -80,7 +92,10 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
         Article article = new Article();
         article.setDescription(dto.getDescription());
         article.setTitle(dto.getTitle());
+        article.setPublishedDate(dto.getPublishedDate());
         article.setLanguageEnum(dto.getLanguageEnum());
+
+
 
         Set<Tag> tags = new HashSet<>();
         for (TagDTO tagDTO : dto.getTags()) {
@@ -112,6 +127,7 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
     public Article requestDTOToExistEntity(Article article, ArticleRequestDTO dto) {
         article.setDescription(dto.getDescription());
         article.setTitle(dto.getTitle());
+        article.setPublishedDate(dto.getPublishedDate());
         article.setLanguageEnum(dto.getLanguageEnum());
         Set<Tag> tags = new HashSet<>();
         for (TagDTO tagDTO : dto.getTags()) {
