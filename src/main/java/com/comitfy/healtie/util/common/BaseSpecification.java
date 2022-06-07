@@ -42,7 +42,7 @@ public abstract class BaseSpecification<Entity extends BaseEntity> implements Sp
             } else if (criteria.getOperation().equalsIgnoreCase(":")) {
                 if (root.get(criteria.getKey()).getJavaType() == String.class) {
                     predicate = builder.like(
-                            builder.lower(root.<String>get(criteria.getKey())), "%" + criteria.getValue() + "%");
+                            builder.lower(root.<String>get(criteria.getKey())), "%" + criteria.getValue().toString().toLowerCase() + "%");
 
                 } else {
                     predicate = builder.equal(root.get(criteria.getKey()), criteria.getValue());
