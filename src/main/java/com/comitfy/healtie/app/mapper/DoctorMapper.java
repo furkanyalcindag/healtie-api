@@ -38,6 +38,9 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
         doctorDTO.setLastName((entity.getUser().getLastName()));
         doctorDTO.setEmail(entity.getUser().getEmail());
 
+        if (entity.getArticleList() != null) {
+            doctorDTO.setArticleCount(entity.getArticleList().size());
+        }
         return doctorDTO;
 
     }
