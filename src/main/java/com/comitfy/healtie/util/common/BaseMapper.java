@@ -1,9 +1,5 @@
 package com.comitfy.healtie.util.common;
 
-import com.comitfy.healtie.app.dto.requestDTO.CategoryRequestDTO;
-import com.comitfy.healtie.app.dto.requestDTO.LanguageRequestDTO;
-import com.comitfy.healtie.app.entity.Category;
-import com.comitfy.healtie.app.entity.Language;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import org.springframework.data.domain.Page;

@@ -33,11 +33,17 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
         doctorDTO.setPhone(entity.getPhone());
         doctorDTO.setClinicName(entity.getClinicName());
         doctorDTO.setUuid(entity.getUuid());
+        doctorDTO.setBranch(entity.getBranch());
+        doctorDTO.setAbout(entity.getAbout());
         doctorDTO.setLanguageEnum(entity.getLanguageEnum());
+
         doctorDTO.setFirstName(entity.getUser().getFirstName());
         doctorDTO.setLastName((entity.getUser().getLastName()));
         doctorDTO.setEmail(entity.getUser().getEmail());
 
+        if (entity.getArticleList() != null) {
+            doctorDTO.setArticleCount(entity.getArticleList().size());
+        }
         return doctorDTO;
 
     }
@@ -49,6 +55,8 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
         doctor.setDiplomaNo(dto.getDiplomaNo());
         doctor.setAddress(dto.getAddress());
         doctor.setPhone(dto.getPhone());
+        doctor.setBranch(dto.getBranch());
+        doctor.setAbout(dto.getAbout());
         doctor.setClinicName(dto.getClinicName());
         doctor.setLanguageEnum(dto.getLanguageEnum());
 
@@ -63,6 +71,8 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
         doctor.setDiplomaNo(dto.getDiplomaNo());
         doctor.setAddress(dto.getAddress());
         doctor.setPhone(dto.getPhone());
+        doctor.setBranch(dto.getBranch());
+        doctor.setAbout(dto.getAbout());
         doctor.setClinicName(dto.getClinicName());
         doctor.setLanguageEnum(dto.getLanguageEnum());
 
@@ -84,6 +94,8 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
         doctor.setDiplomaNo(dto.getDiplomaNo());
         doctor.setAddress(dto.getAddress());
         doctor.setPhone(dto.getPhone());
+        doctor.setBranch(dto.getBranch());
+        doctor.setAbout(dto.getAbout());
         doctor.setClinicName(dto.getClinicName());
         doctor.setLanguageEnum(dto.getLanguageEnum());
 

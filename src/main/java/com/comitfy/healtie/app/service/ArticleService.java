@@ -15,17 +15,17 @@ import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.app.specification.ArticleSpecification;
 import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.PageDTO;
-import com.comitfy.healtie.util.common.BaseFilterRequestDTO;
-import com.comitfy.healtie.util.common.BaseSpecification;
 import com.comitfy.healtie.util.common.BaseWithMultiLanguageService;
-import com.comitfy.healtie.util.common.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 
 
 @Service
@@ -62,29 +62,29 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
     }
 
 
-    /*@Override
-    public PageDTO<ArticleDTO> findAll(int page, int size, List<SearchCriteria> searchCriteriaList) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
-
-        getSpecification().setCriterias(searchCriteriaList);
-
-        PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAll(getSpecification(),pageable));
-
-        for (int i = 0; i < pageDTO.getData().size(); i++) {
-            pageDTO.getData().get(i).setLikeCount(getRepository().getCountOfArticleLike(pageDTO.getData().get(i).getUuid()));
-
-            pageDTO.getData().get(i).setSaveCount(getRepository().getCountOfArticleSave(pageDTO.getData().get(i).getUuid()));
-
-        }
-        return pageDTO;
-    }*/
-
-
-
-
     public PageDTO<ArticleDTO> getArticleByDoctor(UUID id, int page, int size, LanguageEnum languageEnum) {
         Optional<Doctor> doctor = doctorRepository.findByUuid(id);
         Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+
+        if (doctor.isPresent()) {
+
+            PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByDoctor(pageable, doctor.get()));
+            for (int i = 0; i < pageDTO.getData().size(); i++) {
+                pageDTO.getData().get(i).setLikeCount(getRepository().getCountOfArticleLike(pageDTO.getData().get(i).getUuid()));
+
+                pageDTO.getData().get(i).setSaveCount(getRepository().getCountOfArticleSave(pageDTO.getData().get(i).getUuid()));
+
+            }
+            return pageDTO;
+        } else {
+            return null;
+        }
+    }
+
+/*    public PageDTO<ArticleDTO> getArticleByDoctor(UUID id, int page, int size, LanguageEnum languageEnum) {
+        Optional<Doctor> doctor = doctorRepository.findByUuid(id);
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+
         if (doctor.isPresent()) {
 
             PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByDoctorAndLanguageEnum(pageable, doctor.get(), languageEnum));
@@ -94,12 +94,12 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
                 pageDTO.getData().get(i).setSaveCount(getRepository().getCountOfArticleSave(pageDTO.getData().get(i).getUuid()));
 
             }
-
             return pageDTO;
         } else {
             return null;
         }
-    }
+    }*/
+
 
     public ArticleRequestDTO saveArticleByDoctor(UUID id, ArticleRequestDTO dto) {
         Optional<Doctor> doctor = doctorRepository.findByUuid(id);

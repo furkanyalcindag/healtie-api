@@ -45,17 +45,14 @@ public class ArticleSpecification extends BaseSpecification<Article> {
                         root.<String>get(criteria.getKey()), criteria.getValue().toString());
             } else if (criteria.getOperation().equalsIgnoreCase(":")) {
                  if (criteria.getKey().equals("tag")) {
-
                     Join<Article, Tag> join = root.join("tags");
-                    predicate = builder.like( builder.lower(join.get("name").as(String.class)), "%" + criteria.getValue().toString()+ "%");
-
+                    predicate = builder.like( builder.lower(join.get("name").as(String.class)), "%" + criteria.getValue().toString().toLowerCase()+ "%");
                 }
                 else if (root.get(criteria.getKey()).getJavaType() == String.class) {
                     predicate = builder.like(
                             builder.lower(root.<String>get(criteria.getKey())), "%" + criteria.getValue() + "%");
 
                 }
-
                 else {
                     predicate = builder.equal(root.get(criteria.getKey()), criteria.getValue());
                 }

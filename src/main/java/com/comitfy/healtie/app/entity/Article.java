@@ -6,6 +6,7 @@ import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -19,8 +20,15 @@ public class Article extends BaseEntity {
     @Column
     private String title;
 
-    @Column
+
+    @Column(columnDefinition = "Text", length = 100000)
     private String description;
+
+    @Column
+    private String author;
+
+    @Column
+    private Date publishedDate;
 
     @ManyToMany
     private Set<Tag> tags;
