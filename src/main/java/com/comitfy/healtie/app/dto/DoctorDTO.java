@@ -20,5 +20,6 @@ public class DoctorDTO extends BaseDTO {
     private String email;
 
     private long articleCount;
+    private long articleLikeCount;
 
 }

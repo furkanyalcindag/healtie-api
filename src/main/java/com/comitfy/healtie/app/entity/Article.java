@@ -6,6 +6,7 @@ import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -28,7 +29,7 @@ public class Article extends BaseEntity {
     private String author;
 
     @Column
-    private Date publishedDate;
+    private LocalDate publishedDate;
 
     @ManyToMany
     private Set<Tag> tags;

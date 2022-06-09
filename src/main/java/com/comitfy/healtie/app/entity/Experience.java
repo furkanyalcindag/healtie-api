@@ -4,7 +4,8 @@ import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
+
 
 @Entity
 @Table
@@ -18,17 +19,19 @@ import java.util.Date;
 public class Experience extends BaseEntity {
 
     @Column
+    private String title;
+
+    @Column
     private String workedPlace;
 
     @Column
     private String description;
 
     @Column
-    private Date startDate;
-
+    private LocalDate startDate;
 
     @Column
-    private Date endDate;
+    private LocalDate endDate;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn

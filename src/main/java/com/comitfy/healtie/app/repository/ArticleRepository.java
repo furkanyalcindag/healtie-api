@@ -1,18 +1,16 @@
 package com.comitfy.healtie.app.repository;
 
-import com.comitfy.healtie.app.entity.AcademicInfo;
 import com.comitfy.healtie.app.entity.Article;
 import com.comitfy.healtie.app.entity.Category;
 import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.app.model.enums.LanguageEnum;
-import com.comitfy.healtie.util.common.BaseRepository;
+import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.common.BaseWithMultiLanguageRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -33,6 +31,12 @@ public interface ArticleRepository extends BaseWithMultiLanguageRepository<Artic
             "inner join article.userSaves saves  WHERE article.uuid=?1")
     long getCountOfArticleSave(UUID articleUUID);
 
+
+    @Query("SELECT article from Article article" +
+            " inner join article.userSaves saves WHERE saves.uuid=?1 ")
+    Page<Article>  getSavedArticleOfUser(Pageable pageable,UUID uuid);
+
+  //  Page<Article> findAllByUser(Pageable pageable,User user);
 
 
 }

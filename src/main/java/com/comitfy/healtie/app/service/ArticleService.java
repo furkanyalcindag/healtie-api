@@ -14,8 +14,10 @@ import com.comitfy.healtie.app.repository.CategoryRepository;
 import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.app.specification.ArticleSpecification;
 import com.comitfy.healtie.userModule.entity.User;
+import com.comitfy.healtie.userModule.repository.UserRepository;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseWithMultiLanguageService;
+import com.comitfy.healtie.util.common.HelperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -45,6 +47,12 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
 
     @Autowired
     ArticleSpecification articleSpecification;
+
+    @Autowired
+    HelperService helperService;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public ArticleRepository getRepository() {
@@ -80,26 +88,6 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
             return null;
         }
     }
-
-/*    public PageDTO<ArticleDTO> getArticleByDoctor(UUID id, int page, int size, LanguageEnum languageEnum) {
-        Optional<Doctor> doctor = doctorRepository.findByUuid(id);
-        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
-
-        if (doctor.isPresent()) {
-
-            PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByDoctorAndLanguageEnum(pageable, doctor.get(), languageEnum));
-            for (int i = 0; i < pageDTO.getData().size(); i++) {
-                pageDTO.getData().get(i).setLikeCount(getRepository().getCountOfArticleLike(pageDTO.getData().get(i).getUuid()));
-
-                pageDTO.getData().get(i).setSaveCount(getRepository().getCountOfArticleSave(pageDTO.getData().get(i).getUuid()));
-
-            }
-            return pageDTO;
-        } else {
-            return null;
-        }
-    }*/
-
 
     public ArticleRequestDTO saveArticleByDoctor(UUID id, ArticleRequestDTO dto) {
         Optional<Doctor> doctor = doctorRepository.findByUuid(id);
@@ -143,6 +131,15 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
         } else {
             return null;
         }
+    }
+
+    public PageDTO<ArticleDTO> getSavedArticleByUser(int page, int size, User user) {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+        // PageDTO<ArticleDTO> pageDTO=getMapper().pageEntityToPageDTO(getRepository().findAllByUser(pageable,user));
+
+        return getMapper().pageEntityToPageDTO(articleRepository.getSavedArticleOfUser(pageable, user.getUuid()));
+
     }
 
 

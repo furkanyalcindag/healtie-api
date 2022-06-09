@@ -1,7 +1,5 @@
 package com.comitfy.healtie.userModule.mapper;
 
-import com.comitfy.healtie.app.dto.LanguageDTO;
-import com.comitfy.healtie.app.entity.Language;
 import com.comitfy.healtie.userModule.dto.RoleDTO;
 import com.comitfy.healtie.userModule.dto.requestDTO.RoleRequestDTO;
 import com.comitfy.healtie.userModule.entity.Role;
