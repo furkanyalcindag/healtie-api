@@ -43,12 +43,11 @@ public class AuthService implements IAuthService {
 
         if (user.isEmpty()) {
             User newUser = new User();
-            newUser.setEmail(request.getEmail());
+            newUser.setEmail(request.getFirstName());
             newUser.setPassword(passwordEncoder.encode(request.getPassword()));
             newUser.setFirstName(request.getFirstName());
             newUser.setLastName(request.getLastName());
             newUser.setAgeRangeEnum(request.getAgeRangeEnum());
-
 
 
             newUser.setGender(gender);
