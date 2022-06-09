@@ -22,6 +22,10 @@ public interface ArticleRepository extends BaseWithMultiLanguageRepository<Artic
 
     Page<Article> findAllByCategoryListInAndLanguageEnum(Pageable pageable, Set<Category> category, LanguageEnum languageEnum);
 
+
+    Page<Article> findByIdAndUserLikes_Uuid(Pageable pageable, UUID id, UUID userId);
+
+
     @Query("SELECT COUNT(likes) FROM Article article " +
             "inner join article.userLikes likes  WHERE article.uuid=?1")
     long getCountOfArticleLike(UUID articleUUID);
@@ -30,7 +34,6 @@ public interface ArticleRepository extends BaseWithMultiLanguageRepository<Artic
             "inner join article.userSaves saves  WHERE article.uuid=?1")
     long getCountOfArticleSave(UUID articleUUID);
 
-
     @Query("SELECT article from Article article" +
             " inner join article.userSaves saves WHERE saves.uuid=?1 ")
     Page<Article> getSavedArticleOfUser(Pageable pageable, UUID uuid);
@@ -38,6 +41,15 @@ public interface ArticleRepository extends BaseWithMultiLanguageRepository<Artic
     @Query("SELECT article from Article article" +
             " inner join article.userLikes likes WHERE likes.uuid=?1")
     Page<Article> getLikedArticleOfUser(Pageable pageable, UUID uuid);
+
+    @Query("SELECT COUNT(likes) FROM Article article " +
+            "inner join article.userLikes likes  WHERE article.uuid=?1 and likes.uuid=?2")
+    long isLikedByUser(UUID articleUUID, UUID userUUID);
+
+    @Query("SELECT COUNT(saves) FROM Article article " +
+            "inner join article.userSaves saves  WHERE article.uuid=?1 and saves.uuid=?2")
+    long isSavedByUser(UUID articleUUID, UUID userUUID);
+
 
     //  Page<Article> findAllByUser(Pageable pageable,User user);
 

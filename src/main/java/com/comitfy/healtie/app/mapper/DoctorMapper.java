@@ -49,7 +49,6 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
             doctorDTO.setArticleCount(entity.getArticleList().size());
         }
         return doctorDTO;
-
     }
 
     @Override

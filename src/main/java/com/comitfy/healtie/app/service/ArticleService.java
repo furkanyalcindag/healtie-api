@@ -16,8 +16,9 @@ import com.comitfy.healtie.app.specification.ArticleSpecification;
 import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.userModule.repository.UserRepository;
 import com.comitfy.healtie.util.PageDTO;
+import com.comitfy.healtie.util.common.BaseFilterRequestDTO;
 import com.comitfy.healtie.util.common.BaseWithMultiLanguageService;
-import com.comitfy.healtie.util.common.HelperService;
+import com.comitfy.healtie.util.common.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -48,8 +49,6 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
     @Autowired
     ArticleSpecification articleSpecification;
 
-    @Autowired
-    HelperService helperService;
 
     @Autowired
     UserRepository userRepository;
@@ -145,6 +144,62 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
     public PageDTO<ArticleDTO> getLikedArticleByUser(int page, int size, User user) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
         return getMapper().pageEntityToPageDTO(articleRepository.getLikedArticleOfUser(pageable, user.getUuid()));
+    }
+
+
+    public boolean isLikedArticleByUser(UUID articleUUID, UUID userUUID) {
+
+        if (articleRepository.isLikedByUser(articleUUID, userUUID) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+
+    public boolean isSavedArticleByUser(UUID articleUUID, UUID userUUID) {
+
+        if (articleRepository.isSavedByUser(articleUUID, userUUID) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    @Override
+    public PageDTO<ArticleDTO> findAll(BaseFilterRequestDTO filterRequestDTO, LanguageEnum languageEnum) {
+        Pageable pageable = PageRequest.of(filterRequestDTO.getPageNumber(), filterRequestDTO.getPageSize(), Sort.by("id"));
+
+
+        if (filterRequestDTO.getLanguage() != null) {
+            SearchCriteria sc = new SearchCriteria("languageEnum", "=", "", LanguageEnum.valueOf(filterRequestDTO.getLanguage()));
+            filterRequestDTO.getFilters().add(sc);
+        } else {
+            SearchCriteria sc = new SearchCriteria("languageEnum", "=", "", languageEnum);
+            filterRequestDTO.getFilters().add(sc);
+
+        }
+
+
+        getSpecification().setCriterias(filterRequestDTO.getFilters());
+        //return getMapper().pageEntityToPageDTO(getRepository().findAllByLanguageEnum(pageable,languageEnum));
+
+        PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAll(getSpecification(), pageable));
+
+        if (filterRequestDTO.getRequestUserUUID() != null) {
+            for (ArticleDTO articleDTO : pageDTO.getData()) {
+
+                articleDTO.setLike(isLikedArticleByUser(articleDTO.getUuid(), filterRequestDTO.getRequestUserUUID()));
+                articleDTO.setSave(isSavedArticleByUser(articleDTO.getUuid(), filterRequestDTO.getRequestUserUUID()));
+
+            }
+
+        }
+
+        return pageDTO;
+
     }
 
 

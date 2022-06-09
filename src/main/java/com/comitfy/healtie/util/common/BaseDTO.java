@@ -20,5 +20,8 @@ public class BaseDTO {
     private LanguageEnum languageEnum;
     private String language;
 
+    @JsonIgnore
+    private UUID requestUserUUID;
+
 
 }

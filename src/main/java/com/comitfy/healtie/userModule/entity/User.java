@@ -1,8 +1,8 @@
 package com.comitfy.healtie.userModule.entity;
 
 
-import com.comitfy.healtie.app.entity.Gender;
 import com.comitfy.healtie.app.model.enums.AgeRangeEnum;
+import com.comitfy.healtie.app.model.enums.GenderEnum;
 import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import lombok.Data;
 
@@ -32,13 +32,14 @@ public class User extends BaseEntity {
     @Column
     private boolean isEnable;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn
-    private Gender gender;
-
     @Column
     @Enumerated(EnumType.STRING)
     private AgeRangeEnum ageRangeEnum;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private GenderEnum genderEnum;
+
 
 
 

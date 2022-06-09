@@ -1,8 +1,10 @@
 package com.comitfy.healtie.util.common;
 
 import com.comitfy.healtie.app.model.enums.LanguageEnum;
+import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.dbUtil.BaseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -21,6 +23,9 @@ public abstract class BaseWithMultiLanguageCrudController<DTO extends BaseDTO, R
 
     protected abstract Mapper getMapper();
 
+    @Autowired
+    HelperService helperService;
+
     protected void validate(BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             String errors = bindingResult.getAllErrors().stream().map(n -> n.toString())
@@ -32,6 +37,8 @@ public abstract class BaseWithMultiLanguageCrudController<DTO extends BaseDTO, R
     @PostMapping("get-all-by-filter")
     public ResponseEntity<PageDTO<DTO>> getAll(@RequestHeader(value = "accept-language", required = true) String language, @RequestBody BaseFilterRequestDTO filter) {
 
+        User user = helperService.getUserFromSession();
+        filter.setRequestUserUUID(user != null ? user.getUuid() : null);
         PageDTO<DTO> dtoList = getService().findAll(filter, LanguageEnum.valueOf(language));
 
         return new ResponseEntity<>(dtoList, HttpStatus.OK);
