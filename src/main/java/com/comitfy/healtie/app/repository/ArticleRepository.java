@@ -4,7 +4,6 @@ import com.comitfy.healtie.app.entity.Article;
 import com.comitfy.healtie.app.entity.Category;
 import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.app.model.enums.LanguageEnum;
-import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.common.BaseWithMultiLanguageRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,9 +33,13 @@ public interface ArticleRepository extends BaseWithMultiLanguageRepository<Artic
 
     @Query("SELECT article from Article article" +
             " inner join article.userSaves saves WHERE saves.uuid=?1 ")
-    Page<Article>  getSavedArticleOfUser(Pageable pageable,UUID uuid);
+    Page<Article> getSavedArticleOfUser(Pageable pageable, UUID uuid);
 
-  //  Page<Article> findAllByUser(Pageable pageable,User user);
+    @Query("SELECT article from Article article" +
+            " inner join article.userLikes likes WHERE likes.uuid=?1")
+    Page<Article> getLikedArticleOfUser(Pageable pageable, UUID uuid);
+
+    //  Page<Article> findAllByUser(Pageable pageable,User user);
 
 
 }

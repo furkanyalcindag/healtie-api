@@ -142,5 +142,10 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
 
     }
 
+    public PageDTO<ArticleDTO> getLikedArticleByUser(int page, int size, User user) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+        return getMapper().pageEntityToPageDTO(articleRepository.getLikedArticleOfUser(pageable, user.getUuid()));
+    }
+
 
 }

@@ -23,8 +23,12 @@ public class User extends BaseEntity {
 
     @Column(nullable = false)
     private String password;
+
     @Column(nullable = false)
     private String email;
+
+    @Column
+    private String photoLink;
     @Column
     private boolean isEnable;
 
