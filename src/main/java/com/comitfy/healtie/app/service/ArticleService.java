@@ -14,8 +14,11 @@ import com.comitfy.healtie.app.repository.CategoryRepository;
 import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.app.specification.ArticleSpecification;
 import com.comitfy.healtie.userModule.entity.User;
+import com.comitfy.healtie.userModule.repository.UserRepository;
 import com.comitfy.healtie.util.PageDTO;
+import com.comitfy.healtie.util.common.BaseFilterRequestDTO;
 import com.comitfy.healtie.util.common.BaseWithMultiLanguageService;
+import com.comitfy.healtie.util.common.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -45,6 +48,10 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
 
     @Autowired
     ArticleSpecification articleSpecification;
+
+
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public ArticleRepository getRepository() {
@@ -80,26 +87,6 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
             return null;
         }
     }
-
-/*    public PageDTO<ArticleDTO> getArticleByDoctor(UUID id, int page, int size, LanguageEnum languageEnum) {
-        Optional<Doctor> doctor = doctorRepository.findByUuid(id);
-        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
-
-        if (doctor.isPresent()) {
-
-            PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByDoctorAndLanguageEnum(pageable, doctor.get(), languageEnum));
-            for (int i = 0; i < pageDTO.getData().size(); i++) {
-                pageDTO.getData().get(i).setLikeCount(getRepository().getCountOfArticleLike(pageDTO.getData().get(i).getUuid()));
-
-                pageDTO.getData().get(i).setSaveCount(getRepository().getCountOfArticleSave(pageDTO.getData().get(i).getUuid()));
-
-            }
-            return pageDTO;
-        } else {
-            return null;
-        }
-    }*/
-
 
     public ArticleRequestDTO saveArticleByDoctor(UUID id, ArticleRequestDTO dto) {
         Optional<Doctor> doctor = doctorRepository.findByUuid(id);
@@ -143,6 +130,76 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
         } else {
             return null;
         }
+    }
+
+    public PageDTO<ArticleDTO> getSavedArticleByUser(int page, int size, User user) {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+        // PageDTO<ArticleDTO> pageDTO=getMapper().pageEntityToPageDTO(getRepository().findAllByUser(pageable,user));
+
+        return getMapper().pageEntityToPageDTO(articleRepository.getSavedArticleOfUser(pageable, user.getUuid()));
+
+    }
+
+    public PageDTO<ArticleDTO> getLikedArticleByUser(int page, int size, User user) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+        return getMapper().pageEntityToPageDTO(articleRepository.getLikedArticleOfUser(pageable, user.getUuid()));
+    }
+
+
+    public boolean isLikedArticleByUser(UUID articleUUID, UUID userUUID) {
+
+        if (articleRepository.isLikedByUser(articleUUID, userUUID) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+
+    public boolean isSavedArticleByUser(UUID articleUUID, UUID userUUID) {
+
+        if (articleRepository.isSavedByUser(articleUUID, userUUID) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    @Override
+    public PageDTO<ArticleDTO> findAll(BaseFilterRequestDTO filterRequestDTO, LanguageEnum languageEnum) {
+        Pageable pageable = PageRequest.of(filterRequestDTO.getPageNumber(), filterRequestDTO.getPageSize(), Sort.by("id"));
+
+
+        if (filterRequestDTO.getLanguage() != null) {
+            SearchCriteria sc = new SearchCriteria("languageEnum", "=", "", LanguageEnum.valueOf(filterRequestDTO.getLanguage()));
+            filterRequestDTO.getFilters().add(sc);
+        } else {
+            SearchCriteria sc = new SearchCriteria("languageEnum", "=", "", languageEnum);
+            filterRequestDTO.getFilters().add(sc);
+
+        }
+
+
+        getSpecification().setCriterias(filterRequestDTO.getFilters());
+        //return getMapper().pageEntityToPageDTO(getRepository().findAllByLanguageEnum(pageable,languageEnum));
+
+        PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAll(getSpecification(), pageable));
+
+        if (filterRequestDTO.getRequestUserUUID() != null) {
+            for (ArticleDTO articleDTO : pageDTO.getData()) {
+
+                articleDTO.setLike(isLikedArticleByUser(articleDTO.getUuid(), filterRequestDTO.getRequestUserUUID()));
+                articleDTO.setSave(isSavedArticleByUser(articleDTO.getUuid(), filterRequestDTO.getRequestUserUUID()));
+
+            }
+
+        }
+
+        return pageDTO;
+
     }
 
 

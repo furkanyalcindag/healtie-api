@@ -16,6 +16,7 @@ import com.comitfy.healtie.app.service.ArticleService;
 import com.comitfy.healtie.app.service.DoctorService;
 import com.comitfy.healtie.app.specification.ArticleSpecification;
 import com.comitfy.healtie.userModule.entity.User;
+import com.comitfy.healtie.userModule.repository.UserRepository;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseWithMultiLanguageCrudController;
 import com.comitfy.healtie.util.common.HelperService;
@@ -51,6 +52,9 @@ public class ArticleController extends BaseWithMultiLanguageCrudController<Artic
 
     @Autowired
     HelperService helperService;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     protected ArticleService getService() {
@@ -114,4 +118,46 @@ public class ArticleController extends BaseWithMultiLanguageCrudController<Artic
         return new ResponseEntity<>("Başarılı", HttpStatus.OK);
     }
 
+    @GetMapping("user-api/saved-articles/")
+    public ResponseEntity<PageDTO<ArticleDTO>> getSavesByUser(@RequestHeader(value = "accept-language", required = true) String language,
+                                                              @RequestParam int pageNumber, @RequestParam int pageSize) {
+
+        User user = helperService.getUserFromSession();
+        PageDTO<ArticleDTO> dto = articleService.getSavedArticleByUser(pageNumber, pageSize, user);
+
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+    @GetMapping("user-api/liked-articles/")
+    public ResponseEntity<PageDTO<ArticleDTO>> getLikesByUser(@RequestHeader(value = "accept-language", required = true) String language,
+                                                              @RequestParam int pageNumber, @RequestParam int pageSize) {
+        User user = helperService.getUserFromSession();
+        PageDTO<ArticleDTO> dto = articleService.getLikedArticleByUser(pageNumber, pageSize, user);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+
+
+
+
+
+
+    /*    @GetMapping("/")
+    public ResponseEntity<PageDTO<DTO>> getAll(@RequestHeader(value = "accept-language", required = true) String language, @RequestParam int pageNumber, @RequestParam int pageSize) {
+
+        PageDTO<DTO> dtoList = getService().findAll(pageNumber, pageSize, LanguageEnum.valueOf(language));
+
+        return new ResponseEntity<>(dtoList, HttpStatus.OK);
+    }*/
+
+    /*    @GetMapping("doctor/{doctorId}")
+    public ResponseEntity<PageDTO<ArticleDTO>> getByDoctorId(@RequestHeader(value = "accept-language", required = true) String language,
+                                                             @PathVariable UUID doctorId, @RequestParam int pageNumber, @RequestParam int pageSize) {
+        Optional<Doctor> optional = doctorService.getRepository().findByUuid(doctorId);
+        if (optional == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(articleService.getArticleByDoctor(doctorId, pageNumber, pageSize, LanguageEnum.valueOf(language)), HttpStatus.OK);
+        }
+    }*/
 }

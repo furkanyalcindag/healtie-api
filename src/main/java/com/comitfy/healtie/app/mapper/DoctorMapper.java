@@ -5,6 +5,7 @@ import com.comitfy.healtie.app.dto.requestDTO.DoctorRequestDTO;
 import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.userModule.entity.User;
+import com.comitfy.healtie.userModule.repository.UserRepository;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public DoctorDTO entityToDTO(Doctor entity) {
@@ -45,7 +49,6 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
             doctorDTO.setArticleCount(entity.getArticleList().size());
         }
         return doctorDTO;
-
     }
 
     @Override
@@ -88,6 +91,7 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
         return doctor;
     }
 
+
     @Override
     public Doctor requestDTOToExistEntity(Doctor doctor, DoctorRequestDTO dto) {
         doctor.setTitle(dto.getTitle());
@@ -98,6 +102,12 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
         doctor.setAbout(dto.getAbout());
         doctor.setClinicName(dto.getClinicName());
         doctor.setLanguageEnum(dto.getLanguageEnum());
+
+
+        doctor.getUser().setFirstName(dto.getFirstName());
+        doctor.getUser().setLastName(dto.getLastName());
+        doctor.getUser().setEmail(dto.getEmail());
+        doctor.getUser().setPassword(passwordEncoder.encode(dto.getPassword()));
 
         return doctor;
     }

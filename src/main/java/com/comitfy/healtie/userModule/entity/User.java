@@ -1,11 +1,12 @@
 package com.comitfy.healtie.userModule.entity;
 
 
+import com.comitfy.healtie.app.model.enums.AgeRangeEnum;
+import com.comitfy.healtie.app.model.enums.GenderEnum;
 import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 
@@ -22,10 +23,26 @@ public class User extends BaseEntity {
 
     @Column(nullable = false)
     private String password;
+
     @Column(nullable = false)
     private String email;
+
+    @Column
+    private String photoLink;
     @Column
     private boolean isEnable;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private AgeRangeEnum ageRangeEnum;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private GenderEnum genderEnum;
+
+
+
+
 
     /*@JoinTable(name = "user_group",joinColumns = @JoinColumn(name="user_id"))
     @JoinColumn(name = "group_id")

@@ -4,6 +4,7 @@ import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -24,10 +25,10 @@ public class AcademicInfo extends BaseEntity {
     private String profession;
 
     @Column
-    private Date startYear;
+    private LocalDate startYear;
 
     @Column
-    private Date graduateYear;
+    private LocalDate graduateYear;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn
