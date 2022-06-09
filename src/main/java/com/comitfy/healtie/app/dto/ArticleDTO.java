@@ -4,7 +4,6 @@ import com.comitfy.healtie.util.common.BaseDTO;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Set;
 
 @Data
@@ -17,6 +16,9 @@ public class ArticleDTO extends BaseDTO {
     private LocalDate publishedDate;
     private long likeCount;
     private long saveCount;
+
+    private boolean isLike = Boolean.FALSE;
+    private boolean isSave=Boolean.FALSE;
 
     private Set<TagDTO> tags;
 

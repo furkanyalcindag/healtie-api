@@ -40,6 +40,7 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
         articleDTO.setDescription(entity.getDescription());
         articleDTO.setTitle(entity.getTitle());
         articleDTO.setPublishedDate(entity.getPublishedDate());
+        ;
         // articleDTO.setAuthor(entity.getAuthor());
         if (entity.getUserSaves() != null) {
             articleDTO.setSaveCount(entity.getUserSaves().size());
@@ -61,11 +62,13 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
             tagDTO.setUuid(tag.getUuid());
             tagDTOS.add(tagDTO);
         }
+
         articleDTO.setTags(tagDTOS);
         articleDTO.setUuid(entity.getUuid());
         articleDTO.setLanguageEnum(entity.getLanguageEnum());
         return articleDTO;
     }
+
 
     @Override
     public Article dtoToEntity(ArticleDTO dto) {
