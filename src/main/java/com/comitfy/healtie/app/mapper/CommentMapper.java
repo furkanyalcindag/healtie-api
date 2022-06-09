@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Component
 public class CommentMapper implements BaseMapper<CommentDTO, CommentRequestDTO, Comment> {
@@ -47,13 +45,8 @@ public class CommentMapper implements BaseMapper<CommentDTO, CommentRequestDTO, 
         Comment comment = new Comment();
         comment.setContent(dto.getContent());
 
-
-
-     /*   Comment parent = new Comment();
-        comment.setParent(parent);
-
-      Optional<Comment> comment1 = commentRepository.findByUuid(dto.getUuid());
-        comment.setParent(comment1.get());*/
+        Comment comment1 = commentService.findEntityByUUID(dto.getParentUuid());
+        comment.setParent(comment1);
 
         return comment;
     }
@@ -61,10 +54,10 @@ public class CommentMapper implements BaseMapper<CommentDTO, CommentRequestDTO, 
     @Override
     public Comment requestDTOToExistEntity(Comment comment, CommentRequestDTO dto) {
         comment.setContent(dto.getContent());
-   /*     for (UUID uuid : dto.getParentList()) {
-            Optional<Comment> comment1 = commentRepository.findByUuid(uuid);
-            comment1.ifPresent(value -> comment.getParent().add(value));
-        }*/
+
+        Comment comment1 = commentService.findEntityByUUID(dto.getParentUuid());
+        comment.setParent(comment1);
+
         return comment;
     }
 

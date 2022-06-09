@@ -1,6 +1,8 @@
 package com.comitfy.healtie.userModule.service;
 
 
+import com.comitfy.healtie.app.entity.Gender;
+import com.comitfy.healtie.app.service.GenderService;
 import com.comitfy.healtie.userModule.entity.Role;
 import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.userModule.model.requestModel.auth.RegisterRequest;
@@ -28,10 +30,16 @@ public class AuthService implements IAuthService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    GenderService genderService;
+
     @Override
     public boolean registerUser(RegisterRequest request) {
 
         Optional<User> user = userRepository.findByEmail(request.getEmail());
+
+        Gender gender = genderService.findEntityByUUID(request.getGenderUUID());
+
 
         if (user.isEmpty()) {
             User newUser = new User();
@@ -39,9 +47,11 @@ public class AuthService implements IAuthService {
             newUser.setPassword(passwordEncoder.encode(request.getPassword()));
             newUser.setFirstName(request.getFirstName());
             newUser.setLastName(request.getLastName());
-           // newUser.setGender(request.getGender());
+            newUser.setAgeRangeEnum(request.getAgeRangeEnum());
 
 
+
+            newUser.setGender(gender);
 
             // doctorDTO.setFirstName(entity.getUser().getFirstName());
 

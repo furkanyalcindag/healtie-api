@@ -1,6 +1,9 @@
 package com.comitfy.healtie.userModule.model.requestModel.auth;
 
+import com.comitfy.healtie.app.model.enums.AgeRangeEnum;
 import lombok.Data;
+
+import java.util.UUID;
 
 @Data
 public class RegisterRequest {
@@ -10,7 +13,10 @@ public class RegisterRequest {
     private String firstName;
     private String lastName;
     private String confirmPassword;
-    private String gender;
+    private UUID genderUUID;
+
+    private AgeRangeEnum ageRangeEnum;
+
 
 
 }

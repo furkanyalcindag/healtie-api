@@ -24,7 +24,7 @@ public class Gender extends BaseEntity {
     @OneToMany(mappedBy = "gender", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Doctor> doctorList;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private User user;
+    @OneToMany(mappedBy = "gender", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<User> userList;
 
 }

@@ -2,11 +2,11 @@ package com.comitfy.healtie.userModule.entity;
 
 
 import com.comitfy.healtie.app.entity.Gender;
+import com.comitfy.healtie.app.model.enums.AgeRangeEnum;
 import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 
@@ -28,6 +28,13 @@ public class User extends BaseEntity {
     @Column
     private boolean isEnable;
 
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn
+    private Gender gender;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private AgeRangeEnum ageRangeEnum;
 
 
 
@@ -36,9 +43,6 @@ public class User extends BaseEntity {
     @JoinColumn(name = "group_id")
     @OneToMany(fetch = FetchType.LAZY)
     private List<Group> group;*/
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Gender gender;
 
 
     @ManyToMany
