@@ -1,6 +1,6 @@
 package com.comitfy.healtie.userModule.mapper;
 
-import com.comitfy.healtie.app.service.UserService;
+import com.comitfy.healtie.app.service.UserInfoService;
 import com.comitfy.healtie.userModule.dto.UserDTO;
 import com.comitfy.healtie.userModule.dto.requestDTO.UserRequestDTO;
 import com.comitfy.healtie.userModule.entity.User;
@@ -17,7 +17,7 @@ import java.util.List;
 public class UserMapper implements BaseMapper<UserDTO, UserRequestDTO, User> {
 
     @Autowired
-    UserService userService;
+    UserInfoService userService;
 
     @Override
     public UserDTO entityToDTO(User entity) {

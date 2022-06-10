@@ -8,7 +8,7 @@ import com.comitfy.healtie.userModule.repository.UserRepository;
 import com.comitfy.healtie.userModule.service.UserService;
 import com.comitfy.healtie.userModule.specification.UserSpecification;
 import com.comitfy.healtie.util.common.BaseCrudController;
-import com.comitfy.healtie.util.common.MinioService;
+//import com.comitfy.healtie.util.common.MinioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,8 +23,8 @@ public class UserController extends BaseCrudController<UserDTO, UserRequestDTO, 
     @Autowired
     UserMapper userMapper;
 
-    @Autowired
-    private MinioService minioService;
+   /* @Autowired
+    private MinioService minioService;*/
 
     @Override
     protected UserService getService() {
