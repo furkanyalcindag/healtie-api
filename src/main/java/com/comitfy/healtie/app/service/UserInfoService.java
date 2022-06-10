@@ -4,7 +4,6 @@ import com.comitfy.healtie.userModule.dto.UserDTO;
 import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.userModule.mapper.UserMapper;
 import com.comitfy.healtie.userModule.repository.UserRepository;
-import com.comitfy.healtie.util.common.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +11,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class UserService {
+public class UserInfoService {
 
     @Autowired
     UserRepository userRepository;

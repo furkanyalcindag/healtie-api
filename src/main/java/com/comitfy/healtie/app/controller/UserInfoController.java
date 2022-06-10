@@ -1,6 +1,6 @@
 package com.comitfy.healtie.app.controller;
 
-import com.comitfy.healtie.app.service.UserService;
+import com.comitfy.healtie.app.service.UserInfoService;
 import com.comitfy.healtie.userModule.dto.UserDTO;
 import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.common.HelperService;
@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("user-profile")
-public class UserController {
+public class UserInfoController {
 
     @Autowired
     HelperService helperService;
 
     @Autowired
-    UserService userService;
+    UserInfoService userService;
 
 
     @GetMapping("info")
