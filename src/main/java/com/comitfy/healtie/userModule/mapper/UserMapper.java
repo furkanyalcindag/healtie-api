@@ -1,10 +1,12 @@
 package com.comitfy.healtie.userModule.mapper;
 
+import com.comitfy.healtie.app.service.UserService;
 import com.comitfy.healtie.userModule.dto.UserDTO;
 import com.comitfy.healtie.userModule.dto.requestDTO.UserRequestDTO;
 import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +15,10 @@ import java.util.List;
 
 @Component
 public class UserMapper implements BaseMapper<UserDTO, UserRequestDTO, User> {
+
+    @Autowired
+    UserService userService;
+
     @Override
     public UserDTO entityToDTO(User entity) {
 
@@ -22,6 +28,8 @@ public class UserMapper implements BaseMapper<UserDTO, UserRequestDTO, User> {
         userDTO.setEmail(entity.getEmail());
         userDTO.setPhotoLink(entity.getPhotoLink());
         userDTO.setUuid(entity.getUuid());
+        userDTO.setLikedCount(userService.getLikeCountByUser(entity.getUuid()));
+        userDTO.setSavedCount(userService.getSaveCountByUser(entity.getUuid()));
 
         return userDTO;
     }
@@ -43,7 +51,7 @@ public class UserMapper implements BaseMapper<UserDTO, UserRequestDTO, User> {
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
         user.setEmail(dto.getEmail());
-        user.setPhotoLink(dto.getPhotoLink());
+        //user.setPhotoLink(dto.getPhotoLink());
 
         return user;
     }
@@ -54,7 +62,7 @@ public class UserMapper implements BaseMapper<UserDTO, UserRequestDTO, User> {
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
         user.setEmail(dto.getEmail());
-        user.setPhotoLink(dto.getPhotoLink());
+        //user.setPhotoLink(dto.getPhotoLink());
         return user;
     }
 

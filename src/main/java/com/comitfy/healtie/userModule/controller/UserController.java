@@ -8,6 +8,7 @@ import com.comitfy.healtie.userModule.repository.UserRepository;
 import com.comitfy.healtie.userModule.service.UserService;
 import com.comitfy.healtie.userModule.specification.UserSpecification;
 import com.comitfy.healtie.util.common.BaseCrudController;
+import com.comitfy.healtie.util.common.MinioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,9 @@ public class UserController extends BaseCrudController<UserDTO, UserRequestDTO, 
     @Autowired
     UserMapper userMapper;
 
+    @Autowired
+    private MinioService minioService;
+
     @Override
     protected UserService getService() {
         return userService;
@@ -31,4 +35,24 @@ public class UserController extends BaseCrudController<UserDTO, UserRequestDTO, 
     protected UserMapper getMapper() {
         return userMapper;
     }
+
+/*
+    @PostMapping("add-profile-photo")
+    public ResponseEntity<String> addProfilePhoto(@RequestParam("photo") MultipartFile file){
+
+        Path path = Path.of(Objects.requireNonNull(file.getOriginalFilename()));
+        try {
+            minioService.upload(path, file.getInputStream(), file.getContentType());
+        } catch (MinioException e) {
+            throw new IllegalStateException("The file cannot be upload on the internal storage. Please retry later", e);
+        } catch (IOException e) {
+            throw new IllegalStateException("The file cannot be read", e);
+        }
+
+
+    }
+
+
+*/
+
 }
