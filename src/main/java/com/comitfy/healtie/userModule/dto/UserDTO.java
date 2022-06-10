@@ -10,4 +10,6 @@ public class UserDTO extends BaseDTO {
     private String lastName;
     private String email;
     private String photoLink;
+    private long likedCount;
+    private long savedCount;
 }
