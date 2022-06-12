@@ -36,4 +36,9 @@ public class UserService extends BaseService<UserDTO, UserRequestDTO, User, User
     public UserSpecification getSpecification() {
         return userSpecification;
     }
+
+    public User getUserByEmail(String email) {
+
+        return getRepository().findByEmail(email).get();
+    }
 }

@@ -12,9 +12,7 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class AuthService implements IAuthService {
@@ -53,7 +51,7 @@ public class AuthService implements IAuthService {
 
             Set<Role> roles = new HashSet<>();
             roles.add(roleRepository.findByName("user").get());
-            //newUser.setRoles(roles);
+            newUser.setRoles(roles);
 
             userRepository.save(newUser);
             return true;
