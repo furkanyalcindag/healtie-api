@@ -28,6 +28,14 @@ public class CommentMapper implements BaseMapper<CommentDTO, CommentRequestDTO, 
         CommentDTO commentDTO = new CommentDTO();
         commentDTO.setContent(entity.getContent());
         commentDTO.setUuid(entity.getUuid());
+
+        if (entity.getUserLikes() != null) {
+            commentDTO.setLikeCount(entity.getUserLikes().size());
+        }
+        if (entity.getUser() != null) {
+            commentDTO.setUserName(entity.getUser().getFirstName() + " " + entity.getUser().getLastName());
+        }
+
         return commentDTO;
     }
 

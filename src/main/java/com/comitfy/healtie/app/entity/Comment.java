@@ -19,7 +19,10 @@ import java.util.Set;
 )
 public class Comment extends BaseEntity {
 
+    @Column
     private String content;
+    @Column
+    private String userName;
 
 /*    @ManyToMany
     private Set<Comment> parent;*/
