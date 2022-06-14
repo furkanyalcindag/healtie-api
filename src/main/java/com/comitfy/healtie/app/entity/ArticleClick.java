@@ -2,11 +2,10 @@ package com.comitfy.healtie.app.entity;
 
 import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
@@ -16,9 +15,13 @@ import java.util.UUID;
 public class ArticleClick extends BaseEntity {
 
     @Column
-    private UUID articleUUID;
+    @Type(type = "uuid-char")
+    private UUID articleUuid;
+
+
     @Column
-    private UUID userUUID;
+    @Type(type = "uuid-char")
+    private UUID userUuid;
 
 
 }
