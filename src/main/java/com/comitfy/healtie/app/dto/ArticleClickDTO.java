@@ -10,5 +10,4 @@ public class ArticleClickDTO extends BaseDTO {
     private UUID articleUUID;
     private UUID userUUID;
 
-    private long articleClickCount;
 }

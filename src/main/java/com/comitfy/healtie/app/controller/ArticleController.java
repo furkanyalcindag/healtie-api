@@ -3,6 +3,7 @@ package com.comitfy.healtie.app.controller;
 import com.comitfy.healtie.app.dto.ArticleClickDTO;
 import com.comitfy.healtie.app.dto.ArticleDTO;
 import com.comitfy.healtie.app.dto.DoctorDTO;
+import com.comitfy.healtie.app.dto.requestDTO.ArticleClickRequestDTO;
 import com.comitfy.healtie.app.dto.requestDTO.ArticleLikeRequestDTO;
 import com.comitfy.healtie.app.dto.requestDTO.ArticleRequestDTO;
 import com.comitfy.healtie.app.dto.requestDTO.ArticleSaveRequestDTO;
@@ -138,6 +139,25 @@ public class ArticleController extends BaseWithMultiLanguageCrudController<Artic
         User user = helperService.getUserFromSession();
         PageDTO<ArticleDTO> dto = articleService.getLikedArticleByUser(pageNumber, pageSize, user);
         return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ArticleDTO> getById(@RequestHeader(value = "accept-language", required = true) String acceptLanguage, @PathVariable UUID id) {
+        ArticleDTO optionalT = getService().findByUUID(id);
+        if (optionalT == null) {
+
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        } else {
+
+            User user= helperService.getUserFromSession();
+            ArticleClickRequestDTO articleClickRequestDTO = new ArticleClickRequestDTO();
+            articleClickRequestDTO.setArticleUUID(optionalT.getUuid());
+            articleClickRequestDTO.setUserUUID(user!=null?user.getUuid():null);
+            articleClickService.save(articleClickRequestDTO);
+
+            return new ResponseEntity<>(optionalT, HttpStatus.OK);
+        }
     }
 
    /* @GetMapping("user-api/clicked-article/")

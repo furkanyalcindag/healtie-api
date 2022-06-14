@@ -10,7 +10,7 @@ import java.util.UUID;
 @Table
 @Data
 @AttributeOverride(name = "uuid", column = @Column(name = "article_click_uuid"))
-public class ProfileClick extends BaseEntity {
+public class DoctorProfileClick extends BaseEntity {
     private UUID userUUID;
     private UUID doctorUUID;
 }
