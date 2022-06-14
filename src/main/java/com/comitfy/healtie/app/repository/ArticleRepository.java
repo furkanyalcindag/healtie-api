@@ -50,6 +50,10 @@ public interface ArticleRepository extends BaseWithMultiLanguageRepository<Artic
             "inner join article.userSaves saves  WHERE article.uuid=?1 and saves.uuid=?2")
     long isSavedByUser(UUID articleUUID, UUID userUUID);
 
+    @Query("SELECT COUNT(article) FROM Article article" +
+            " inner join article.categoryList category WHERE category.uuid=?1")
+    long getCountOfArticleByCategory(UUID categoryUUID);
+
 
     //  Page<Article> findAllByUser(Pageable pageable,User user);
 

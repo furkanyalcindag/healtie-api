@@ -117,7 +117,6 @@ public class CommentService extends BaseService<CommentDTO, CommentRequestDTO, C
 
         }
 */
-
         getSpecification().setCriterias(filterRequestDTO.getFilters());
         //return getMapper().pageEntityToPageDTO(getRepository().findAllByLanguageEnum(pageable,languageEnum));
 

@@ -25,5 +25,7 @@ public class CategoryDTO extends BaseDTO {
 
     private List<CategoryDTO> parentList;
 
+    private long articleCount;
+
 
 }
