@@ -1,5 +1,6 @@
 package com.comitfy.healtie.app.controller;
 
+import com.comitfy.healtie.app.dto.ArticleClickDTO;
 import com.comitfy.healtie.app.dto.ArticleDTO;
 import com.comitfy.healtie.app.dto.DoctorDTO;
 import com.comitfy.healtie.app.dto.requestDTO.ArticleLikeRequestDTO;
@@ -12,6 +13,7 @@ import com.comitfy.healtie.app.model.enums.LanguageEnum;
 import com.comitfy.healtie.app.repository.ArticleRepository;
 import com.comitfy.healtie.app.repository.CategoryRepository;
 import com.comitfy.healtie.app.repository.DoctorRepository;
+import com.comitfy.healtie.app.service.ArticleClickService;
 import com.comitfy.healtie.app.service.ArticleService;
 import com.comitfy.healtie.app.service.DoctorService;
 import com.comitfy.healtie.app.specification.ArticleSpecification;
@@ -46,6 +48,8 @@ public class ArticleController extends BaseWithMultiLanguageCrudController<Artic
 
     @Autowired
     ArticleRepository articleRepository;
+    @Autowired
+    ArticleClickService articleClickService;
 
     @Autowired
     DoctorService doctorService;
@@ -136,6 +140,20 @@ public class ArticleController extends BaseWithMultiLanguageCrudController<Artic
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
+   /* @GetMapping("user-api/clicked-article/")
+    public ResponseEntity<ArticleClickDTO> getClickedByUser(@RequestHeader(value = "accept-language", required = true) String language){
+        User user=helperService.getUserFromSession();
+        if(user==null){
+
+        }
+        ArticleClickDTO dto=articleClickService.
+
+
+
+               if (entity.getUserSaves() != null) {
+            articleDTO.setSaveCount(entity.getUserSaves().size());
+        }
+    }*/
 
 
 

@@ -12,7 +12,9 @@ import com.comitfy.healtie.app.repository.CommentRepository;
 import com.comitfy.healtie.app.specification.CommentSpecification;
 import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.PageDTO;
+import com.comitfy.healtie.util.common.BaseFilterRequestDTO;
 import com.comitfy.healtie.util.common.BaseService;
+import com.comitfy.healtie.util.common.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -88,6 +90,48 @@ public class CommentService extends BaseService<CommentDTO, CommentRequestDTO, C
             return null;
         }
 
+
+    }
+
+    public boolean isLikedCommentByUser(UUID commentUUID, UUID userUUID) {
+
+        if (commentRepository.isLikedByUser(commentUUID, userUUID) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    @Override
+    public PageDTO<CommentDTO> findAll(BaseFilterRequestDTO filterRequestDTO, LanguageEnum languageEnum) {
+        Pageable pageable = PageRequest.of(filterRequestDTO.getPageNumber(), filterRequestDTO.getPageSize(), Sort.by("id"));
+
+
+      /*  if (filterRequestDTO.getLanguage() != null) {
+            SearchCriteria sc = new SearchCriteria("languageEnum", "=", "", LanguageEnum.valueOf(filterRequestDTO.getLanguage()));
+            filterRequestDTO.getFilters().add(sc);
+        } else {
+            SearchCriteria sc = new SearchCriteria("languageEnum", "=", "", languageEnum);
+            filterRequestDTO.getFilters().add(sc);
+
+        }
+*/
+
+        getSpecification().setCriterias(filterRequestDTO.getFilters());
+        //return getMapper().pageEntityToPageDTO(getRepository().findAllByLanguageEnum(pageable,languageEnum));
+
+        PageDTO<CommentDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAll(getSpecification(), pageable));
+
+        if (filterRequestDTO.getRequestUserUUID() != null) {
+            for (CommentDTO commentDTO : pageDTO.getData()) {
+                commentDTO.setLike(isLikedCommentByUser(commentDTO.getUuid(), filterRequestDTO.getRequestUserUUID()));
+
+            }
+
+        }
+
+        return pageDTO;
 
     }
 

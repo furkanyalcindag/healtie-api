@@ -16,5 +16,8 @@ public class CommentDTO extends BaseDTO {
 
     private long likeCount;
 
+    private boolean isLike = Boolean.FALSE;
+    private String userName;
+
 
 }
