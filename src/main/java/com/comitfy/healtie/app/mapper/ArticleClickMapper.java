@@ -16,8 +16,8 @@ public class ArticleClickMapper implements BaseMapper<ArticleClickDTO, ArticleCl
     @Override
     public ArticleClickDTO entityToDTO(ArticleClick entity) {
         ArticleClickDTO articleClickDTO = new ArticleClickDTO();
-        articleClickDTO.setArticleUUID(entity.getArticleUUID());
-        articleClickDTO.setUserUUID(entity.getUserUUID());
+        articleClickDTO.setArticleUUID(entity.getArticleUuid());
+        articleClickDTO.setUserUUID(entity.getUserUuid());
         articleClickDTO.setUuid(entity.getUuid());
         return
                 articleClickDTO;
@@ -26,8 +26,8 @@ public class ArticleClickMapper implements BaseMapper<ArticleClickDTO, ArticleCl
     @Override
     public ArticleClick dtoToEntity(ArticleClickDTO dto) {
         ArticleClick articleClick = new ArticleClick();
-        articleClick.setArticleUUID(dto.getArticleUUID());
-        articleClick.setUserUUID(dto.getUserUUID());
+        articleClick.setArticleUuid(dto.getArticleUUID());
+        articleClick.setArticleUuid(dto.getUserUUID());
         return articleClick;
 
     }
@@ -35,15 +35,15 @@ public class ArticleClickMapper implements BaseMapper<ArticleClickDTO, ArticleCl
     @Override
     public ArticleClick requestDTOToEntity(ArticleClickRequestDTO dto) {
         ArticleClick articleClick = new ArticleClick();
-        articleClick.setArticleUUID(dto.getArticleUUID());
-        articleClick.setUserUUID(dto.getUserUUID());
+        articleClick.setArticleUuid(dto.getArticleUUID());
+        articleClick.setUserUuid(dto.getUserUUID());
         return articleClick;
     }
 
     @Override
     public ArticleClick requestDTOToExistEntity(ArticleClick articleClick, ArticleClickRequestDTO dto) {
-        articleClick.setArticleUUID(dto.getArticleUUID());
-        articleClick.setUserUUID(dto.getUserUUID());
+        articleClick.setArticleUuid(dto.getArticleUUID());
+        articleClick.setUserUuid(dto.getUserUUID());
         return articleClick;
     }
 

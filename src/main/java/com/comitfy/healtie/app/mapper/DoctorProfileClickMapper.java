@@ -17,8 +17,8 @@ public class DoctorProfileClickMapper implements BaseMapper<DoctorProfileClickDT
     public DoctorProfileClickDTO entityToDTO(DoctorProfileClick entity) {
 
         DoctorProfileClickDTO doctorProfileClickDTO = new DoctorProfileClickDTO();
-        doctorProfileClickDTO.setDoctorUUID(entity.getDoctorUUID());
-        doctorProfileClickDTO.setUserUUID(entity.getUserUUID());
+        doctorProfileClickDTO.setDoctorUUID(entity.getDoctorUuid());
+        doctorProfileClickDTO.setUserUUID(entity.getUserUuid());
         return doctorProfileClickDTO;
     }
 
