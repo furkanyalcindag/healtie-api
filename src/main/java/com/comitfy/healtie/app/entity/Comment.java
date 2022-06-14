@@ -5,7 +5,6 @@ import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -23,9 +22,6 @@ public class Comment extends BaseEntity {
     private String content;
     @Column
     private String userName;
-
-/*    @ManyToMany
-    private Set<Comment> parent;*/
 
     @ManyToOne
     private Comment parent;
