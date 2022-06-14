@@ -81,7 +81,7 @@ public class CommentService extends BaseService<CommentDTO, CommentRequestDTO, C
         Optional<Article> article = articleRepository.findByUuid(id);
         Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
         if (article.isPresent()) {
-            PageDTO<CommentDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByArticle(pageable, article.get()));
+            PageDTO<CommentDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByArticleOrderByIdDesc(pageable, article.get()));
             for (int i = 0; i < pageDTO.getData().size(); i++) {
                 pageDTO.getData().get(i).setLikeCount(getRepository().getCountOfCommentLike(pageDTO.getData().get(i).getUuid()));
             }

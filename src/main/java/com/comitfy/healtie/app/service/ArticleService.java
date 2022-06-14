@@ -71,7 +71,7 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
 
     public PageDTO<ArticleDTO> getArticleByDoctor(UUID id, int page, int size, LanguageEnum languageEnum) {
         Optional<Doctor> doctor = doctorRepository.findByUuid(id);
-        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("id")));
 
         if (doctor.isPresent()) {
 
@@ -170,7 +170,7 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
 
     @Override
     public PageDTO<ArticleDTO> findAll(BaseFilterRequestDTO filterRequestDTO, LanguageEnum languageEnum) {
-        Pageable pageable = PageRequest.of(filterRequestDTO.getPageNumber(), filterRequestDTO.getPageSize(), Sort.by("id"));
+        Pageable pageable = PageRequest.of(filterRequestDTO.getPageNumber(), filterRequestDTO.getPageSize(), Sort.by(Sort.Order.desc("id")));
 
 
         if (filterRequestDTO.getLanguage() != null) {

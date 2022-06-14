@@ -1,6 +1,11 @@
 package com.comitfy.healtie.app.service;
 
+import com.comitfy.healtie.app.model.enums.GenderEnum;
 import com.comitfy.healtie.userModule.dto.UserDTO;
+import com.comitfy.healtie.userModule.dto.requestDTO.UserAgeRangeRequestDTO;
+import com.comitfy.healtie.userModule.dto.requestDTO.UserGenderRequestDTO;
+import com.comitfy.healtie.userModule.dto.requestDTO.UserNameRequestDTO;
+import com.comitfy.healtie.userModule.dto.requestDTO.UserRequestDTO;
 import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.userModule.mapper.UserMapper;
 import com.comitfy.healtie.userModule.repository.UserRepository;
@@ -36,5 +41,60 @@ public class UserInfoService {
         return optionalEntity.map(entity -> userMapper.entityToDTO(entity)).orElse(null);
 
     }
+
+    public UserGenderRequestDTO updateGender(UUID id, UserGenderRequestDTO dto) {
+        Optional<User> user = userRepository.findByUuid(id);
+        if (user.isPresent()) {
+            User user1 = userMapper.requestDTOToExistEntityforGender(user.get(), dto);
+            user1.setGenderEnum(dto.getGenderEnum());
+
+            userRepository.save(user1);
+
+            return dto;
+        } else {
+            return null;
+        }
+    }
+    public UserAgeRangeRequestDTO updateAgeRange(UUID id, UserAgeRangeRequestDTO dto) {
+        Optional<User> user = userRepository.findByUuid(id);
+        if (user.isPresent()) {
+            User user1 = userMapper.requestDTOToExistEntityforAgeRange(user.get(), dto);
+            user1.setAgeRangeEnum(dto.getAgeRangeEnum());
+
+            userRepository.save(user1);
+
+            return dto;
+        } else {
+            return null;
+        }
+    }
+
+    public UserNameRequestDTO updateName(UUID id, UserNameRequestDTO dto) {
+        Optional<User> user = userRepository.findByUuid(id);
+        if (user.isPresent()) {
+            User user1 = userMapper.requestDTOToExistEntityforName(user.get(), dto);
+            user1.setFirstName(dto.getFirstName());
+            user1.setLastName(dto.getLastName());
+
+            userRepository.save(user1);
+
+            return dto;
+        } else {
+            return null;
+        }
+    }
+
+
+/*    public UserRequestDTO update(UUID id, UserRequestDTO dto) {
+        Optional<User> user = userRepository.findByUuid(id);
+        if (user.isPresent()) {
+            User user1 = userMapper.requestDTOToExistEntity(user.get(), dto);
+            userRepository.save(user1);
+            return dto;
+        } else {
+            return null;
+        }
+    }*/
+
 
 }
