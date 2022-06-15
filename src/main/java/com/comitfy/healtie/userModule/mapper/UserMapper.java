@@ -26,6 +26,7 @@ public class UserMapper implements BaseMapper<UserDTO, UserRequestDTO, User> {
     public UserDTO entityToDTO(User entity) {
 
         UserDTO userDTO = new UserDTO();
+        userDTO.setUsername(entity.getEmail());
         userDTO.setFirstName(entity.getFirstName());
         userDTO.setLastName(entity.getLastName());
         userDTO.setEmail(entity.getEmail());
@@ -34,6 +35,9 @@ public class UserMapper implements BaseMapper<UserDTO, UserRequestDTO, User> {
         userDTO.setLikedCount(userService.getLikeCountByUser(entity.getUuid()));
         userDTO.setSavedCount(userService.getSaveCountByUser(entity.getUuid()));
 
+        if (entity.getArticleList() != null) {
+            userDTO.setArticleCount(entity.getArticleList().size());
+        }
         return userDTO;
     }
 
@@ -84,6 +88,7 @@ public class UserMapper implements BaseMapper<UserDTO, UserRequestDTO, User> {
     }
 
     public User requestDTOToExistEntityforName(User user, UserNameRequestDTO dto) {
+
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
 

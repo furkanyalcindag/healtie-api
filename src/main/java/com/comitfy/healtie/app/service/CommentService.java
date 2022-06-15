@@ -14,7 +14,6 @@ import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseFilterRequestDTO;
 import com.comitfy.healtie.util.common.BaseService;
-import com.comitfy.healtie.util.common.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -79,7 +78,7 @@ public class CommentService extends BaseService<CommentDTO, CommentRequestDTO, C
 
     public PageDTO<CommentDTO> getCommentByArticle(UUID id, int page, int size, LanguageEnum languageEnum) {
         Optional<Article> article = articleRepository.findByUuid(id);
-        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("id")));
         if (article.isPresent()) {
             PageDTO<CommentDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByArticleOrderByIdDesc(pageable, article.get()));
             for (int i = 0; i < pageDTO.getData().size(); i++) {
@@ -90,7 +89,18 @@ public class CommentService extends BaseService<CommentDTO, CommentRequestDTO, C
             return null;
         }
 
+    }
 
+    public PageDTO<CommentDTO> getCommentByParent(UUID id, int page, int size) {
+        Optional<Comment> parent = commentRepository.findByUuid(id);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("id")));
+        if (parent.isPresent()) {
+            PageDTO<CommentDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findCommentByParent(pageable, parent.get()));
+            return pageDTO;
+
+        } else {
+            return null;
+        }
     }
 
     public boolean isLikedCommentByUser(UUID commentUUID, UUID userUUID) {
@@ -105,8 +115,7 @@ public class CommentService extends BaseService<CommentDTO, CommentRequestDTO, C
 
     @Override
     public PageDTO<CommentDTO> findAll(BaseFilterRequestDTO filterRequestDTO, LanguageEnum languageEnum) {
-        Pageable pageable = PageRequest.of(filterRequestDTO.getPageNumber(), filterRequestDTO.getPageSize(), Sort.by("id"));
-
+        Pageable pageable = PageRequest.of(filterRequestDTO.getPageNumber(), filterRequestDTO.getPageSize(), Sort.by(Sort.Order.desc("id")));
 
       /*  if (filterRequestDTO.getLanguage() != null) {
             SearchCriteria sc = new SearchCriteria("languageEnum", "=", "", LanguageEnum.valueOf(filterRequestDTO.getLanguage()));

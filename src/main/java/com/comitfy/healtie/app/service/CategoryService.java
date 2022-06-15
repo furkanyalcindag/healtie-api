@@ -52,7 +52,7 @@ public class CategoryService extends BaseWithMultiLanguageService<CategoryDTO, C
 
     public PageDTO<CategoryDTO> getCategoryById(UUID id, int page, int size, LanguageEnum languageEnum) {
         Optional<Category> category = categoryRepository.findByUuid(id);
-        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("id")));
         if (category.isPresent()) {
             PageDTO<CategoryDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAll(pageable));
             for (int i = 0; i < pageDTO.getData().size(); i++) {

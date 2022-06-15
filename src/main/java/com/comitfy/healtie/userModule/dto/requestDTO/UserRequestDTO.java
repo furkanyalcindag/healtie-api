@@ -7,6 +7,8 @@ import lombok.Data;
 
 @Data
 public class UserRequestDTO extends BaseDTO {
+
+    private String username;
     private String firstName;
     private String lastName;
     private String email;

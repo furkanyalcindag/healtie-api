@@ -38,6 +38,7 @@ public class AuthService implements IAuthService {
         if (user.isEmpty()) {
             User newUser = new User();
             newUser.setEmail(request.getEmail());
+            newUser.setUsername(request.getEmail());
             newUser.setPassword(passwordEncoder.encode(request.getPassword()));
             newUser.setFirstName(request.getFirstName());
             newUser.setLastName(request.getLastName());

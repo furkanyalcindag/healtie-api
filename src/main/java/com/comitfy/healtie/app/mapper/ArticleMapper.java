@@ -49,8 +49,12 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
         if (entity.getUserLikes() != null) {
             articleDTO.setLikeCount(entity.getUserLikes().size());
         }
-        if (entity.getDoctor() != null) {
+       /* if (entity.getDoctor() != null) {
             articleDTO.setAuthor(entity.getDoctor().getUser().getFirstName() + " " + entity.getDoctor().getUser().getLastName());
+        }*/
+
+        if (entity.getUser() != null) {
+            articleDTO.setAuthor(entity.getUser().getFirstName() + " " + entity.getUser().getLastName());
         }
 
 

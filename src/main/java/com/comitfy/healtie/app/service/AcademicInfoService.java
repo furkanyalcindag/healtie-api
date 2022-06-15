@@ -51,7 +51,7 @@ public class AcademicInfoService extends BaseService<AcademicInfoDTO, AcademicIn
 
     public PageDTO<AcademicInfoDTO> getAcademicInfoByDoctor(UUID id, int page, int size) {
         Optional<Doctor> doctor = doctorRepository.findByUuid(id);
-        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("graduateYear")));
         if (doctor.isPresent()) {
             return getMapper().pageEntityToPageDTO(academicInfoRepository.findAllByDoctor(pageable, doctor.get()));
         } else {

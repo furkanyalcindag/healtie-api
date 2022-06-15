@@ -1,11 +1,9 @@
 package com.comitfy.healtie.app.service;
 
-import com.comitfy.healtie.app.model.enums.GenderEnum;
 import com.comitfy.healtie.userModule.dto.UserDTO;
 import com.comitfy.healtie.userModule.dto.requestDTO.UserAgeRangeRequestDTO;
 import com.comitfy.healtie.userModule.dto.requestDTO.UserGenderRequestDTO;
 import com.comitfy.healtie.userModule.dto.requestDTO.UserNameRequestDTO;
-import com.comitfy.healtie.userModule.dto.requestDTO.UserRequestDTO;
 import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.userModule.mapper.UserMapper;
 import com.comitfy.healtie.userModule.repository.UserRepository;
@@ -55,6 +53,7 @@ public class UserInfoService {
             return null;
         }
     }
+
     public UserAgeRangeRequestDTO updateAgeRange(UUID id, UserAgeRangeRequestDTO dto) {
         Optional<User> user = userRepository.findByUuid(id);
         if (user.isPresent()) {
@@ -83,18 +82,4 @@ public class UserInfoService {
             return null;
         }
     }
-
-
-/*    public UserRequestDTO update(UUID id, UserRequestDTO dto) {
-        Optional<User> user = userRepository.findByUuid(id);
-        if (user.isPresent()) {
-            User user1 = userMapper.requestDTOToExistEntity(user.get(), dto);
-            userRepository.save(user1);
-            return dto;
-        } else {
-            return null;
-        }
-    }*/
-
-
 }

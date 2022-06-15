@@ -55,7 +55,11 @@ public class CommentController extends BaseCrudController<CommentDTO, CommentReq
 
         Article article = articleService.findEntityByUUID(articleId);
         User user = helperService.getUserFromSession();
-        return new ResponseEntity<>(commentService.saveCommentByArticle(articleId, commentRequestDTO, article, user), HttpStatus.OK);
+        if (user != null) {
+            return new ResponseEntity<>(commentService.saveCommentByArticle(articleId, commentRequestDTO, article, user), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("user-api/like-comment/{commentId}")
@@ -78,6 +82,16 @@ public class CommentController extends BaseCrudController<CommentDTO, CommentReq
         }
     }
 
+    @GetMapping("parent/{commentId}")
+    public ResponseEntity<PageDTO<CommentDTO>> getByParentId(@RequestHeader(value = "accept-language", required = true) String language,
+                                                             @PathVariable UUID commentId, @RequestParam int pageNumber, @RequestParam int pageSize) {
+        Optional<Comment> optional = commentService.getRepository().findByUuid(commentId);
+        if (optional == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(commentService.getCommentByParent(commentId, pageNumber, pageSize), HttpStatus.OK);
+        }
+    }
 
 
 }

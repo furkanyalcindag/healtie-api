@@ -38,18 +38,6 @@ public class CategoryController extends BaseWithMultiLanguageCrudController<Cate
         return categoryMapper;
     }
 
-    /*    @GetMapping("doctor/{doctorId}")
-    public ResponseEntity<PageDTO<ArticleDTO>> getByDoctorId(@RequestHeader(value = "accept-language", required = true) String language,
-                                                             @PathVariable UUID doctorId, @RequestParam int pageNumber, @RequestParam int pageSize) {
-        Optional<Doctor> optional = doctorService.getRepository().findByUuid(doctorId);
-        if (optional == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(articleService.getArticleByDoctor(doctorId, pageNumber, pageSize, LanguageEnum.valueOf(language)), HttpStatus.OK);
-        }
-    }*/
-
-
     @GetMapping("category/{categoryId}")
     public ResponseEntity<PageDTO<CategoryDTO>> getByCategoryId(@RequestHeader(value = "accept-language", required = true) String language,
                                                                 @PathVariable UUID categoryId, @RequestParam int pageNumber, @RequestParam int pageSize) {

@@ -1,12 +1,14 @@
 package com.comitfy.healtie.userModule.entity;
 
 
+import com.comitfy.healtie.app.entity.Article;
 import com.comitfy.healtie.app.model.enums.AgeRangeEnum;
 import com.comitfy.healtie.app.model.enums.GenderEnum;
 import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 
@@ -14,6 +16,7 @@ import java.util.Set;
 @Data
 @Table(name = "users")
 public class User extends BaseEntity {
+
     @Column
     private String username;
     @Column
@@ -39,6 +42,9 @@ public class User extends BaseEntity {
     @Column
     @Enumerated(EnumType.STRING)
     private GenderEnum genderEnum;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private List<Article> articleList;
 
 
 

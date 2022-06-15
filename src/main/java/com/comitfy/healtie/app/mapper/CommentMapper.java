@@ -54,6 +54,7 @@ public class CommentMapper implements BaseMapper<CommentDTO, CommentRequestDTO, 
         Comment comment = new Comment();
         comment.setContent(dto.getContent());
 
+
         Comment comment1 = commentService.findEntityByUUID(dto.getParentUuid());
         comment.setParent(comment1);
 
