@@ -6,9 +6,7 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class ProfileClickDTO extends BaseDTO {
+public class DoctorProfileClickDTO extends BaseDTO {
     private UUID userUUID;
     private UUID doctorUUID;
-
-    private long profileClickCount;
 }
