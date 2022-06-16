@@ -1,8 +1,6 @@
 package com.comitfy.healtie.app.controller;
 
-import com.comitfy.healtie.app.dto.ArticleClickDTO;
 import com.comitfy.healtie.app.dto.ArticleDTO;
-import com.comitfy.healtie.app.dto.DoctorDTO;
 import com.comitfy.healtie.app.dto.requestDTO.ArticleClickRequestDTO;
 import com.comitfy.healtie.app.dto.requestDTO.ArticleLikeRequestDTO;
 import com.comitfy.healtie.app.dto.requestDTO.ArticleRequestDTO;
@@ -20,6 +18,7 @@ import com.comitfy.healtie.app.service.DoctorService;
 import com.comitfy.healtie.app.specification.ArticleSpecification;
 import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.userModule.repository.UserRepository;
+import com.comitfy.healtie.userModule.service.UserService;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseWithMultiLanguageCrudController;
 import com.comitfy.healtie.util.common.HelperService;
@@ -54,6 +53,8 @@ public class ArticleController extends BaseWithMultiLanguageCrudController<Artic
 
     @Autowired
     DoctorService doctorService;
+    @Autowired
+    UserService userService;
 
     @Autowired
     HelperService helperService;
@@ -75,10 +76,11 @@ public class ArticleController extends BaseWithMultiLanguageCrudController<Artic
     public ResponseEntity<PageDTO<ArticleDTO>> getByDoctorId(@RequestHeader(value = "accept-language", required = true) String language,
                                                              @PathVariable UUID doctorId, @RequestParam int pageNumber, @RequestParam int pageSize) {
         Optional<Doctor> optional = doctorService.getRepository().findByUuid(doctorId);
+        // User user = helperService.getUserFromSession();
         if (optional == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<>(articleService.getArticleByDoctor(doctorId, pageNumber, pageSize, LanguageEnum.valueOf(language)), HttpStatus.OK);
+            return new ResponseEntity<>(articleService.getArticleByUser(doctorId, pageNumber, pageSize, LanguageEnum.valueOf(language)), HttpStatus.OK);
         }
     }
 
@@ -92,16 +94,16 @@ public class ArticleController extends BaseWithMultiLanguageCrudController<Artic
     }
 
 
-    @PostMapping("/{doctorId}")
-    public ResponseEntity<ArticleRequestDTO> saveByDoctorId(@RequestHeader(value = "accept-language", required = true) String acceptLanguage,
-                                                            @PathVariable UUID doctorId, @RequestBody ArticleRequestDTO articleRequestDTO) {
-        DoctorDTO optional = doctorService.findByUUID(doctorId);
-        if (optional == null) {
-
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(articleService.saveArticleByDoctor(doctorId, articleRequestDTO), HttpStatus.OK);
-        }
+    @PostMapping("/user-api")
+    public ResponseEntity<ArticleRequestDTO> saveByUserId(@RequestHeader(value = "accept-language", required = true) String acceptLanguage,
+                                                          @RequestBody ArticleRequestDTO articleRequestDTO) {
+        //UserDTO optional = userService.findByUUID(userId);
+        User user = helperService.getUserFromSession();
+        if (user != null) {
+            {
+                return new ResponseEntity<>(articleService.saveArticleByUser(user.getUuid(), articleRequestDTO), HttpStatus.OK);
+            }
+        } else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
 
@@ -150,10 +152,10 @@ public class ArticleController extends BaseWithMultiLanguageCrudController<Artic
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         } else {
 
-            User user= helperService.getUserFromSession();
+            User user = helperService.getUserFromSession();
             ArticleClickRequestDTO articleClickRequestDTO = new ArticleClickRequestDTO();
             articleClickRequestDTO.setArticleUUID(optionalT.getUuid());
-            articleClickRequestDTO.setUserUUID(user!=null?user.getUuid():null);
+            articleClickRequestDTO.setUserUUID(user != null ? user.getUuid() : null);
             articleClickService.save(articleClickRequestDTO);
 
             return new ResponseEntity<>(optionalT, HttpStatus.OK);
@@ -175,27 +177,4 @@ public class ArticleController extends BaseWithMultiLanguageCrudController<Artic
         }
     }*/
 
-
-
-
-
-
-    /*    @GetMapping("/")
-    public ResponseEntity<PageDTO<DTO>> getAll(@RequestHeader(value = "accept-language", required = true) String language, @RequestParam int pageNumber, @RequestParam int pageSize) {
-
-        PageDTO<DTO> dtoList = getService().findAll(pageNumber, pageSize, LanguageEnum.valueOf(language));
-
-        return new ResponseEntity<>(dtoList, HttpStatus.OK);
-    }*/
-
-    /*    @GetMapping("doctor/{doctorId}")
-    public ResponseEntity<PageDTO<ArticleDTO>> getByDoctorId(@RequestHeader(value = "accept-language", required = true) String language,
-                                                             @PathVariable UUID doctorId, @RequestParam int pageNumber, @RequestParam int pageSize) {
-        Optional<Doctor> optional = doctorService.getRepository().findByUuid(doctorId);
-        if (optional == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(articleService.getArticleByDoctor(doctorId, pageNumber, pageSize, LanguageEnum.valueOf(language)), HttpStatus.OK);
-        }
-    }*/
 }

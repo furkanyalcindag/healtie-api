@@ -13,7 +13,9 @@ import java.util.UUID;
 @Repository
 public interface CommentRepository extends BaseRepository<Comment> {
 
-    Page<Comment> findAllByArticle(Pageable pageable, Article article);
+    Page<Comment> findAllByArticleOrderByIdDesc(Pageable pageable, Article article);
+
+    Page<Comment> findCommentByParent(Pageable pageable, Comment parent);
 
     @Query("SELECT COUNT(likes) FROM Comment comment " +
             "inner join comment.userLikes likes  WHERE comment.uuid=?1")

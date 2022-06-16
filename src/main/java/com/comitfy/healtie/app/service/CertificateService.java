@@ -51,7 +51,7 @@ public class CertificateService extends BaseService<CertificateDTO, CertificateR
 
     public PageDTO<CertificateDTO> getCertificateByDoctor(UUID id, int page, int size) {
         Optional<Doctor> doctor = doctorRepository.findByUuid(id);
-        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("takenDate")));
         if (doctor.isPresent()) {
             return getMapper().pageEntityToPageDTO(certificateRepository.findAllByDoctor(pageable, doctor.get()));
         } else {

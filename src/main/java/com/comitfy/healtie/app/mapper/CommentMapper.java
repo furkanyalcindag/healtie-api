@@ -29,6 +29,7 @@ public class CommentMapper implements BaseMapper<CommentDTO, CommentRequestDTO, 
         commentDTO.setContent(entity.getContent());
         commentDTO.setUuid(entity.getUuid());
 
+
         if (entity.getUserLikes() != null) {
             commentDTO.setLikeCount(entity.getUserLikes().size());
         }
@@ -52,6 +53,7 @@ public class CommentMapper implements BaseMapper<CommentDTO, CommentRequestDTO, 
 
         Comment comment = new Comment();
         comment.setContent(dto.getContent());
+
 
         Comment comment1 = commentService.findEntityByUUID(dto.getParentUuid());
         comment.setParent(comment1);

@@ -44,9 +44,13 @@ public class Article extends BaseEntity {
     private List<Comment> commentList;
 
 
+  /*  @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn()
+    private Doctor doctor;*/
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn()
-    private Doctor doctor;
+    private User user;
 
     @ManyToMany
     private Set<User> userLikes;
