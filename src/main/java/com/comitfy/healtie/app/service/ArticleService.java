@@ -6,7 +6,6 @@ import com.comitfy.healtie.app.dto.requestDTO.ArticleRequestDTO;
 import com.comitfy.healtie.app.dto.requestDTO.ArticleSaveRequestDTO;
 import com.comitfy.healtie.app.entity.Article;
 import com.comitfy.healtie.app.entity.Category;
-import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.app.mapper.ArticleMapper;
 import com.comitfy.healtie.app.model.enums.LanguageEnum;
 import com.comitfy.healtie.app.repository.ArticleRepository;
@@ -106,7 +105,7 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
 
             }
 
-           for (ArticleDTO articleDTO : pageDTO.getData()) {
+            for (ArticleDTO articleDTO : pageDTO.getData()) {
                 articleDTO.setLike(isLikedArticleByUser(articleDTO.getUuid(), id));
                 articleDTO.setSave(isSavedArticleByUser(articleDTO.getUuid(), id));
             }
@@ -185,8 +184,17 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
     }
 
     public PageDTO<ArticleDTO> getLikedArticleByUser(int page, int size, User user) {
+
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("id")));
+
+        PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByUser(pageable, user));
+
+        for (ArticleDTO articleDTO : pageDTO.getData()) {
+            articleDTO.setLike(isLikedArticleByUser(articleDTO.getUuid(), user.getUuid()));
+            articleDTO.setSave(isSavedArticleByUser(articleDTO.getUuid(), user.getUuid()));
+        }
         return getMapper().pageEntityToPageDTO(articleRepository.getLikedArticleOfUser(pageable, user.getUuid()));
+
     }
 
 
