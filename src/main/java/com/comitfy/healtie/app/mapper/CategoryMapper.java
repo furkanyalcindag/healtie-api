@@ -34,9 +34,9 @@ public class CategoryMapper implements BaseMapper<CategoryDTO, CategoryRequestDT
         categoryDTO.setUuid(entity.getUuid());
         categoryDTO.setLanguage(entity.getLanguageEnum().name());
         //categoryDTO.setParentList(entity.getParent());
-        if (entity.getArticleList() != null) {
+    /*    if (entity.getArticleList() != null) {
             categoryDTO.setArticleCount(entity.getArticleList().size());
-        }
+        }*/
         if (entity.getArticleList() != null) {
             categoryDTO.setArticleCount(articleRepository.getCountOfArticleByCategory(entity.getUuid()));
         }

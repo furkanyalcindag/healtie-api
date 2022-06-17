@@ -25,9 +25,6 @@ public class Article extends BaseEntity {
     private String description;
 
     @Column
-    private String author;
-
-    @Column
     private LocalDate publishedDate;
 
     @ManyToMany

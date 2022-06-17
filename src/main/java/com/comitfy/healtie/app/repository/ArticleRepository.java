@@ -2,7 +2,6 @@ package com.comitfy.healtie.app.repository;
 
 import com.comitfy.healtie.app.entity.Article;
 import com.comitfy.healtie.app.entity.Category;
-import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.app.model.enums.LanguageEnum;
 import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.common.BaseWithMultiLanguageRepository;
@@ -17,14 +16,13 @@ import java.util.UUID;
 @Repository
 public interface ArticleRepository extends BaseWithMultiLanguageRepository<Article> {
 
-   // Page<Article> findAllByDoctorAndLanguageEnum(Pageable pageable, Doctor doctor, LanguageEnum languageEnum);
+    // Page<Article> findAllByDoctorAndLanguageEnum(Pageable pageable, Doctor doctor, LanguageEnum languageEnum);
 
- //   Page<Article> findAllByDoctor(Pageable pageable, Doctor doctor);
+    //   Page<Article> findAllByDoctor(Pageable pageable, Doctor doctor);
 
-   Page<Article> findAllByUser(Pageable pageable, User user);
+    Page<Article> findAllByUser(Pageable pageable, User user);
 
     Page<Article> findAllByCategoryListInAndLanguageEnum(Pageable pageable, Set<Category> category, LanguageEnum languageEnum);
-
 
 
     @Query("SELECT COUNT(likes) FROM Article article " +
@@ -55,7 +53,9 @@ public interface ArticleRepository extends BaseWithMultiLanguageRepository<Artic
             " inner join article.categoryList category WHERE category.uuid=?1")
     long getCountOfArticleByCategory(UUID categoryUUID);
 
-
+    @Query("SELECT COUNT(comment) FROM Article  article" +
+            " inner join article.commentList comment WHERE article.uuid=?1")
+    long getCountOfComment(UUID articleUUID);
 
 
 }

@@ -8,6 +8,7 @@ import com.comitfy.healtie.app.mapper.ExperienceMapper;
 import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.app.repository.ExperienceRepository;
 import com.comitfy.healtie.app.specification.ExperienceSpecification;
+import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,8 +60,8 @@ public class ExperienceService extends BaseService<ExperienceDTO, ExperienceRequ
         }
     }
 
-    public ExperienceRequestDTO saveExperienceByDoctor(UUID id, ExperienceRequestDTO dto) {
-        Optional<Doctor> doctor = doctorRepository.findByUuid(id);
+    public ExperienceRequestDTO saveExperienceByDoctor(User user, ExperienceRequestDTO dto) {
+        Optional<Doctor> doctor = doctorRepository.findByUser(user);
         if (doctor.isPresent()) {
             Experience experience = getMapper().requestDTOToEntity(dto);
             experience.setDoctor(doctor.get());
@@ -71,4 +72,5 @@ public class ExperienceService extends BaseService<ExperienceDTO, ExperienceRequ
         }
 
     }
+
 }

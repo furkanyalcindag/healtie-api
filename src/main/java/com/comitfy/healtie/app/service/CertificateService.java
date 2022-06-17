@@ -8,6 +8,7 @@ import com.comitfy.healtie.app.mapper.CertificateMapper;
 import com.comitfy.healtie.app.repository.CertificateRepository;
 import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.app.specification.CertificateSpecification;
+import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,8 +60,19 @@ public class CertificateService extends BaseService<CertificateDTO, CertificateR
         }
     }
 
-    public CertificateRequestDTO saveCertificateByDoctor(UUID id, CertificateRequestDTO dto) {
-        Optional<Doctor> doctor = doctorRepository.findByUuid(id);
+    /*    public CertificateRequestDTO saveCertificateByDoctor(UUID id, CertificateRequestDTO dto) {
+            Optional<Doctor> doctor = doctorRepository.findByUuid(id);
+            if (doctor.isPresent()) {
+                Certificate certificate = getMapper().requestDTOToEntity(dto);
+                certificate.setDoctor(doctor.get());
+                certificateRepository.save(certificate);
+                return dto;
+            } else {
+                return null;
+            }
+        }*/
+    public CertificateRequestDTO saveCertificateByDoctor(User user, CertificateRequestDTO dto) {
+        Optional<Doctor> doctor = doctorRepository.findByUser(user);
         if (doctor.isPresent()) {
             Certificate certificate = getMapper().requestDTOToEntity(dto);
             certificate.setDoctor(doctor.get());

@@ -1,7 +1,6 @@
 package com.comitfy.healtie.app.controller;
 
 import com.comitfy.healtie.app.dto.AcademicInfoDTO;
-import com.comitfy.healtie.app.dto.DoctorDTO;
 import com.comitfy.healtie.app.dto.requestDTO.AcademicInfoRequestDTO;
 import com.comitfy.healtie.app.entity.AcademicInfo;
 import com.comitfy.healtie.app.entity.Doctor;
@@ -11,8 +10,10 @@ import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.app.service.AcademicInfoService;
 import com.comitfy.healtie.app.service.DoctorService;
 import com.comitfy.healtie.app.specification.AcademicInfoSpecification;
+import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseCrudController;
+import com.comitfy.healtie.util.common.HelperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,9 @@ public class AcademicInfoController extends BaseCrudController<AcademicInfoDTO, 
     DoctorRepository doctorRepository;
 
     @Autowired
+    HelperService helperService;
+
+    @Autowired
     DoctorService doctorService;
 
     @Override
@@ -50,15 +54,14 @@ public class AcademicInfoController extends BaseCrudController<AcademicInfoDTO, 
         return academicInfoMapper;
     }
 
-
-    @PostMapping("/{doctorId}")
-    public ResponseEntity<AcademicInfoRequestDTO> saveByDoctorId(@RequestHeader(value = "accept-language", required = true) String acceptLanguage,
-                                                                 @PathVariable UUID doctorId, @RequestBody AcademicInfoRequestDTO academicInfoRequestDTO) {
-        DoctorDTO optional = doctorService.findByUUID(doctorId);
-        if (optional == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @PostMapping("/doctor-api")
+    public ResponseEntity<AcademicInfoRequestDTO> saveByDoctor(@RequestHeader(value = "accept-language", required = true) String acceptLanguage,
+                                                               @RequestBody AcademicInfoRequestDTO academicInfoRequestDTO) {
+        User user = helperService.getUserFromSession();
+        if (user != null) {
+            return new ResponseEntity<>(academicInfoService.saveAcademicInfoByDoctor(user, academicInfoRequestDTO), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(academicInfoService.saveAcademicInfoByDoctor(doctorId, academicInfoRequestDTO), HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -73,6 +76,31 @@ public class AcademicInfoController extends BaseCrudController<AcademicInfoDTO, 
         }
     }
 
+    /*@PutMapping("/gender-update/{id}")
+    public ResponseEntity<String> updateGender(@RequestBody UserGenderRequestDTO dto) {
+        User user = helperService.getUserFromSession();
+        UserDTO userDTO = userService.findByUUID(user.getUuid());
+        if (userDTO == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND);
+        } else {
+
+            userService.updateGender(user.getUuid(), dto);
+            return new ResponseEntity<>("Object with the id " + user.getUuid() + " was updated.", HttpStatus.OK);
+
+
+        }
+    }*/
+    @PutMapping("/user-api/{academicInfoId}")
+    public ResponseEntity<String> updateAcademicInfo(@PathVariable UUID academicInfoId,@RequestBody AcademicInfoRequestDTO dto) {
+        User user = helperService.getUserFromSession();
+        AcademicInfoDTO academicInfoDTO = academicInfoService.findByUUID(academicInfoId);
+        if (academicInfoDTO == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND);
+        } else {
+            academicInfoService.updateAcademicInfo(user.getUuid(), dto);
+            return new ResponseEntity<>("Object with the id \" + user.getUuid() + \" was updated.", HttpStatus.OK);
+        }
+    }
 
 }
 

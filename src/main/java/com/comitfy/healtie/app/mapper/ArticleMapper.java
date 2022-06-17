@@ -6,10 +6,7 @@ import com.comitfy.healtie.app.dto.requestDTO.ArticleRequestDTO;
 import com.comitfy.healtie.app.entity.Article;
 import com.comitfy.healtie.app.entity.Category;
 import com.comitfy.healtie.app.entity.Tag;
-import com.comitfy.healtie.app.repository.ArticleRepository;
-import com.comitfy.healtie.app.repository.CategoryRepository;
-import com.comitfy.healtie.app.repository.DoctorRepository;
-import com.comitfy.healtie.app.repository.TagRepository;
+import com.comitfy.healtie.app.repository.*;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +29,9 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
     CategoryRepository categoryRepository;
 
     @Autowired
+    CommentRepository commentRepository;
+
+    @Autowired
     TagRepository tagRepository;
 
     @Override
@@ -49,12 +49,12 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
         if (entity.getUserLikes() != null) {
             articleDTO.setLikeCount(entity.getUserLikes().size());
         }
-       /* if (entity.getDoctor() != null) {
-            articleDTO.setAuthor(entity.getDoctor().getUser().getFirstName() + " " + entity.getDoctor().getUser().getLastName());
-        }*/
 
         if (entity.getUser() != null) {
             articleDTO.setAuthor(entity.getUser().getFirstName() + " " + entity.getUser().getLastName());
+        }
+        if (entity.getCommentList() != null) {
+            articleDTO.setCommentCount(articleRepository.getCountOfComment(entity.getUuid()));
         }
 
 

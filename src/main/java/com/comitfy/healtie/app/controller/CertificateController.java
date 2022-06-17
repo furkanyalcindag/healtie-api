@@ -1,7 +1,6 @@
 package com.comitfy.healtie.app.controller;
 
 import com.comitfy.healtie.app.dto.CertificateDTO;
-import com.comitfy.healtie.app.dto.DoctorDTO;
 import com.comitfy.healtie.app.dto.requestDTO.CertificateRequestDTO;
 import com.comitfy.healtie.app.entity.Certificate;
 import com.comitfy.healtie.app.entity.Doctor;
@@ -11,8 +10,10 @@ import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.app.service.CertificateService;
 import com.comitfy.healtie.app.service.DoctorService;
 import com.comitfy.healtie.app.specification.CertificateSpecification;
+import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseCrudController;
+import com.comitfy.healtie.util.common.HelperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,8 @@ public class CertificateController extends BaseCrudController<CertificateDTO, Ce
 
     @Autowired
     DoctorService doctorService;
+    @Autowired
+    HelperService helperService;
 
     @Override
     protected CertificateService getService() {
@@ -47,14 +50,14 @@ public class CertificateController extends BaseCrudController<CertificateDTO, Ce
         return certificateMapper;
     }
 
-    @PostMapping("/{doctorId}")
-    public ResponseEntity<CertificateRequestDTO> saveByDoctorId(@RequestHeader(value = "accept-language", required = true) String acceptLanguage,
-                                                                @PathVariable UUID doctorId, @RequestBody CertificateRequestDTO certificateRequestDTO) {
-        DoctorDTO optional = doctorService.findByUUID(doctorId);
-        if (optional == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @PostMapping("/doctor-api")
+    public ResponseEntity<CertificateRequestDTO> saveByDoctor(@RequestHeader(value = "accept-language", required = true) String acceptLanguage,
+                                                              @RequestBody CertificateRequestDTO certificateRequestDTO) {
+        User user = helperService.getUserFromSession();
+        if (user != null) {
+            return new ResponseEntity<>(certificateService.saveCertificateByDoctor(user, certificateRequestDTO), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(certificateService.saveCertificateByDoctor(doctorId, certificateRequestDTO), HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 

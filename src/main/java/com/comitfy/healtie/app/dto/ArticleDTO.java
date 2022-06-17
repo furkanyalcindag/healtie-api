@@ -18,9 +18,11 @@ public class ArticleDTO extends BaseDTO {
     private long saveCount;
 
     private boolean isLike = Boolean.FALSE;
-    private boolean isSave=Boolean.FALSE;
+    private boolean isSave = Boolean.FALSE;
 
     private Set<TagDTO> tags;
+
+    private long commentCount;
 
 
 }

@@ -8,7 +8,6 @@ import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.userModule.repository.UserRepository;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseMapper;
-import com.comitfy.healtie.util.common.HelperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,9 +28,6 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
     @Autowired
     UserRepository userRepository;
 
-    @Autowired
-    HelperService helperService;
-
     @Override
     public DoctorDTO entityToDTO(Doctor entity) {
         DoctorDTO doctorDTO = new DoctorDTO();
@@ -49,11 +45,15 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
         doctorDTO.setFirstName(entity.getUser().getFirstName());
         doctorDTO.setLastName((entity.getUser().getLastName()));
         doctorDTO.setEmail(entity.getUser().getEmail());
+        doctorDTO.setGenderEnum(entity.getUser().getGenderEnum());
+        doctorDTO.setAgeRangeEnum(entity.getUser().getAgeRangeEnum());
+        doctorDTO.setPhone(entity.getUser().getPhotoLink());
 
 
   /*      if (entity.getArticleList() != null) {
             doctorDTO.setArticleCount(entity.getArticleList().size());
         }*/
+
         return doctorDTO;
     }
 
@@ -85,11 +85,14 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
         doctor.setClinicName(dto.getClinicName());
         doctor.setLanguageEnum(dto.getLanguageEnum());
 
-        User user = helperService.getUserFromSession();
+        User user = new User();
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
         user.setEmail(dto.getEmail());
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        user.setGenderEnum(dto.getGenderEnum());
+        user.setAgeRangeEnum(dto.getAgeRangeEnum());
+        user.setPhotoLink(dto.getPhotoLink());
 
         doctor.setUser(user);
 
@@ -113,6 +116,10 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
         doctor.getUser().setLastName(dto.getLastName());
         doctor.getUser().setEmail(dto.getEmail());
         doctor.getUser().setPassword(passwordEncoder.encode(dto.getPassword()));
+        doctor.getUser().setGenderEnum(dto.getGenderEnum());
+        doctor.getUser().setAgeRangeEnum(dto.getAgeRangeEnum());
+        doctor.getUser().setPhotoLink(dto.getPhotoLink());
+
 
         return doctor;
     }
