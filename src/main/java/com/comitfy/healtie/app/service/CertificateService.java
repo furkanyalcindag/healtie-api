@@ -60,23 +60,28 @@ public class CertificateService extends BaseService<CertificateDTO, CertificateR
         }
     }
 
-    /*    public CertificateRequestDTO saveCertificateByDoctor(UUID id, CertificateRequestDTO dto) {
-            Optional<Doctor> doctor = doctorRepository.findByUuid(id);
-            if (doctor.isPresent()) {
-                Certificate certificate = getMapper().requestDTOToEntity(dto);
-                certificate.setDoctor(doctor.get());
-                certificateRepository.save(certificate);
-                return dto;
-            } else {
-                return null;
-            }
-        }*/
     public CertificateRequestDTO saveCertificateByDoctor(User user, CertificateRequestDTO dto) {
         Optional<Doctor> doctor = doctorRepository.findByUser(user);
         if (doctor.isPresent()) {
             Certificate certificate = getMapper().requestDTOToEntity(dto);
             certificate.setDoctor(doctor.get());
             certificateRepository.save(certificate);
+            return dto;
+        } else {
+            return null;
+        }
+    }
+
+    public CertificateRequestDTO updateCertificate(UUID id, CertificateRequestDTO dto, User user) {
+        Optional<Certificate> certificate = certificateRepository.findByUuid(id);
+        if (certificate.isPresent()) {
+            Certificate certificate1 = certificateMapper.requestDTOToExistEntity(certificate.get(), dto);
+            certificate1.setCertificateNo(dto.getCertificateNo());
+            certificate1.setTakenDate(dto.getTakenDate());
+            certificate1.setTakenFrom(dto.getTakenFrom());
+            certificate1.setName(dto.getName());
+            certificateRepository.save(certificate1);
+
             return dto;
         } else {
             return null;

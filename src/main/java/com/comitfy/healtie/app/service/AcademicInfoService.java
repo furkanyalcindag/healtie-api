@@ -76,19 +76,8 @@ public class AcademicInfoService extends BaseService<AcademicInfoDTO, AcademicIn
             return null;
         }
     }
-    /* public RequestDTO update(UUID id, RequestDTO dto) {
-        Optional<Entity> entity = getRepository().findByUuid(id);
 
-        if (entity.isPresent()) {
-            Entity entity1 = getMapper().requestDTOToExistEntity(entity.get(), dto);
-            getRepository().save(entity1);
-            return dto;
-        } else {
-            return null;
-        }
-    }*/
-
-    public AcademicInfoRequestDTO updateAcademicInfo(UUID id, AcademicInfoRequestDTO dto) {
+    public AcademicInfoRequestDTO updateAcademicInfo(UUID id, AcademicInfoRequestDTO dto, User user) {
         Optional<AcademicInfo> academicInfo = academicInfoRepository.findByUuid(id);
         if (academicInfo.isPresent()) {
             AcademicInfo academicInfo1 = academicInfoMapper.requestDTOToExistEntity(academicInfo.get(), dto);
@@ -102,19 +91,6 @@ public class AcademicInfoService extends BaseService<AcademicInfoDTO, AcademicIn
             return null;
         }
     }
-    /*    public UserGenderRequestDTO updateGender(UUID id, UserGenderRequestDTO dto) {
-        Optional<User> user = userRepository.findByUuid(id);
-        if (user.isPresent()) {
-            User user1 = userMapper.requestDTOToExistEntityforGender(user.get(), dto);
-            user1.setGenderEnum(dto.getGenderEnum());
-
-            userRepository.save(user1);
-
-            return dto;
-        } else {
-            return null;
-        }
-    }*/
 
 }
 

@@ -20,5 +20,7 @@ public interface AcademicInfoRepository extends BaseRepository<AcademicInfo> {
 
     Page<AcademicInfo> findAllByDoctor(Pageable pageable, Doctor doctor);
 
+    //Optional<AcademicInfo> findByDoctor(Doctor doctor);
+
 
 }

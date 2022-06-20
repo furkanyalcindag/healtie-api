@@ -2,6 +2,7 @@ package com.comitfy.healtie.app.service;
 
 import com.comitfy.healtie.app.dto.ExperienceDTO;
 import com.comitfy.healtie.app.dto.requestDTO.ExperienceRequestDTO;
+import com.comitfy.healtie.app.entity.Certificate;
 import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.app.entity.Experience;
 import com.comitfy.healtie.app.mapper.ExperienceMapper;
@@ -73,4 +74,20 @@ public class ExperienceService extends BaseService<ExperienceDTO, ExperienceRequ
 
     }
 
+    public ExperienceRequestDTO updateExperience(UUID id, ExperienceRequestDTO dto, User user) {
+        Optional<Experience> experience = experienceRepository.findByUuid(id);
+        if (experience.isPresent()) {
+            Experience experience1 = experienceMapper.requestDTOToExistEntity(experience.get(), dto);
+            experience1.setDescription(dto.getDescription());
+            experience1.setStartDate(dto.getStartDate());
+            experience1.setEndDate(dto.getEndDate());
+            experience1.setTitle(dto.getTitle());
+            experience1.setWorkedPlace(dto.getWorkedPlace());
+            experienceRepository.save(experience1);
+
+            return dto;
+        } else {
+            return null;
+        }
+    }
 }

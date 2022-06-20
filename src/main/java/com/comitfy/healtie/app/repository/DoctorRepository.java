@@ -17,6 +17,7 @@ public interface DoctorRepository extends BaseRepository<Doctor> {
 
 
     Optional<Doctor> findByUser(User user);
+
  /*
     @Query("SELECT COUNT(articles) FROM Doctor doctor" +
             " inner join doctor.articleList articles where doctor.uuid=?1")

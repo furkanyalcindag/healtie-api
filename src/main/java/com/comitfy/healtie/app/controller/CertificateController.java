@@ -72,4 +72,15 @@ public class CertificateController extends BaseCrudController<CertificateDTO, Ce
         }
     }
 
+    @PutMapping("/user-api/{certificateId}")
+    public ResponseEntity<String> updateCertificate(@PathVariable UUID certificateId, @RequestBody CertificateRequestDTO dto) {
+        User user = helperService.getUserFromSession();
+        CertificateDTO certificateDTO = certificateService.findByUUID(certificateId);
+        if (certificateDTO == null || user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND);
+        } else {
+            certificateService.updateCertificate(certificateId, dto, user);
+            return new ResponseEntity<>("The object was updated.", HttpStatus.OK);
+        }
+    }
 }

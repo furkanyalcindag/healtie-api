@@ -70,4 +70,16 @@ public class ExperienceController extends BaseCrudController<ExperienceDTO, Expe
             return new ResponseEntity<>(experienceService.getExperienceByDoctor(doctorId, pageNumber, pageSize), HttpStatus.OK);
         }
     }
+
+    @PutMapping("/user-api/{experienceId}")
+    public ResponseEntity<String> updateExperience(@PathVariable UUID experienceId, @RequestBody ExperienceRequestDTO dto) {
+        User user = helperService.getUserFromSession();
+        ExperienceDTO experienceDTO = experienceService.findByUUID(experienceId);
+        if (experienceDTO == null || user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND);
+        } else {
+            experienceService.updateExperience(experienceId, dto, user);
+            return new ResponseEntity<>("The object was updated.", HttpStatus.OK);
+        }
+    }
 }

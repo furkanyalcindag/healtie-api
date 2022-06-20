@@ -1,7 +1,7 @@
 package com.comitfy.healtie.app.mapper;
 
 import com.comitfy.healtie.app.dto.DoctorDTO;
-import com.comitfy.healtie.app.dto.requestDTO.DoctorRequestDTO;
+import com.comitfy.healtie.app.dto.requestDTO.*;
 import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.userModule.entity.User;
@@ -122,6 +122,48 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
 
 
         return doctor;
+    }
+
+    public Doctor requestDTOToExistEntityForTitle(Doctor doctor, DoctorTitleRequestDTO dto) {
+        doctor.setTitle(dto.getTitle());
+        return doctor;
+
+    }
+
+    public Doctor requestDTOToExistEntityForDiplomaNo(Doctor doctor, DoctorDiplomaNoRequestDTO dto) {
+        doctor.setDiplomaNo(dto.getDiplomaNo());
+        return doctor;
+
+    }
+
+    public Doctor requestDTOToExistEntityForAddress(Doctor doctor, DoctorAddressRequestDTO dto) {
+        doctor.setAddress(dto.getAddress());
+        return doctor;
+
+    }
+
+    public Doctor requestDTOToExistEntityForPhone(Doctor doctor, DoctorPhoneRequestDTO dto) {
+        doctor.setPhone(dto.getPhone());
+        return doctor;
+
+    }
+
+    public Doctor requestDTOToExistEntityForClinicName(Doctor doctor, DoctorClinicNameRequestDTO dto) {
+        doctor.setClinicName(dto.getClinicName());
+        return doctor;
+
+    }
+
+    public Doctor requestDTOToExistEntityForAbout(Doctor doctor, DoctorAboutRequestDTO dto) {
+        doctor.setAbout(dto.getAbout());
+        return doctor;
+
+    }
+
+    public Doctor requestDTOToExistEntityForBranch(Doctor doctor, DoctorBranchRequestDTO dto) {
+        doctor.setBranch(dto.getBranch());
+        return doctor;
+
     }
 
     @Override

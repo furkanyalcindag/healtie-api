@@ -82,8 +82,8 @@ public class CommentController extends BaseCrudController<CommentDTO, CommentReq
         }
     }
 
-    @GetMapping("parent/{commentId}")
-    public ResponseEntity<PageDTO<CommentDTO>> getByParentId(@RequestHeader(value = "accept-language", required = true) String language,
+    @GetMapping("/{commentId}")
+    public ResponseEntity<PageDTO<CommentDTO>> getByCommentId(@RequestHeader(value = "accept-language", required = true) String language,
                                                              @PathVariable UUID commentId, @RequestParam int pageNumber, @RequestParam int pageSize) {
         Optional<Comment> optional = commentService.getRepository().findByUuid(commentId);
         if (optional == null) {
