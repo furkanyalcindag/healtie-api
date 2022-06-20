@@ -10,15 +10,11 @@ import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.app.mapper.ArticleMapper;
 import com.comitfy.healtie.app.model.enums.LanguageEnum;
 import com.comitfy.healtie.app.repository.ArticleRepository;
-import com.comitfy.healtie.app.repository.CategoryRepository;
-import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.app.service.ArticleClickService;
 import com.comitfy.healtie.app.service.ArticleService;
 import com.comitfy.healtie.app.service.DoctorService;
 import com.comitfy.healtie.app.specification.ArticleSpecification;
 import com.comitfy.healtie.userModule.entity.User;
-import com.comitfy.healtie.userModule.repository.UserRepository;
-import com.comitfy.healtie.userModule.service.UserService;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseWithMultiLanguageCrudController;
 import com.comitfy.healtie.util.common.HelperService;
@@ -41,26 +37,13 @@ public class ArticleController extends BaseWithMultiLanguageCrudController<Artic
     ArticleMapper articleMapper;
 
     @Autowired
-    CategoryRepository categoryRepository;
-
-    @Autowired
-    DoctorRepository doctorRepository;
-
-    @Autowired
-    ArticleRepository articleRepository;
-    @Autowired
     ArticleClickService articleClickService;
 
     @Autowired
     DoctorService doctorService;
     @Autowired
-    UserService userService;
-
-    @Autowired
     HelperService helperService;
 
-    @Autowired
-    UserRepository userRepository;
 
     @Override
     protected ArticleService getService() {
@@ -76,11 +59,10 @@ public class ArticleController extends BaseWithMultiLanguageCrudController<Artic
     public ResponseEntity<PageDTO<ArticleDTO>> getByDoctorId(@RequestHeader(value = "accept-language", required = true) String language,
                                                              @PathVariable UUID doctorId, @RequestParam int pageNumber, @RequestParam int pageSize) {
         Optional<Doctor> optional = doctorService.getRepository().findByUuid(doctorId);
-        // User user = helperService.getUserFromSession();
         if (optional == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<>(articleService.getArticleByUser(doctorId, pageNumber, pageSize, LanguageEnum.valueOf(language)), HttpStatus.OK);
+            return new ResponseEntity<>(articleService.getArticleByDoctor(doctorId, pageNumber, pageSize, LanguageEnum.valueOf(language)), HttpStatus.OK);
         }
     }
 

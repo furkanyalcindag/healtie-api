@@ -2,11 +2,13 @@ package com.comitfy.healtie.app.entity;
 
 import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.UUID;
 
 @Entity
 @Table
@@ -14,18 +16,18 @@ import javax.persistence.Table;
 @AttributeOverride(
         name = "uuid",
         column = @Column(
-                name = "settings_uuid"
+                name = "user_contract_uuid"
         )
 )
-public class Settings extends BaseEntity {
-
-    @Column(unique = true)
-    private String key;
+public class UserContract extends BaseEntity {
+    @Column
+    @Type(type = "uuid-char")
+    private UUID userUuid;
 
     @Column
-    private String value;
+    @Type(type = "uuid-char")
+    private UUID contractUuid;
 
     @Column
-    private boolean isCurrent;
-
+    private boolean isSigned;
 }

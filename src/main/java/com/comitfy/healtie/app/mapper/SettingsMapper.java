@@ -19,6 +19,7 @@ public class SettingsMapper implements BaseMapper<SettingsDTO, SettingsRequestDT
         SettingsDTO settingsDTO = new SettingsDTO();
         settingsDTO.setKey(entity.getKey());
         settingsDTO.setValue(entity.getValue());
+        settingsDTO.setCurrent(entity.isCurrent());
         settingsDTO.setUuid(entity.getUuid());
         return settingsDTO;
     }
@@ -28,6 +29,7 @@ public class SettingsMapper implements BaseMapper<SettingsDTO, SettingsRequestDT
         Settings settings = new Settings();
         settings.setKey(dto.getKey());
         settings.setValue(dto.getValue());
+        settings.setCurrent(dto.isCurrent());
         return settings;
     }
 
@@ -36,6 +38,7 @@ public class SettingsMapper implements BaseMapper<SettingsDTO, SettingsRequestDT
         Settings settings = new Settings();
         settings.setKey(dto.getKey());
         settings.setValue(dto.getValue());
+        settings.setCurrent(dto.isCurrent());
         return settings;
 
     }
@@ -44,6 +47,7 @@ public class SettingsMapper implements BaseMapper<SettingsDTO, SettingsRequestDT
     public Settings requestDTOToExistEntity(Settings entity, SettingsRequestDTO dto) {
         entity.setKey(dto.getKey());
         entity.setValue(dto.getValue());
+        entity.setCurrent(dto.isCurrent());
         return entity;
     }
 

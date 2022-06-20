@@ -8,6 +8,8 @@ import com.comitfy.healtie.app.mapper.AcademicInfoMapper;
 import com.comitfy.healtie.app.repository.AcademicInfoRepository;
 import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.app.specification.AcademicInfoSpecification;
+import com.comitfy.healtie.userModule.entity.User;
+import com.comitfy.healtie.userModule.repository.UserRepository;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,9 @@ public class AcademicInfoService extends BaseService<AcademicInfoDTO, AcademicIn
 
     @Autowired
     DoctorRepository doctorRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Autowired
     AcademicInfoSpecification academicInfoSpecification;
@@ -59,12 +64,28 @@ public class AcademicInfoService extends BaseService<AcademicInfoDTO, AcademicIn
         }
     }
 
-    public AcademicInfoRequestDTO saveAcademicInfoByDoctor(UUID id, AcademicInfoRequestDTO dto) {
-        Optional<Doctor> doctor = doctorRepository.findByUuid(id);
+
+    public AcademicInfoRequestDTO saveAcademicInfoByDoctor(User user, AcademicInfoRequestDTO dto) {
+        Optional<Doctor> doctor = doctorRepository.findByUser(user);
         if (doctor.isPresent()) {
             AcademicInfo academicInfo = getMapper().requestDTOToEntity(dto);
             academicInfo.setDoctor(doctor.get());
             academicInfoRepository.save(academicInfo);
+            return dto;
+        } else {
+            return null;
+        }
+    }
+
+    public AcademicInfoRequestDTO updateAcademicInfo(UUID id, AcademicInfoRequestDTO dto, User user) {
+        Optional<AcademicInfo> academicInfo = academicInfoRepository.findByUuid(id);
+        if (academicInfo.isPresent()) {
+            AcademicInfo academicInfo1 = academicInfoMapper.requestDTOToExistEntity(academicInfo.get(), dto);
+            academicInfo1.setSchoolName(dto.getSchoolName());
+            academicInfo1.setProfession(dto.getProfession());
+            academicInfo1.setStartYear(dto.getStartYear());
+            academicInfo1.setGraduateYear(dto.getGraduateYear());
+            academicInfoRepository.save(academicInfo1);
             return dto;
         } else {
             return null;
