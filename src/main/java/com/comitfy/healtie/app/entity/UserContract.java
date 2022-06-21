@@ -1,13 +1,12 @@
 package com.comitfy.healtie.app.entity;
 
+import com.comitfy.healtie.app.dto.ContractDTO;
 import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import lombok.Data;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity

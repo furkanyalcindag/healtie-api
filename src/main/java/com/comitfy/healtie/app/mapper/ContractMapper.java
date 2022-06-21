@@ -1,8 +1,10 @@
 package com.comitfy.healtie.app.mapper;
 
+import com.comitfy.healtie.app.dto.ContractActiveDTO;
 import com.comitfy.healtie.app.dto.ContractDTO;
 import com.comitfy.healtie.app.dto.requestDTO.ContractRequestDTO;
 import com.comitfy.healtie.app.entity.Contract;
+import com.comitfy.healtie.app.model.enums.LanguageEnum;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseMapper;
 import org.springframework.data.domain.Page;
@@ -20,7 +22,24 @@ public class ContractMapper implements BaseMapper<ContractDTO, ContractRequestDT
         contractDTO.setTitle(entity.getTitle());
         contractDTO.setContent(entity.getContent());
         contractDTO.setRequired(entity.isRequired());
+        contractDTO.setActive(entity.isActivated());
         contractDTO.setUuid(entity.getUuid());
+
+        contractDTO.setLanguageEnum(entity.getLanguageEnum());
+        return contractDTO;
+
+
+
+    }
+
+    public ContractActiveDTO entityToDTOActive(Contract entity) {
+        ContractActiveDTO contractDTO = new ContractActiveDTO();
+        contractDTO.setKey(entity.getKey());
+        contractDTO.setTitle(entity.getTitle());
+        contractDTO.setRequired(entity.isRequired());
+        contractDTO.setActive(entity.isActivated());
+        contractDTO.setUuid(entity.getUuid());
+
         return contractDTO;
 
     }
@@ -31,9 +50,12 @@ public class ContractMapper implements BaseMapper<ContractDTO, ContractRequestDT
         contract.setKey(dto.getKey());
         contract.setTitle(dto.getTitle());
         contract.setContent(dto.getContent());
+        contract.setActivated(dto.isActive());
         contract.setRequired(dto.isRequired());
+        contract.setLanguageEnum(LanguageEnum.valueOf(dto.getLanguage()));
         return contract;
     }
+
 
     @Override
     public Contract requestDTOToEntity(ContractRequestDTO dto) {
@@ -41,7 +63,10 @@ public class ContractMapper implements BaseMapper<ContractDTO, ContractRequestDT
         contract.setKey(dto.getKey());
         contract.setTitle(dto.getTitle());
         contract.setContent(dto.getContent());
+        contract.setActivated(dto.isActive());
         contract.setRequired(dto.isRequired());
+        contract.setLanguageEnum(LanguageEnum.valueOf(dto.getLanguage()));
+
         return contract;
     }
 
@@ -51,7 +76,10 @@ public class ContractMapper implements BaseMapper<ContractDTO, ContractRequestDT
         contract.setKey(dto.getKey());
         contract.setTitle(dto.getTitle());
         contract.setContent(dto.getContent());
+        contract.setActivated(dto.isActive());
         contract.setRequired(dto.isRequired());
+        contract.setLanguageEnum(LanguageEnum.valueOf(dto.getLanguage()));
+
         return contract;
     }
 
@@ -75,12 +103,29 @@ public class ContractMapper implements BaseMapper<ContractDTO, ContractRequestDT
         return contractDTOList;
     }
 
+    public List<ContractActiveDTO> entityListToDTOListActive(List<Contract> contracts) {
+        List<ContractActiveDTO> contractDTOList = new ArrayList<>();
+        for (Contract contract : contracts) {
+            ContractActiveDTO contractDTO = entityToDTOActive(contract);
+            contractDTOList.add(contractDTO);
+        }
+        return contractDTOList;
+    }
+
     @Override
     public PageDTO<ContractDTO> pageEntityToPageDTO(Page<Contract> pageEntity) {
         PageDTO<ContractDTO> pageDTO = new PageDTO<ContractDTO>();
         List<Contract> entityList = pageEntity.toList();
         List<ContractDTO> contractDTOList = entityListToDTOList(entityList);
         pageDTO.setStart(pageEntity, contractDTOList);
+        return pageDTO;
+    }
+
+    public PageDTO<ContractActiveDTO> pageActiveEntityToPageDTO(Page<Contract> pageEntity) {
+        PageDTO<ContractActiveDTO> pageDTO = new PageDTO<ContractActiveDTO>();
+        List<Contract> entityList = pageEntity.toList();
+        List<ContractActiveDTO> contractActiveDTOList = entityListToDTOListActive(entityList);
+        pageDTO.setStart(pageEntity, contractActiveDTOList);
         return pageDTO;
     }
 }

@@ -42,14 +42,4 @@ public class ArticleClickService extends BaseService<ArticleClickDTO, ArticleCli
         return articleClickSpecification;
     }
 
-    /*public PageDTO<ArticleClickDTO> getClickedArticleByUser(int page, int size, User user) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
-        return getMapper().pageEntityToPageDTO();
-
-    }*/
-
-    /*  public PageDTO<ArticleDTO> getLikedArticleByUser(int page, int size, User user) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
-        return getMapper().pageEntityToPageDTO(articleRepository.getLikedArticleOfUser(pageable, user.getUuid()));
-    }*/
 }

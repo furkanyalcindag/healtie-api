@@ -6,7 +6,6 @@ import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table
@@ -27,17 +26,19 @@ public class Contract extends BaseEntity {
     private boolean isRequired;
 
     @Column
-    private boolean isActive;
+    private boolean activated;
 
     @Column
-    private int order;
+    private int orderOfContract;
 
     @Column
     @Enumerated(EnumType.STRING)
     private LanguageEnum languageEnum;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private User user;
+
+ /*   @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn()
+    private User user;*/
 
 
 }
