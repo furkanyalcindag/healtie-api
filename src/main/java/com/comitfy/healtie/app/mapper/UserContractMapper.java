@@ -1,13 +1,14 @@
 package com.comitfy.healtie.app.mapper;
 
-import com.comitfy.healtie.app.dto.UserContractDTO;
-import com.comitfy.healtie.app.dto.requestDTO.UserContractRequestDTO;
-import com.comitfy.healtie.app.entity.UserContract;
+import com.comitfy.healtie.userModule.dto.UserContractDTO;
+import com.comitfy.healtie.userModule.dto.requestDTO.UserContractRequestDTO;
+import com.comitfy.healtie.userModule.entity.UserContract;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -17,61 +18,61 @@ public class UserContractMapper implements BaseMapper<UserContractDTO, UserContr
         UserContractDTO userContractDTO = new UserContractDTO();
         userContractDTO.setUuid(entity.getUuid());
         userContractDTO.setContractUuid(entity.getContractUuid());
-        userContractDTO.setUserUuid(entity.getUserUuid());
+        //userContractDTO.setUserUuid(entity.getUserUuid());
         userContractDTO.setSigned(entity.isSigned());
         return userContractDTO;
 
     }
 
-        /*  Set<TagDTO> tagDTOS = new HashSet<>();
-        for (Tag tag : entity.getTags()) {
-
-            TagDTO tagDTO = new TagDTO();
-            tagDTO.setName(tag.getName());
-            tagDTO.setUuid(tag.getUuid());
-            tagDTOS.add(tagDTO);
-        }
-
-        articleDTO.setTags(tagDTOS);
-           for (UUID uuid : dto.getCategoryList()) {
-            Optional<Category> category1 = categoryRepository.findByUuid(uuid);
-
-            category1.ifPresent(value -> article.getCategoryList().add(value));
-        } for (ArticleClick articleClick : articleClickEntity) {
-            ArticleClickDTO articleClickDTO = entityToDTO(articleClick);
-            articleClickDTOList.add(articleClickDTO);
-        }
-
-         */
-
 
     @Override
     public UserContract dtoToEntity(UserContractDTO dto) {
-        return null;
+        UserContract userContract = new UserContract();
+        userContract.setContractUuid(dto.getContractUuid());
+        return userContract;
     }
 
     @Override
     public UserContract requestDTOToEntity(UserContractRequestDTO dto) {
-        return null;
+        UserContract userContract = new UserContract();
+        userContract.setContractUuid(dto.getContractUuid());
+        return userContract;
     }
 
     @Override
     public UserContract requestDTOToExistEntity(UserContract entity, UserContractRequestDTO dto) {
-        return null;
+
+        entity.setContractUuid(dto.getContractUuid());
+        return entity;
     }
 
     @Override
     public List<UserContract> dtoListToEntityList(List<UserContractDTO> userContractDTOS) {
-        return null;
+        List<UserContract> userContractList = new ArrayList<>();
+        for (UserContractDTO userContractDTO : userContractDTOS) {
+            UserContract contract = dtoToEntity(userContractDTO);
+            userContractList.add(contract);
+        }
+        return userContractList;
     }
 
     @Override
     public List<UserContractDTO> entityListToDTOList(List<UserContract> userContracts) {
-        return null;
+        List<UserContractDTO> userContractDTOList = new ArrayList<>();
+        for (UserContract userContract : userContracts) {
+            UserContractDTO userContractDTO = entityToDTO(userContract);
+            userContractDTOList.add(userContractDTO);
+        }
+        return userContractDTOList;
     }
 
     @Override
     public PageDTO<UserContractDTO> pageEntityToPageDTO(Page<UserContract> pageEntity) {
-        return null;
-    }
+        PageDTO<UserContractDTO> pageDTO = new PageDTO<UserContractDTO>();
+        List<UserContract> entityList = pageEntity.toList();
+        List<UserContractDTO> userContractDTOList = entityListToDTOList(entityList);
+        pageDTO.setStart(pageEntity, userContractDTOList);
+        return pageDTO;
+
+}
 }

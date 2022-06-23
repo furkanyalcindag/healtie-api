@@ -11,7 +11,7 @@ import java.util.Set;
 @Data
 @Table
 public class Role extends BaseEntity {
-    @Column
+    @Column(unique = true)
     private String name;
     @Column
     private String description;

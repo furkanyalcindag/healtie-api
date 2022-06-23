@@ -1,7 +1,6 @@
 package com.comitfy.healtie.userModule.entity;
 
 
-import com.comitfy.healtie.app.entity.Contract;
 import com.comitfy.healtie.app.entity.Article;
 import com.comitfy.healtie.app.model.enums.AgeRangeEnum;
 import com.comitfy.healtie.app.model.enums.GenderEnum;

@@ -1,4 +1,4 @@
-package com.comitfy.healtie.app.dto.requestDTO;
+package com.comitfy.healtie.userModule.dto.requestDTO;
 
 import com.comitfy.healtie.app.model.enums.LanguageEnum;
 import com.comitfy.healtie.util.common.BaseDTO;

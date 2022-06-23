@@ -1,10 +1,11 @@
-package com.comitfy.healtie.app.mapper;
+package com.comitfy.healtie.userModule.mapper;
 
 import com.comitfy.healtie.app.dto.ContractActiveDTO;
-import com.comitfy.healtie.app.dto.ContractDTO;
-import com.comitfy.healtie.app.dto.requestDTO.ContractRequestDTO;
-import com.comitfy.healtie.app.entity.Contract;
 import com.comitfy.healtie.app.model.enums.LanguageEnum;
+import com.comitfy.healtie.userModule.dto.ContractDTO;
+import com.comitfy.healtie.userModule.dto.UserContractDTO;
+import com.comitfy.healtie.userModule.dto.requestDTO.ContractRequestDTO;
+import com.comitfy.healtie.userModule.entity.Contract;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseMapper;
 import org.springframework.data.domain.Page;
@@ -21,14 +22,23 @@ public class ContractMapper implements BaseMapper<ContractDTO, ContractRequestDT
         contractDTO.setKey(entity.getKey());
         contractDTO.setTitle(entity.getTitle());
         contractDTO.setContent(entity.getContent());
-        contractDTO.setRequired(entity.isRequired());
-        contractDTO.setActive(entity.isActivated());
+        contractDTO.setActive(entity.getActivated());
+        contractDTO.setRequired(entity.getRequired());
         contractDTO.setUuid(entity.getUuid());
 
         contractDTO.setLanguageEnum(entity.getLanguageEnum());
         return contractDTO;
 
 
+    }
+
+    public UserContractDTO entityToDTOUserContract(Contract entity) {
+
+        UserContractDTO userContractDTO = new UserContractDTO();
+        userContractDTO.setUuid(entity.getUuid());
+        userContractDTO.setContractUuid(entity.getUuid());
+        userContractDTO.setSigned(entity.getSigned());
+        return userContractDTO;
 
     }
 
@@ -36,8 +46,8 @@ public class ContractMapper implements BaseMapper<ContractDTO, ContractRequestDT
         ContractActiveDTO contractDTO = new ContractActiveDTO();
         contractDTO.setKey(entity.getKey());
         contractDTO.setTitle(entity.getTitle());
-        contractDTO.setRequired(entity.isRequired());
-        contractDTO.setActive(entity.isActivated());
+        contractDTO.setRequired(entity.getRequired());
+        contractDTO.setActive(entity.getActivated());
         contractDTO.setUuid(entity.getUuid());
 
         return contractDTO;
@@ -112,6 +122,15 @@ public class ContractMapper implements BaseMapper<ContractDTO, ContractRequestDT
         return contractDTOList;
     }
 
+    public List<UserContractDTO> entityListToDTOListUserContract(List<Contract> contracts) {
+        List<UserContractDTO> contractDTOList = new ArrayList<>();
+        for (Contract contract : contracts) {
+            UserContractDTO contractDTO = entityToDTOUserContract(contract);
+            contractDTOList.add(contractDTO);
+        }
+        return contractDTOList;
+    }
+
     @Override
     public PageDTO<ContractDTO> pageEntityToPageDTO(Page<Contract> pageEntity) {
         PageDTO<ContractDTO> pageDTO = new PageDTO<ContractDTO>();
@@ -128,4 +147,13 @@ public class ContractMapper implements BaseMapper<ContractDTO, ContractRequestDT
         pageDTO.setStart(pageEntity, contractActiveDTOList);
         return pageDTO;
     }
+
+    public PageDTO<UserContractDTO> pageEntityToPageDTOUserContract(Page<Contract> pageEntity) {
+        PageDTO<UserContractDTO> pageDTO = new PageDTO<UserContractDTO>();
+        List<Contract> entityList = pageEntity.toList();
+        List<UserContractDTO> contractDTOList = entityListToDTOListUserContract(entityList);
+        pageDTO.setStart(pageEntity, contractDTOList);
+        return pageDTO;
+    }
+
 }

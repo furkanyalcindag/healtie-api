@@ -22,4 +22,5 @@ public interface UserRepository extends BaseRepository<User> {
             " inner join article.userSaves saves  where saves.uuid=?1")
     long getSaveCountByUser(UUID userUUID);
 
+
 }

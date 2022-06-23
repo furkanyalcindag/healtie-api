@@ -1,15 +1,15 @@
-package com.comitfy.healtie.app.service;
+package com.comitfy.healtie.userModule.service;
 
 import com.comitfy.healtie.app.dto.ContractActiveDTO;
-import com.comitfy.healtie.app.dto.ContractDTO;
-import com.comitfy.healtie.app.dto.requestDTO.ContractRequestDTO;
-import com.comitfy.healtie.app.entity.Contract;
-import com.comitfy.healtie.app.mapper.ContractMapper;
 import com.comitfy.healtie.app.model.enums.LanguageEnum;
-import com.comitfy.healtie.app.repository.ContractRepository;
-import com.comitfy.healtie.app.specification.ContractSpecification;
+import com.comitfy.healtie.userModule.dto.ContractDTO;
+import com.comitfy.healtie.userModule.dto.requestDTO.ContractRequestDTO;
+import com.comitfy.healtie.userModule.entity.Contract;
 import com.comitfy.healtie.userModule.entity.User;
+import com.comitfy.healtie.userModule.mapper.ContractMapper;
+import com.comitfy.healtie.userModule.repository.ContractRepository;
 import com.comitfy.healtie.userModule.repository.UserRepository;
+import com.comitfy.healtie.userModule.specification.ContractSpecification;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,17 +61,14 @@ public class ContractService extends BaseService<ContractDTO, ContractRequestDTO
         }
     }
 
-    public PageDTO<ContractActiveDTO> getActiveContract(UUID id, int page, int size, LanguageEnum languageEnum) {
-        Optional<User> user = userRepository.findByUuid(id);
+    public PageDTO<ContractActiveDTO> getActiveContract( int page, int size, LanguageEnum languageEnum) {
+
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("id")));
-        if (user.isPresent()) {
+
             PageDTO<ContractActiveDTO> pageDTO = contractMapper.pageActiveEntityToPageDTO(contractRepository.findAllByActivatedAndLanguageEnum(pageable, true, languageEnum));
 
             return pageDTO;
-        } else {
-            return null;
-        }
-    }
 
+    }
 
 }

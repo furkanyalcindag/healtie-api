@@ -1,7 +1,6 @@
-package com.comitfy.healtie.app.entity;
+package com.comitfy.healtie.userModule.entity;
 
 import com.comitfy.healtie.app.model.enums.LanguageEnum;
-import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import lombok.Data;
 
@@ -23,13 +22,16 @@ public class Contract extends BaseEntity {
     private String content;
 
     @Column
-    private boolean isRequired;
+    private Boolean required;
 
     @Column
-    private boolean activated;
+    private Boolean signed;
 
     @Column
-    private int orderOfContract;
+    private Boolean activated;
+
+    @Column
+    private Integer orderOfContract;
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -42,4 +44,6 @@ public class Contract extends BaseEntity {
 
 
 }
+//for döngüsünde contractuuid dön her döngüde kaydet validete yaptıgın yerde yap
+
 

@@ -18,12 +18,12 @@ public interface DoctorRepository extends BaseRepository<Doctor> {
 
     Optional<Doctor> findByUser(User user);
 
- /*
-    @Query("SELECT COUNT(articles) FROM Doctor doctor" +
-            " inner join doctor.articleList articles where doctor.uuid=?1")
-    long getCountOfArticles(UUID doctorUUID);
 
-    select article.id,count(article.id) from article
+/*    @Query("SELECT COUNT(articles) FROM Doctor doctor" +
+            " inner join doctor.articleList articles where doctor.uuid=?1")
+    long getCountOfArticles(UUID doctorUUID);*/
+
+  /*  select article.id,count(article.id) from article
 inner join article_user_likes on article_user_likes.article_id = article.id group by article.id
 having article.doctor_id=1
 

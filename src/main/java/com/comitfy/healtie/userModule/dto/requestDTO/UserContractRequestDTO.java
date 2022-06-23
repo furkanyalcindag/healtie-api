@@ -1,6 +1,6 @@
-package com.comitfy.healtie.app.dto.requestDTO;
+package com.comitfy.healtie.userModule.dto.requestDTO;
 
-import com.comitfy.healtie.app.dto.ContractDTO;
+import com.comitfy.healtie.userModule.dto.ContractDTO;
 import com.comitfy.healtie.util.common.BaseDTO;
 import lombok.Data;
 

@@ -1,6 +1,6 @@
-package com.comitfy.healtie.app.specification;
+package com.comitfy.healtie.userModule.specification;
 
-import com.comitfy.healtie.app.entity.Contract;
+import com.comitfy.healtie.userModule.entity.Contract;
 import com.comitfy.healtie.util.common.BaseSpecification;
 import org.springframework.stereotype.Component;
 
