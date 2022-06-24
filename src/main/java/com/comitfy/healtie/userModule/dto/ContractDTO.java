@@ -1,4 +1,4 @@
-package com.comitfy.healtie.app.dto;
+package com.comitfy.healtie.userModule.dto;
 
 import com.comitfy.healtie.util.common.BaseDTO;
 import lombok.Data;
@@ -13,4 +13,7 @@ public class ContractDTO extends BaseDTO {
     private String content;
 
     private boolean isRequired;
+
+    private boolean isActive;
+
 }

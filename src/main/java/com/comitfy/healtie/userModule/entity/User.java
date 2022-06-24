@@ -50,6 +50,8 @@ public class User extends BaseEntity {
 
 
 
+
+
     /*@JoinTable(name = "user_group",joinColumns = @JoinColumn(name="user_id"))
     @JoinColumn(name = "group_id")
     @OneToMany(fetch = FetchType.LAZY)

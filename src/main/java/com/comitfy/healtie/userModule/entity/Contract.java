@@ -1,12 +1,10 @@
-package com.comitfy.healtie.app.entity;
+package com.comitfy.healtie.userModule.entity;
 
 import com.comitfy.healtie.app.model.enums.LanguageEnum;
-import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table
@@ -24,21 +22,28 @@ public class Contract extends BaseEntity {
     private String content;
 
     @Column
-    private boolean isRequired;
+    private Boolean required;
 
     @Column
-    private boolean isActive;
+    private Boolean signed;
 
     @Column
-    private int order;
+    private Boolean activated;
+
+    @Column
+    private Integer orderOfContract;
 
     @Column
     @Enumerated(EnumType.STRING)
     private LanguageEnum languageEnum;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private User user;
+
+ /*   @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn()
+    private User user;*/
 
 
 }
+//for döngüsünde contractuuid dön her döngüde kaydet validete yaptıgın yerde yap
+
 

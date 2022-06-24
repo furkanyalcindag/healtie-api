@@ -20,7 +20,7 @@ public interface ArticleRepository extends BaseWithMultiLanguageRepository<Artic
 
     //   Page<Article> findAllByDoctor(Pageable pageable, Doctor doctor);
 
-    Page<Article> findAllByUser(Pageable pageable, User user);
+    Page<Article> findAllByUser(Pageable pageable, User user,LanguageEnum languageEnum);
 
     Page<Article> findAllByCategoryListInAndLanguageEnum(Pageable pageable, Set<Category> category, LanguageEnum languageEnum);
 

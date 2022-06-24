@@ -112,7 +112,7 @@ public class ArticleController extends BaseWithMultiLanguageCrudController<Artic
                                                               @RequestParam int pageNumber, @RequestParam int pageSize) {
 
         User user = helperService.getUserFromSession();
-        PageDTO<ArticleDTO> dto = articleService.getSavedArticleByUser(pageNumber, pageSize, user);
+        PageDTO<ArticleDTO> dto = articleService.getSavedArticleByUser(pageNumber, pageSize, user,LanguageEnum.valueOf(language));
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
@@ -121,7 +121,7 @@ public class ArticleController extends BaseWithMultiLanguageCrudController<Artic
     public ResponseEntity<PageDTO<ArticleDTO>> getLikesByUser(@RequestHeader(value = "accept-language", required = true) String language,
                                                               @RequestParam int pageNumber, @RequestParam int pageSize) {
         User user = helperService.getUserFromSession();
-        PageDTO<ArticleDTO> dto = articleService.getLikedArticleByUser(pageNumber, pageSize, user);
+        PageDTO<ArticleDTO> dto = articleService.getLikedArticleByUser(pageNumber, pageSize, user,LanguageEnum.valueOf(language));
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 

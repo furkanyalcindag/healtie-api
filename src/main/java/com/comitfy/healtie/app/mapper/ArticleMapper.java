@@ -6,6 +6,7 @@ import com.comitfy.healtie.app.dto.requestDTO.ArticleRequestDTO;
 import com.comitfy.healtie.app.entity.Article;
 import com.comitfy.healtie.app.entity.Category;
 import com.comitfy.healtie.app.entity.Tag;
+import com.comitfy.healtie.app.model.enums.LanguageEnum;
 import com.comitfy.healtie.app.repository.*;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseMapper;
@@ -80,7 +81,8 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
         article.setDescription(dto.getDescription());
         article.setTitle(dto.getTitle());
         article.setPublishedDate(dto.getPublishedDate());
-        article.setLanguageEnum(dto.getLanguageEnum());
+        article.setLanguageEnum(LanguageEnum.valueOf(dto.getLanguage()));
+        //article.setLanguageEnum(dto.getLanguageEnum());
         Set<Tag> tags = new HashSet<>();
         for (TagDTO tagDTO : dto.getTags()) {
 
@@ -99,8 +101,8 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
         article.setDescription(dto.getDescription());
         article.setTitle(dto.getTitle());
         article.setPublishedDate(dto.getPublishedDate());
-        article.setLanguageEnum(dto.getLanguageEnum());
-
+        //article.setLanguageEnum(dto.getLanguageEnum());
+        article.setLanguageEnum(LanguageEnum.valueOf(dto.getLanguage()));
 
         Set<Tag> tags = new HashSet<>();
         for (TagDTO tagDTO : dto.getTags()) {
@@ -133,7 +135,8 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
         article.setDescription(dto.getDescription());
         article.setTitle(dto.getTitle());
         article.setPublishedDate(dto.getPublishedDate());
-        article.setLanguageEnum(dto.getLanguageEnum());
+       // article.setLanguageEnum(dto.getLanguageEnum());
+        article.setLanguageEnum(LanguageEnum.valueOf(dto.getLanguage()));
         Set<Tag> tags = new HashSet<>();
         for (TagDTO tagDTO : dto.getTags()) {
 

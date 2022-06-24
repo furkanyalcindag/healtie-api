@@ -80,7 +80,7 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
 
         if (doctor.isPresent()) {
 
-            PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByUser(pageable, doctor.get().getUser()));
+            PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByUser(pageable, doctor.get().getUser(),languageEnum));
             for (int i = 0; i < pageDTO.getData().size(); i++) {
 
                 pageDTO.getData().get(i).setLikeCount(getRepository().getCountOfArticleLike(pageDTO.getData().get(i).getUuid()));
@@ -144,11 +144,11 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
         }
     }
 
-    public PageDTO<ArticleDTO> getSavedArticleByUser(int page, int size, User user) {
+    public PageDTO<ArticleDTO> getSavedArticleByUser(int page, int size, User user,LanguageEnum languageEnum) {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("id")));
 
-        PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByUser(pageable, user));
+        PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByUser(pageable, user,languageEnum));
 
         for (ArticleDTO articleDTO : pageDTO.getData()) {
             articleDTO.setLike(isLikedArticleByUser(articleDTO.getUuid(), user.getUuid()));
@@ -160,11 +160,11 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
 
     }
 
-    public PageDTO<ArticleDTO> getLikedArticleByUser(int page, int size, User user) {
+    public PageDTO<ArticleDTO> getLikedArticleByUser(int page, int size, User user,LanguageEnum languageEnum) {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("id")));
 
-        PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByUser(pageable, user));
+        PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByUser(pageable, user,languageEnum));
 
         for (ArticleDTO articleDTO : pageDTO.getData()) {
             articleDTO.setLike(isLikedArticleByUser(articleDTO.getUuid(), user.getUuid()));
