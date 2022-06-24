@@ -62,9 +62,6 @@ public class AuthService implements IAuthService {
             newUser.setGenderEnum(request.getGenderEnum());
 
 
-
-
-
             // newUser.setGender(gender);
 
             // doctorDTO.setFirstName(entity.getUser().getFirstName());
@@ -75,13 +72,16 @@ public class AuthService implements IAuthService {
 
             userRepository.save(newUser);
 
-            UserContract userContract = new UserContract();
+
             for (UserContractDTO contractDTO:request.getContractDTOList()) {
+                UserContract userContract = new UserContract();
                 userContract.setContractUuid(contractDTO.getContractUuid());
                 userContract.setUserUuid(newUser.getUuid());
                 userContract.setSigned(contractDTO.isSigned());
+                userContractRepository.save(userContract);
+
             }
-            userContractRepository.save(userContract);
+
 
             return true;
 
@@ -113,47 +113,4 @@ public class AuthService implements IAuthService {
         return x;
     }
 
-/*    public void addContractToUser(UserContractDTO userContractDTO) {
-        //   Optional<User> user1 = userRepository.findByUuid(user.getUuid());
-        UserContract userContract = new UserContract();
-        userContract.setContractUuid(userContractDTO.getContractUuid());
-        userContract.setUserUuid(userContractDTO.getRequestUserUUID());
-        userContract.setSigned(userContractDTO.isSigned());
-        userContractRepository.save(userContract);
-
-
-    }*/
-
-    /*
-    Set<Category> parentList = new HashSet<>();
-        category.setParent(parentList);
-        for (UUID uuid : dto.getParentList()) {
-            Optional<Category> category1 = categoryRepository.findByUuid(uuid);
-
-            category1.ifPresent(value -> category.getParent().add(value));
-        }
-
-    public PageDTO<ArticleDTO> getLikedArticleByUser(int page, int size, User user,LanguageEnum languageEnum) {
-
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("id")));
-
-        PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByUser(pageable, user,languageEnum));
-
-        for (ArticleDTO articleDTO : pageDTO.getData()) {
-            articleDTO.setLike(isLikedArticleByUser(articleDTO.getUuid(), user.getUuid()));
-            articleDTO.setSave(isSavedArticleByUser(articleDTO.getUuid(), user.getUuid()));
-            articleDTO.setCommentCount(getRepository().getCountOfComment(articleDTO.getUuid()));
-        }
-        return getMapper().pageEntityToPageDTO(articleRepository.getLikedArticleOfUser(pageable, user.getUuid()));
-
-    }
-
-      for (Tag tag : entity.getTags()) {
-
-            TagDTO tagDTO = new TagDTO();
-            tagDTO.setName(tag.getName());
-            tagDTO.setUuid(tag.getUuid());
-            tagDTOS.add(tagDTO);
-        }
-*/
 }

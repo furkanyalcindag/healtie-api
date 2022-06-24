@@ -17,7 +17,7 @@ public class UserContractMapper implements BaseMapper<UserContractDTO, UserContr
     public UserContractDTO entityToDTO(UserContract entity) {
         UserContractDTO userContractDTO = new UserContractDTO();
         userContractDTO.setUuid(entity.getUuid());
-        userContractDTO.setContractUuid(entity.getContractUuid());
+      //  userContractDTO.setContractUuid(entity.getContractUuid());
         //userContractDTO.setUserUuid(entity.getUserUuid());
         userContractDTO.setSigned(entity.isSigned());
         return userContractDTO;
@@ -28,7 +28,7 @@ public class UserContractMapper implements BaseMapper<UserContractDTO, UserContr
     @Override
     public UserContract dtoToEntity(UserContractDTO dto) {
         UserContract userContract = new UserContract();
-        userContract.setContractUuid(dto.getContractUuid());
+      //  userContract.setContractUuid(dto.getContractUuid());
         return userContract;
     }
 

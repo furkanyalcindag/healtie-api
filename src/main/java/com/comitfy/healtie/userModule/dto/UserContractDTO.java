@@ -3,6 +3,7 @@ package com.comitfy.healtie.userModule.dto;
 import com.comitfy.healtie.util.common.BaseDTO;
 import lombok.Data;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -11,7 +12,7 @@ public class UserContractDTO extends BaseDTO {
   //  private UUID userUuid;
     private UUID contractUuid;
     private boolean isSigned;
-    private boolean isActive;
-    private boolean isRequire;
+/*    private boolean isActive;
+    private boolean isRequire;*/
   //  private Set<ContractDTO> contractDTOList;
 }
