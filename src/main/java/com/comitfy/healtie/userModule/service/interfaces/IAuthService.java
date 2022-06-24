@@ -18,4 +18,5 @@ public interface IAuthService {
     // Optional<Contract> findByUUID(UUID uuid);
 
     boolean isValidateUserContracts(List<UserContractDTO> contractDTOList);
+  //  public void addContractToUser(UserContractDTO userContractDTO);
 }

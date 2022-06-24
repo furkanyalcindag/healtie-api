@@ -1,6 +1,7 @@
 package com.comitfy.healtie.userModule.controller;
 
 
+import com.comitfy.healtie.userModule.dto.UserContractDTO;
 import com.comitfy.healtie.userModule.entity.Role;
 import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.userModule.model.requestModel.auth.LoginRequest;
@@ -54,6 +55,7 @@ public class AuthorizationController {
 
         if (isValid) {
             authService.registerUser(user);
+        //    authService.addContractToUser(new UserContractDTO());
             //  authService.isValidateUserContracts(user.getContractDTOList());
             return new ResponseEntity<String>("Kullanıcı Eklendi", HttpStatus.OK);
         } else return new ResponseEntity<String>("Kullanıcı eklenemedi", HttpStatus.PROXY_AUTHENTICATION_REQUIRED);

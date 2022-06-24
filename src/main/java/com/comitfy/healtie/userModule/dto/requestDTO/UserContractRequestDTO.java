@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Data
 public class UserContractRequestDTO extends BaseDTO {
-    private Set<ContractDTO> contractDTOS;
+   // private Set<ContractDTO> contractDTOList;
     private UUID contractUuid;
 
     private boolean isSigned;

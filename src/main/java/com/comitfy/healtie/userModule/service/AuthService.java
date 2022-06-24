@@ -1,9 +1,9 @@
 package com.comitfy.healtie.userModule.service;
 
 
+import com.comitfy.healtie.app.repository.UserContractRepository;
 import com.comitfy.healtie.userModule.dto.ContractDTO;
 import com.comitfy.healtie.userModule.dto.UserContractDTO;
-import com.comitfy.healtie.userModule.dto.requestDTO.UserContractRequestDTO;
 import com.comitfy.healtie.userModule.entity.Contract;
 import com.comitfy.healtie.userModule.entity.Role;
 import com.comitfy.healtie.userModule.entity.User;
@@ -19,10 +19,7 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class AuthService implements IAuthService {
@@ -42,6 +39,8 @@ public class AuthService implements IAuthService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
+    UserContractRepository userContractRepository;
 
 
     @Override
@@ -63,6 +62,9 @@ public class AuthService implements IAuthService {
             newUser.setGenderEnum(request.getGenderEnum());
 
 
+
+
+
             // newUser.setGender(gender);
 
             // doctorDTO.setFirstName(entity.getUser().getFirstName());
@@ -72,6 +74,15 @@ public class AuthService implements IAuthService {
             newUser.setRoles(roles);
 
             userRepository.save(newUser);
+
+            UserContract userContract = new UserContract();
+            for (UserContractDTO contractDTO:request.getContractDTOList()) {
+                userContract.setContractUuid(contractDTO.getContractUuid());
+                userContract.setUserUuid(newUser.getUuid());
+                userContract.setSigned(contractDTO.isSigned());
+            }
+            userContractRepository.save(userContract);
+
             return true;
 
         } else {
@@ -102,21 +113,27 @@ public class AuthService implements IAuthService {
         return x;
     }
 
-/*    public void addContractToUser(UserContractDTO userContractDTO, Contract contract, User user){
-        for (Contract contract1:contract.getUuid()){
+/*    public void addContractToUser(UserContractDTO userContractDTO) {
+        //   Optional<User> user1 = userRepository.findByUuid(user.getUuid());
+        UserContract userContract = new UserContract();
+        userContract.setContractUuid(userContractDTO.getContractUuid());
+        userContract.setUserUuid(userContractDTO.getRequestUserUUID());
+        userContract.setSigned(userContractDTO.isSigned());
+        userContractRepository.save(userContract);
 
+
+    }*/
+
+    /*
+    Set<Category> parentList = new HashSet<>();
+        category.setParent(parentList);
+        for (UUID uuid : dto.getParentList()) {
+            Optional<Category> category1 = categoryRepository.findByUuid(uuid);
+
+            category1.ifPresent(value -> category.getParent().add(value));
         }
-        if (contractRequestDTO.isSigned()){
-            contract.setUuid(contractRequestDTO.getUuid());
-            userRepository.save(user);
-        }else {
-            return;
-        }
-    }
-    */
 
-
-    /* public PageDTO<ArticleDTO> getLikedArticleByUser(int page, int size, User user,LanguageEnum languageEnum) {
+    public PageDTO<ArticleDTO> getLikedArticleByUser(int page, int size, User user,LanguageEnum languageEnum) {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("id")));
 
@@ -129,5 +146,14 @@ public class AuthService implements IAuthService {
         }
         return getMapper().pageEntityToPageDTO(articleRepository.getLikedArticleOfUser(pageable, user.getUuid()));
 
-    }*/
+    }
+
+      for (Tag tag : entity.getTags()) {
+
+            TagDTO tagDTO = new TagDTO();
+            tagDTO.setName(tag.getName());
+            tagDTO.setUuid(tag.getUuid());
+            tagDTOS.add(tagDTO);
+        }
+*/
 }
