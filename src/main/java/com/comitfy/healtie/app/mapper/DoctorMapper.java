@@ -48,6 +48,7 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
         doctorDTO.setGenderEnum(entity.getUser().getGenderEnum());
         doctorDTO.setAgeRangeEnum(entity.getUser().getAgeRangeEnum());
         doctorDTO.setPhone(entity.getUser().getPhotoLink());
+        doctorDTO.setUserName(entity.getUser().getEmail());
 
 
   /*      if (entity.getArticleList() != null) {
@@ -93,7 +94,7 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
         user.setGenderEnum(dto.getGenderEnum());
         user.setAgeRangeEnum(dto.getAgeRangeEnum());
         user.setPhotoLink(dto.getPhotoLink());
-
+        user.setUsername(dto.getEmail());
         doctor.setUser(user);
 
         return doctor;

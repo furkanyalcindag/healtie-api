@@ -148,7 +148,7 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("id")));
 
-        PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByUser(pageable, user,languageEnum));
+        PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().getSavedArticleOfUser(pageable, user.getUuid()));
 
         for (ArticleDTO articleDTO : pageDTO.getData()) {
             articleDTO.setLike(isLikedArticleByUser(articleDTO.getUuid(), user.getUuid()));
@@ -164,7 +164,8 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("id")));
 
-        PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByUser(pageable, user,languageEnum));
+      //  PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByUser(pageable, user,languageEnum));
+        PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().getLikedArticleOfUser(pageable, user.getUuid()));
 
         for (ArticleDTO articleDTO : pageDTO.getData()) {
             articleDTO.setLike(isLikedArticleByUser(articleDTO.getUuid(), user.getUuid()));

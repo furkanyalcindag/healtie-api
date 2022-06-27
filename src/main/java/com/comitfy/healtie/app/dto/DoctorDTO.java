@@ -21,6 +21,7 @@ public class DoctorDTO extends BaseDTO {
     private String lastName;
     private String email;
     private String photoLink;
+    private String userName;
 
     private AgeRangeEnum ageRangeEnum;
     private GenderEnum genderEnum;

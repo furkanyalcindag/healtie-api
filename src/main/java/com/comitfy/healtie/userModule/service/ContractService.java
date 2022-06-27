@@ -5,9 +5,11 @@ import com.comitfy.healtie.app.model.enums.LanguageEnum;
 import com.comitfy.healtie.userModule.dto.ContractDTO;
 import com.comitfy.healtie.userModule.dto.requestDTO.ContractRequestDTO;
 import com.comitfy.healtie.userModule.entity.Contract;
+import com.comitfy.healtie.userModule.entity.Role;
 import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.userModule.mapper.ContractMapper;
 import com.comitfy.healtie.userModule.repository.ContractRepository;
+import com.comitfy.healtie.userModule.repository.RoleRepository;
 import com.comitfy.healtie.userModule.repository.UserRepository;
 import com.comitfy.healtie.userModule.specification.ContractSpecification;
 import com.comitfy.healtie.util.PageDTO;
@@ -18,7 +20,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -28,6 +32,9 @@ public class ContractService extends BaseService<ContractDTO, ContractRequestDTO
     ContractRepository contractRepository;
     @Autowired
     ContractMapper contractMapper;
+
+    @Autowired
+    RoleRepository roleRepository;
     @Autowired
     ContractSpecification contractSpecification;
 
@@ -61,14 +68,27 @@ public class ContractService extends BaseService<ContractDTO, ContractRequestDTO
         }
     }
 
-    public PageDTO<ContractActiveDTO> getActiveContract( int page, int size, LanguageEnum languageEnum) {
+    public PageDTO<ContractActiveDTO> getActiveContract(int page, int size, LanguageEnum languageEnum) {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("id")));
 
-            PageDTO<ContractActiveDTO> pageDTO = contractMapper.pageActiveEntityToPageDTO(contractRepository.findAllByActivatedAndLanguageEnum(pageable, true, languageEnum));
+        PageDTO<ContractActiveDTO> pageDTO = contractMapper.pageActiveEntityToPageDTO(contractRepository.findAllByActivatedAndLanguageEnum(pageable, true, languageEnum));
 
-            return pageDTO;
+        return pageDTO;
 
     }
+
+    public PageDTO<ContractActiveDTO> getActiveContractByRole(UUID id, int page, int size,LanguageEnum languageEnum) {
+        Optional<Role> role = roleRepository.findByUuid(id);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("id")));
+        if (role.isPresent()) {
+            Set<Role> roleSet = new HashSet<>();
+            roleSet.add(role.get());
+            return contractMapper.pageActiveEntityToPageDTO(contractRepository.findAllByRoleListInAndActivated(pageable, roleSet, true));
+        } else {
+            return null;
+        }
+    }
+
 
 }

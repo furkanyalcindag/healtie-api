@@ -8,8 +8,10 @@ import com.comitfy.healtie.app.model.enums.LanguageEnum;
 import com.comitfy.healtie.app.repository.CategoryRepository;
 import com.comitfy.healtie.app.service.CategoryService;
 import com.comitfy.healtie.app.specification.CategorySpecification;
+import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseWithMultiLanguageCrudController;
+import com.comitfy.healtie.util.common.HelperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,9 @@ public class CategoryController extends BaseWithMultiLanguageCrudController<Cate
 
     @Autowired
     CategoryMapper categoryMapper;
+
+    @Autowired
+    HelperService helperService;
 
     @Override
     protected CategoryService getService() {
@@ -47,6 +52,19 @@ public class CategoryController extends BaseWithMultiLanguageCrudController<Cate
         } else {
             return new ResponseEntity<>(categoryService.getCategoryById(categoryId, pageNumber, pageSize, LanguageEnum.valueOf(language)), HttpStatus.OK);
         }
+    }
+
+    @PutMapping("/user-api/{categoryId}")
+    public ResponseEntity<String> updateCategory(@PathVariable UUID categoryId, @RequestBody CategoryRequestDTO dto) {
+        User user = helperService.getUserFromSession();
+        CategoryDTO categoryDTO = categoryService.findByUUID(categoryId);
+        if (categoryDTO == null || user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND);
+        } else {
+            categoryService.updateCategory(categoryId, dto, user);
+            return new ResponseEntity<>("The object was updated.", HttpStatus.OK);
+        }
+
     }
 
 

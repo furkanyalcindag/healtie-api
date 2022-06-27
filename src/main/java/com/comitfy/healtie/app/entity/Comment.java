@@ -20,8 +20,6 @@ public class Comment extends BaseEntity {
 
     @Column
     private String content;
-    @Column
-    private String userName;
 
     @ManyToOne
     private Comment parent;
