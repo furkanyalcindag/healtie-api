@@ -3,19 +3,25 @@ package com.comitfy.healtie.userModule.mapper;
 import com.comitfy.healtie.app.dto.ContractActiveDTO;
 import com.comitfy.healtie.app.model.enums.LanguageEnum;
 import com.comitfy.healtie.userModule.dto.ContractDTO;
+import com.comitfy.healtie.userModule.dto.RoleDTO;
 import com.comitfy.healtie.userModule.dto.UserContractDTO;
 import com.comitfy.healtie.userModule.dto.requestDTO.ContractRequestDTO;
 import com.comitfy.healtie.userModule.entity.Contract;
+import com.comitfy.healtie.userModule.entity.Role;
+import com.comitfy.healtie.userModule.repository.RoleRepository;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class ContractMapper implements BaseMapper<ContractDTO, ContractRequestDTO, Contract> {
+
+    @Autowired
+    RoleRepository roleRepository;
     @Override
     public ContractDTO entityToDTO(Contract entity) {
         ContractDTO contractDTO = new ContractDTO();
@@ -27,6 +33,14 @@ public class ContractMapper implements BaseMapper<ContractDTO, ContractRequestDT
         contractDTO.setUuid(entity.getUuid());
 
         contractDTO.setLanguageEnum(entity.getLanguageEnum());
+        Set<RoleDTO> roleDTOS=new HashSet<>();
+        for (Role role:entity.getRoleList()){
+            RoleDTO roleDTO=new RoleDTO();
+            roleDTO.setName(role.getName());
+            roleDTO.setUuid(role.getUuid());
+            roleDTOS.add(roleDTO);
+        }
+
         return contractDTO;
 
 
@@ -37,7 +51,6 @@ public class ContractMapper implements BaseMapper<ContractDTO, ContractRequestDT
         UserContractDTO userContractDTO = new UserContractDTO();
         userContractDTO.setUuid(entity.getUuid());
         userContractDTO.setContractUuid(entity.getUuid());
-        userContractDTO.setSigned(entity.getSigned());
         return userContractDTO;
 
     }
@@ -49,6 +62,14 @@ public class ContractMapper implements BaseMapper<ContractDTO, ContractRequestDT
         contractDTO.setRequired(entity.getRequired());
         contractDTO.setActive(entity.getActivated());
         contractDTO.setUuid(entity.getUuid());
+        Set<RoleDTO> roleDTOS=new HashSet<>();
+        for (Role role:entity.getRoleList()){
+            RoleDTO roleDTO=new RoleDTO();
+            roleDTO.setName(role.getName());
+            roleDTO.setUuid(role.getUuid());
+            roleDTOS.add(roleDTO);
+        }
+
 
         return contractDTO;
 
@@ -76,6 +97,12 @@ public class ContractMapper implements BaseMapper<ContractDTO, ContractRequestDT
         contract.setActivated(dto.isActive());
         contract.setRequired(dto.isRequired());
         contract.setLanguageEnum(LanguageEnum.valueOf(dto.getLanguage()));
+
+        contract.setRoleList(new HashSet<>());
+        for (UUID uuid:dto.getRoleList()){
+            Optional<Role> role=roleRepository.findByUuid(uuid);
+            role.ifPresent(value->contract.getRoleList().add(value));
+        }
 
         return contract;
     }

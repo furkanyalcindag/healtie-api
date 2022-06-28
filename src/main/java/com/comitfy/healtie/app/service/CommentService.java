@@ -83,6 +83,7 @@ public class CommentService extends BaseService<CommentDTO, CommentRequestDTO, C
             PageDTO<CommentDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByArticleOrderByIdDesc(pageable, article.get()));
             for (int i = 0; i < pageDTO.getData().size(); i++) {
                 pageDTO.getData().get(i).setLikeCount(getRepository().getCountOfCommentLike(pageDTO.getData().get(i).getUuid()));
+                pageDTO.getData().get(i).setReplyCount(getRepository().getCountOfCommentByParent(pageDTO.getData().get(i).getUuid()));
             }
             return pageDTO;
         } else {

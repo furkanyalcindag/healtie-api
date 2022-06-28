@@ -18,6 +18,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("contract")
 public class ContractController extends BaseCrudController<ContractDTO, ContractRequestDTO, Contract, ContractRepository, ContractMapper, ContractSpecification, ContractService> {
@@ -55,6 +57,13 @@ public class ContractController extends BaseCrudController<ContractDTO, Contract
                                                                         @RequestParam int pageNumber, @RequestParam int pageSize) {
         PageDTO<ContractActiveDTO> dtoList = contractService.getActiveContract(pageNumber, pageSize, LanguageEnum.valueOf(language));
         return new ResponseEntity<>(dtoList, HttpStatus.OK);
+    }
+
+    @GetMapping("/active-contracts-by-role/{roleId}")
+    public ResponseEntity<PageDTO<ContractActiveDTO>> getActiveContractByRole(@RequestHeader(value = "accept-language", required = true) String language,
+                                                                              @PathVariable UUID roleId, @RequestParam int pageNumber, @RequestParam int pageSize) {
+        PageDTO<ContractActiveDTO> pageDTO = contractService.getActiveContractByRole(roleId, pageNumber, pageSize, LanguageEnum.valueOf(language));
+        return new ResponseEntity<>(pageDTO, HttpStatus.OK);
     }
 
 }

@@ -1,10 +1,13 @@
 package com.comitfy.healtie.userModule.entity;
 
+import com.comitfy.healtie.app.entity.Category;
+import com.comitfy.healtie.app.entity.Tag;
 import com.comitfy.healtie.app.model.enums.LanguageEnum;
 import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table
@@ -25,9 +28,6 @@ public class Contract extends BaseEntity {
     private Boolean required;
 
     @Column
-    private Boolean signed;
-
-    @Column
     private Boolean activated;
 
     @Column
@@ -37,6 +37,8 @@ public class Contract extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private LanguageEnum languageEnum;
 
+    @ManyToMany
+    private Set<Role> roleList;
 
  /*   @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn()

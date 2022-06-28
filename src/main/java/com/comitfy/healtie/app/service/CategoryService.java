@@ -8,6 +8,7 @@ import com.comitfy.healtie.app.model.enums.LanguageEnum;
 import com.comitfy.healtie.app.repository.ArticleRepository;
 import com.comitfy.healtie.app.repository.CategoryRepository;
 import com.comitfy.healtie.app.specification.CategorySpecification;
+import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseWithMultiLanguageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,6 @@ public class CategoryService extends BaseWithMultiLanguageService<CategoryDTO, C
 
     @Autowired
     CategoryMapper categoryMapper;
-
 
     @Autowired
     CategorySpecification categorySpecification;
@@ -59,6 +59,19 @@ public class CategoryService extends BaseWithMultiLanguageService<CategoryDTO, C
                 pageDTO.getData().get(i).setArticleCount(articleRepository.getCountOfArticleByCategory(category.get().getUuid()));
             }
             return pageDTO;
+        } else {
+            return null;
+        }
+
+    }
+
+    public CategoryRequestDTO updateCategory(UUID id, CategoryRequestDTO dto, User user) {
+        Optional<Category> category = categoryRepository.findByUuid(id);
+        if (category.isPresent()) {
+            Category category1 = categoryMapper.requestDTOToExistEntity(category.get(), dto);
+            category1.setName(dto.getName());
+            category1.setTop(dto.isTop());
+            return dto;
         } else {
             return null;
         }

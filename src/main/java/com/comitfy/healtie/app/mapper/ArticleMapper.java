@@ -70,7 +70,7 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
 
         articleDTO.setTags(tagDTOS);
         articleDTO.setUuid(entity.getUuid());
-        articleDTO.setLanguageEnum(entity.getLanguageEnum());
+        articleDTO.setLanguage(entity.getLanguageEnum().name());
         return articleDTO;
     }
 
@@ -82,7 +82,7 @@ public class ArticleMapper implements BaseMapper<ArticleDTO, ArticleRequestDTO, 
         article.setTitle(dto.getTitle());
         article.setPublishedDate(dto.getPublishedDate());
         article.setLanguageEnum(LanguageEnum.valueOf(dto.getLanguage()));
-        //article.setLanguageEnum(dto.getLanguageEnum());
+        article.setLanguageEnum(dto.getLanguageEnum());
         Set<Tag> tags = new HashSet<>();
         for (TagDTO tagDTO : dto.getTags()) {
 

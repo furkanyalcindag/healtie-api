@@ -25,15 +25,9 @@ public interface CommentRepository extends BaseRepository<Comment> {
             " inner join comment.userLikes likes WHERE comment.uuid=?1 and likes.uuid=?2")
     long isLikedByUser(UUID commentUUID, UUID userUUID);
 
-
-    @Query("SELECT COUNT(comment) FROM Article  article" +
-            " inner join article.commentList comment WHERE comment.uuid=?1")
-    long getCountOfCommentByArticle(UUID articleUUID);
-
-
-
-
-
+    @Query("SELECT COUNT(comments) FROM Comment  comment" +
+            " inner join comment.parent comments WHERE comments.uuid=?1")
+    long getCountOfCommentByParent(UUID commentUUID);
 
 
 }

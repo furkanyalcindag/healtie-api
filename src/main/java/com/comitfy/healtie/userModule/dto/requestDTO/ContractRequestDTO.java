@@ -5,6 +5,9 @@ import com.comitfy.healtie.util.common.BaseDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
+import java.util.List;
+import java.util.UUID;
+
 @Data
 public class ContractRequestDTO extends BaseDTO {
     private String key;
@@ -20,4 +23,6 @@ public class ContractRequestDTO extends BaseDTO {
     private LanguageEnum languageEnum;
 
     private boolean isActive;
+
+    private List<UUID> roleList;
 }

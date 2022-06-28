@@ -34,6 +34,8 @@ public class UserMapper implements BaseMapper<UserDTO, UserRequestDTO, User> {
         userDTO.setUuid(entity.getUuid());
         userDTO.setLikedCount(userService.getLikeCountByUser(entity.getUuid()));
         userDTO.setSavedCount(userService.getSaveCountByUser(entity.getUuid()));
+        userDTO.setGenderEnum(entity.getGenderEnum());
+       userDTO.setAgeRangeEnum(entity.getAgeRangeEnum());
 
         if (entity.getArticleList() != null) {
             userDTO.setArticleCount(entity.getArticleList().size());

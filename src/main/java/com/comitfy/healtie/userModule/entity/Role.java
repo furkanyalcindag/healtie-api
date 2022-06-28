@@ -16,6 +16,9 @@ public class Role extends BaseEntity {
     @Column
     private String description;
 
+    @ManyToMany
+    private Set<Contract> contractList;
+
     /*@ManyToMany
     private Set<User> users;*/
 
