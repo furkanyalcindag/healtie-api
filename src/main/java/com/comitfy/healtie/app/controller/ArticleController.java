@@ -144,19 +144,5 @@ public class ArticleController extends BaseWithMultiLanguageCrudController<Artic
         }
     }
 
-   /* @GetMapping("user-api/clicked-article/")
-    public ResponseEntity<ArticleClickDTO> getClickedByUser(@RequestHeader(value = "accept-language", required = true) String language){
-        User user=helperService.getUserFromSession();
-        if(user==null){
-
-        }
-        ArticleClickDTO dto=articleClickService.
-
-
-
-               if (entity.getUserSaves() != null) {
-            articleDTO.setSaveCount(entity.getUserSaves().size());
-        }
-    }*/
 
 }

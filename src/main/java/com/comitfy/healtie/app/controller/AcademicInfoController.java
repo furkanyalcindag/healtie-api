@@ -76,34 +76,6 @@ public class AcademicInfoController extends BaseCrudController<AcademicInfoDTO, 
         }
     }
 
-    /*@PutMapping("/gender-update/{id}")
-    public ResponseEntity<String> updateGender(@RequestBody UserGenderRequestDTO dto) {
-        User user = helperService.getUserFromSession();
-        UserDTO userDTO = userService.findByUUID(user.getUuid());
-        if (userDTO == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND);
-        } else {
-
-            userService.updateGender(user.getUuid(), dto);
-            return new ResponseEntity<>("Object with the id " + user.getUuid() + " was updated.", HttpStatus.OK);
-
-
-        }
-    }
-
-     @PutMapping("/{id}")
-    public ResponseEntity<String> update(@RequestHeader(value = "accept-language", required = true) String acceptLanguage, @PathVariable UUID id, @RequestBody RequestDTO body) {
-        DTO optional = getService().findByUUID(id);
-
-        if (optional == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND);
-        } else {
-            body.setLanguageEnum(LanguageEnum.valueOf(acceptLanguage));
-            getService().update(id, body);
-            return new ResponseEntity<>("Object with the id " + id + " was updated.", HttpStatus.OK);
-        }
-
-    }*/
 
     @PutMapping("/user-api/{academicInfoId}")
     public ResponseEntity<String> updateAcademicInfo(@PathVariable UUID academicInfoId, @RequestBody AcademicInfoRequestDTO dto) {

@@ -1,5 +1,6 @@
 package com.comitfy.healtie.app.service;
 
+import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.userModule.dto.UserDTO;
 import com.comitfy.healtie.userModule.dto.requestDTO.UserAgeRangeRequestDTO;
 import com.comitfy.healtie.userModule.dto.requestDTO.UserGenderRequestDTO;
@@ -22,6 +23,9 @@ public class UserInfoService {
     @Autowired
     UserMapper userMapper;
 
+    @Autowired
+    DoctorRepository doctorRepository;
+
     public long getLikeCountByUser(UUID userUUID) {
 
         return userRepository.getLikeCountByUser(userUUID);
@@ -31,6 +35,10 @@ public class UserInfoService {
     public long getSaveCountByUser(UUID userUUID) {
 
         return userRepository.getSaveCountByUser(userUUID);
+    }
+
+    public long getLikeCountOfArticleByUser(UUID userUUID) {
+        return doctorRepository.getCountOfArticleLikes(userUUID);
     }
 
 

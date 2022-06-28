@@ -1,11 +1,8 @@
 package com.comitfy.healtie.app.repository;
 
-import com.comitfy.healtie.app.entity.Article;
 import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.common.BaseRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -27,12 +24,20 @@ public interface DoctorRepository extends BaseRepository<Doctor> {
 inner join article_user_likes on article_user_likes.article_id = article.id group by article.id
 having article.doctor_id=1
 
+    @Query("SELECT COUNT(likes) FROM Article article " +
+            "inner join article.userLikes likes  WHERE article.uuid=?1")
+    long getCountOfArticleLike(UUID articleUUID);
 
-    */
+   */
+
 
 /*    @Query("SELECT COUNT(article.userLikes) from Article article" +
-            " inner join article.userLikes on article.userLikes=article.id group by article.id having  article.doctor.id=?1")
-    long getCountOfArticleLikes(UUID doctorUUID);*/
+            " inner join article.userLikes on article.userLikes=article.id group by article.id having  article.user.id=?1")
+    long getCountOfArticleLikes(UUID userUUID);*/
+
+    @Query("SELECT COUNT(likes) from Article article" +
+            " inner join article.userLikes likes  inner join article.user user where user.uuid=?1")
+    long getCountOfArticleLikes(UUID userUUID);
 
 
 }
