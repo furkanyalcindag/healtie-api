@@ -4,6 +4,7 @@ import com.comitfy.healtie.app.dto.DoctorDTO;
 import com.comitfy.healtie.app.dto.requestDTO.*;
 import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.app.repository.DoctorRepository;
+import com.comitfy.healtie.app.service.UserInfoService;
 import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.userModule.repository.UserRepository;
 import com.comitfy.healtie.util.PageDTO;
@@ -28,6 +29,9 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    UserInfoService userInfoService;
+
     @Override
     public DoctorDTO entityToDTO(Doctor entity) {
         DoctorDTO doctorDTO = new DoctorDTO();
@@ -40,6 +44,7 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
         doctorDTO.setBranch(entity.getBranch());
         doctorDTO.setAbout(entity.getAbout());
         doctorDTO.setLanguageEnum(entity.getLanguageEnum());
+        doctorDTO.setArticleLikeCount(userInfoService.getLikeCountOfArticleByUser(entity.getUser().getUuid()));
 
 
         doctorDTO.setFirstName(entity.getUser().getFirstName());
