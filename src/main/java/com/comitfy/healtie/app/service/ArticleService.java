@@ -53,6 +53,9 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
     @Autowired
     CommentRepository commentRepository;
 
+    @Autowired
+    DoctorService doctorService;
+
 
     @Autowired
     UserRepository userRepository;
@@ -75,12 +78,12 @@ public class ArticleService extends BaseWithMultiLanguageService<ArticleDTO, Art
 
 
     public PageDTO<ArticleDTO> getArticleByDoctor(UUID id, int page, int size, LanguageEnum languageEnum) {
-        Optional<Doctor> doctor = doctorRepository.findByUuid(id);
+        Doctor doctor = doctorService.findEntityByUUID(id);
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("id")));
 
-        if (doctor.isPresent()) {
+        if (doctor != null) {
 
-            PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByUser(pageable, doctor.get().getUser(),languageEnum));
+            PageDTO<ArticleDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByUser(pageable, doctor.getUser(),languageEnum));
             for (int i = 0; i < pageDTO.getData().size(); i++) {
 
                 pageDTO.getData().get(i).setLikeCount(getRepository().getCountOfArticleLike(pageDTO.getData().get(i).getUuid()));
