@@ -8,42 +8,71 @@ import com.comitfy.healtie.util.common.BaseMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class UserPreferenceMapper implements BaseMapper<UserPreferenceDTO, UserPreferenceRequestDTO, UserPreference> {
     @Override
     public UserPreferenceDTO entityToDTO(UserPreference entity) {
-        return null;
+        UserPreferenceDTO userPreferenceDTO = new UserPreferenceDTO();
+        userPreferenceDTO.setPreferenceUUID(entity.getPreferenceUUID());
+        userPreferenceDTO.setUserUUID(entity.getUserUUID());
+        userPreferenceDTO.setUuid(entity.getUuid());
+        return userPreferenceDTO;
+
     }
 
     @Override
     public UserPreference dtoToEntity(UserPreferenceDTO dto) {
-        return null;
+        UserPreference userPreference = new UserPreference();
+        userPreference.setUserUUID(dto.getUserUUID());
+        userPreference.setPreferenceUUID(dto.getPreferenceUUID());
+        return userPreference;
     }
 
     @Override
     public UserPreference requestDTOToEntity(UserPreferenceRequestDTO dto) {
-        return null;
+        UserPreference userPreference = new UserPreference();
+        userPreference.setUserUUID(dto.getUserUUID());
+        userPreference.setPreferenceUUID(dto.getPreferenceUUID());
+        return userPreference;
     }
 
     @Override
-    public UserPreference requestDTOToExistEntity(UserPreference entity, UserPreferenceRequestDTO dto) {
-        return null;
+    public UserPreference requestDTOToExistEntity(UserPreference userPreference, UserPreferenceRequestDTO dto) {
+
+        userPreference.setUserUUID(dto.getUserUUID());
+        userPreference.setPreferenceUUID(dto.getPreferenceUUID());
+        return userPreference;
     }
 
     @Override
     public List<UserPreference> dtoListToEntityList(List<UserPreferenceDTO> userPreferenceDTOS) {
-        return null;
+        List<UserPreference> userPreferenceList = new ArrayList<>();
+        for (UserPreferenceDTO userPreferenceDTO : userPreferenceDTOS) {
+            UserPreference userPreference = dtoToEntity(userPreferenceDTO);
+            userPreferenceList.add(userPreference);
+        }
+        return userPreferenceList;
     }
 
     @Override
     public List<UserPreferenceDTO> entityListToDTOList(List<UserPreference> userPreferences) {
-        return null;
+        List<UserPreferenceDTO> userPreferenceDTOList = new ArrayList<>();
+        for (UserPreference userPreference : userPreferences) {
+            UserPreferenceDTO userPreferenceDTO = entityToDTO(userPreference);
+            userPreferenceDTOList.add(userPreferenceDTO);
+        }
+        return userPreferenceDTOList;
     }
 
     @Override
     public PageDTO<UserPreferenceDTO> pageEntityToPageDTO(Page<UserPreference> pageEntity) {
-        return null;
+        PageDTO<UserPreferenceDTO> pageDTO = new PageDTO<UserPreferenceDTO>();
+        List<UserPreference> entityList = pageEntity.toList();
+        List<UserPreferenceDTO> userPreferenceDTOList = entityListToDTOList(entityList);
+        pageDTO.setStart(pageEntity, userPreferenceDTOList);
+        return pageDTO;
     }
 }
