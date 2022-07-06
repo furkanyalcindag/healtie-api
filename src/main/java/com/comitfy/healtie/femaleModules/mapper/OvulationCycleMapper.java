@@ -27,15 +27,14 @@ public class OvulationCycleMapper implements BaseMapper<OvulationCycleDTO, Ovula
         ovulationCycleDTO.setUuid(entity.getUuid());
 
         Set<FertilityLevelDTO> fertilityLevelDTOS = new HashSet<>();
-        for (FertilityLevel fertilityLevel : entity.getFertilityLevels()) {
+   /*     for (FertilityLevel fertilityLevel : entity.getFertilityLevels()) {
 
             FertilityLevelDTO fertilityLevelDTO = new FertilityLevelDTO();
             fertilityLevelDTO.setFertilityLevelEnum(fertilityLevel.getFertilityLevelEnum());
             fertilityLevelDTO.setDate(fertilityLevel.getDate());
             fertilityLevelDTOS.add(fertilityLevelDTO);
         }
-        ovulationCycleDTO.setFertilityLevels(fertilityLevelDTOS);
-
+        ovulationCycleDTO.setFertilityLevels(fertilityLevelDTOS);*/
         return ovulationCycleDTO;
     }
 

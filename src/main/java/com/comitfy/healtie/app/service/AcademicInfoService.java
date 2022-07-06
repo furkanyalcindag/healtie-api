@@ -81,10 +81,6 @@ public class AcademicInfoService extends BaseService<AcademicInfoDTO, AcademicIn
         Optional<AcademicInfo> academicInfo = academicInfoRepository.findByUuid(id);
         if (academicInfo.isPresent()) {
             AcademicInfo academicInfo1 = academicInfoMapper.requestDTOToExistEntity(academicInfo.get(), dto);
-            academicInfo1.setSchoolName(dto.getSchoolName());
-            academicInfo1.setProfession(dto.getProfession());
-            academicInfo1.setStartYear(dto.getStartYear());
-            academicInfo1.setGraduateYear(dto.getGraduateYear());
             academicInfoRepository.save(academicInfo1);
             return dto;
         } else {
