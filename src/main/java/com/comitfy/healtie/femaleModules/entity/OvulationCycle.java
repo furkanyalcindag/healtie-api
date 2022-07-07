@@ -37,7 +37,5 @@ public class OvulationCycle extends BaseEntity {
     @JoinColumn()
     private User user;
 
-    @ManyToMany
-    private Set<FertilityLevel> fertilityLevels;
 
 }
