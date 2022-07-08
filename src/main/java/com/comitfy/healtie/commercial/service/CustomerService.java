@@ -4,7 +4,7 @@ import com.comitfy.healtie.commercial.dto.CustomerDTO;
 import com.comitfy.healtie.commercial.dto.request.CustomerRequestDTO;
 import com.comitfy.healtie.commercial.entity.Customer;
 import com.comitfy.healtie.commercial.mapper.CustomerMapper;
-import com.comitfy.healtie.commercial.repository.AdvertisementRepository;
+import com.comitfy.healtie.commercial.repository.ProductRepository;
 import com.comitfy.healtie.commercial.repository.CustomerRepository;
 import com.comitfy.healtie.commercial.specification.CustomerSpecification;
 import com.comitfy.healtie.userModule.entity.User;
@@ -30,7 +30,7 @@ public class CustomerService extends BaseService<CustomerDTO, CustomerRequestDTO
     CustomerSpecification customerSpecification;
 
     @Autowired
-    AdvertisementRepository advertisementRepository;
+    ProductRepository productRepository;
 
     @Override
     public CustomerRepository getRepository() {
