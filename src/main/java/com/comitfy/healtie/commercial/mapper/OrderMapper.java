@@ -1,8 +1,13 @@
 package com.comitfy.healtie.commercial.mapper;
 
+import com.comitfy.healtie.app.dto.requestDTO.DoctorTitleRequestDTO;
+import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.commercial.dto.OrderDTO;
 import com.comitfy.healtie.commercial.dto.request.OrderRequestDTO;
-import com.comitfy.healtie.commercial.entity.Orders;
+import com.comitfy.healtie.commercial.dto.request.OrderStatusRequestDTO;
+import com.comitfy.healtie.commercial.entity.Order;
+import com.comitfy.healtie.commercial.model.enums.CardStatusEnum;
+import com.comitfy.healtie.commercial.model.enums.OrderStatusEnum;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseMapper;
 import org.springframework.data.domain.Page;
@@ -12,75 +17,84 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class OrderMapper implements BaseMapper<OrderDTO, OrderRequestDTO, Orders> {
+public class OrderMapper implements BaseMapper<OrderDTO, OrderRequestDTO, Order> {
 
     @Override
-    public OrderDTO entityToDTO(Orders entity) {
+    public OrderDTO entityToDTO(Order entity) {
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setUserUUID(entity.getUserUUID());
         orderDTO.setProductUUID(entity.getProductUUID());
-        orderDTO.setOrderDate(entity.getOrderDate());
+        orderDTO.setOrderDate(entity.getCreationDate());
         orderDTO.setDeliveryDate(entity.getDeliveryDate());
+        orderDTO.setOrderDate(entity.getCreationDate());
+        orderDTO.setOrderStatusEnum(OrderStatusEnum.ON_HOLD);
+        orderDTO.setCardStatusEnum(CardStatusEnum.APPROVED);
 
         orderDTO.setUuid(entity.getUuid());
         return orderDTO;
     }
 
     @Override
-    public Orders dtoToEntity(OrderDTO dto) {
-        Orders orders = new Orders();
-        orders.setUserUUID(dto.getUserUUID());
-        orders.setProductUUID(dto.getProductUUID());
-        orders.setOrderDate(dto.getOrderDate());
-        orders.setDeliveryDate(dto.getDeliveryDate());
-        orders.setNetPrice(dto.getNetPrice());
-        orders.setPaidAmount(dto.getPaidAmount());
-        orders.setTaxRatio(orders.getTaxRatio());
-        orders.setTotalPrice(dto.getTotalPrice());
-        orders.setCheckingTypeEnum(dto.getCheckingTypeEnum());
-        orders.setPaymentStatusEnum(dto.getPaymentStatusEnum());
-        return orders;
+    public Order dtoToEntity(OrderDTO dto) {
+        Order order = new Order();
+        order.setUserUUID(dto.getUserUUID());
+        order.setProductUUID(dto.getProductUUID());
+        order.setOrderDate(dto.getOrderDate());
+        order.setDeliveryDate(dto.getDeliveryDate());
+        order.setNetPrice(dto.getNetPrice());
+        order.setTaxRatio(order.getTaxRatio());
+        order.setTotalPrice(dto.getTotalPrice());
+        order.setCheckingTypeEnum(dto.getCheckingTypeEnum());
+        order.setPaymentStatusEnum(dto.getPaymentStatusEnum());
+        order.setOrderStatusEnum(dto.getOrderStatusEnum());
+        return order;
+    }
+
+
+    @Override
+    public Order requestDTOToEntity(OrderRequestDTO dto) {
+        Order order = new Order();
+        order.setUserUUID(dto.getUserUUID());
+        order.setProductUUID(dto.getProductUUID());
+        order.setOrderDate(dto.getOrderDate());
+        order.setNetPrice(dto.getNetPrice());
+        order.setTaxRatio(order.getTaxRatio());
+        order.setTotalPrice(dto.getTotalPrice());
+
+        return order;
     }
 
     @Override
-    public Orders requestDTOToEntity(OrderRequestDTO dto) {
-        Orders orders = new Orders();
-        orders.setUserUUID(dto.getUserUUID());
-        orders.setProductUUID(dto.getProductUUID());
-        orders.setNetPrice(dto.getNetPrice());
-        orders.setPaidAmount(dto.getPaidAmount());
-        orders.setTaxRatio(orders.getTaxRatio());
-        orders.setTotalPrice(dto.getTotalPrice());
+    public Order requestDTOToExistEntity(Order order, OrderRequestDTO dto) {
 
-        return orders;
+        order.setUserUUID(dto.getUserUUID());
+        order.setProductUUID(dto.getProductUUID());
+        order.setNetPrice(dto.getNetPrice());
+        order.setTaxRatio(order.getTaxRatio());
+        order.setTotalPrice(dto.getTotalPrice());
+        return order;
+    }
+
+    public Order requestDTOToExistEntityForOrderStatusEnum(Order order, OrderStatusRequestDTO dto) {
+        order.setOrderStatusEnum(dto.getOrderStatusEnum());
+        return order;
+
     }
 
     @Override
-    public Orders requestDTOToExistEntity(Orders orders, OrderRequestDTO dto) {
-
-        orders.setUserUUID(dto.getUserUUID());
-        orders.setProductUUID(dto.getProductUUID());
-        orders.setNetPrice(dto.getNetPrice());
-        orders.setPaidAmount(dto.getPaidAmount());
-        orders.setTaxRatio(orders.getTaxRatio());
-        orders.setTotalPrice(dto.getTotalPrice());
-        return orders;
-    }
-
-    @Override
-    public List<Orders> dtoListToEntityList(List<OrderDTO> orderDTOS) {
-        List<Orders> ordersList = new ArrayList<Orders>();
+    public List<Order> dtoListToEntityList(List<OrderDTO> orderDTOS) {
+        List<Order> orderList = new ArrayList<Order>();
         for (OrderDTO orderDTO : orderDTOS) {
-            Orders orders = dtoToEntity(orderDTO);
-            ordersList.add(orders);
+            Order order = dtoToEntity(orderDTO);
+            orderList.add(order);
         }
-        return ordersList;
+        return orderList;
     }
 
     @Override
-    public List<OrderDTO> entityListToDTOList(List<Orders> orders) {
+    public List<OrderDTO> entityListToDTOList(List<Order> orders) {
         List<OrderDTO> orderDTOList = new ArrayList<OrderDTO>();
-        for (Orders order : orders) {
+        for (Order order : orders) {
             OrderDTO orderDTO = entityToDTO(order);
             orderDTOList.add(orderDTO);
         }
@@ -89,9 +103,9 @@ public class OrderMapper implements BaseMapper<OrderDTO, OrderRequestDTO, Orders
 
 
     @Override
-    public PageDTO<OrderDTO> pageEntityToPageDTO(Page<Orders> pageEntity) {
+    public PageDTO<OrderDTO> pageEntityToPageDTO(Page<Order> pageEntity) {
         PageDTO<OrderDTO> pageDTO = new PageDTO<OrderDTO>();
-        List<Orders> entityList = pageEntity.toList();
+        List<Order> entityList = pageEntity.toList();
         List<OrderDTO> orderDTOList = entityListToDTOList(entityList);
         pageDTO.setStart(pageEntity, orderDTOList);
 

@@ -49,7 +49,7 @@ public class ProductMapper implements BaseMapper<ProductDTO, ProductRequestDTO, 
         product.setWidth(dto.getWidth());
         product.setPrice(dto.getPrice());
         product.setTaxRatio(dto.getTaxRatio());
-      product.setTotalPrice(dto.getPrice()+(dto.getPrice()+(dto.getTaxRatio())/100));
+        product.setTotalPrice(dto.getPrice()+(dto.getPrice()*(dto.getTaxRatio())/100));
 
         return product;
     }

@@ -1,6 +1,8 @@
 package com.comitfy.healtie.commercial.entity;
 
+import com.comitfy.healtie.commercial.model.enums.CardStatusEnum;
 import com.comitfy.healtie.commercial.model.enums.CheckingTypeEnum;
+import com.comitfy.healtie.commercial.model.enums.OrderStatusEnum;
 import com.comitfy.healtie.commercial.model.enums.PaymentStatusEnum;
 import com.comitfy.healtie.util.dbUtil.BaseEntity;
 import lombok.Data;
@@ -8,13 +10,14 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Table
+@Table(name = "cmt_order")
 @Data
 @AttributeOverride(name = "uuid", column = @Column(name = "order_uuid"))
-public class Orders extends BaseEntity {
+public class Order extends BaseEntity {
 
 
     @Column
@@ -27,7 +30,7 @@ public class Orders extends BaseEntity {
     private UUID productUUID;
 
     @Column
-    private LocalDate orderDate;
+    private Date orderDate;
 
     @Column
     private LocalDate deliveryDate;
@@ -41,8 +44,6 @@ public class Orders extends BaseEntity {
     @Column
     private Float taxRatio;
 
-    @Column
-    private Float paidAmount;
 
     @Column
     private Float remainingMoney;
@@ -54,4 +55,12 @@ public class Orders extends BaseEntity {
     @Column
     @Enumerated(EnumType.STRING)
     private PaymentStatusEnum paymentStatusEnum;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private OrderStatusEnum orderStatusEnum;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private CardStatusEnum cardStatusEnum;
 }

@@ -4,6 +4,7 @@ import com.comitfy.healtie.util.common.BaseDTO;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.UUID;
 
 @Data
@@ -12,7 +13,7 @@ public class OrderRequestDTO extends BaseDTO {
     private UUID userUUID;
     private UUID productUUID;
 
-    private LocalDate orderDate;
+    private Date orderDate;
 
     private LocalDate deliveryDate;
 
@@ -22,7 +23,6 @@ public class OrderRequestDTO extends BaseDTO {
 
     private Float taxRatio;
 
-    private Float paidAmount;
 
 
 }
