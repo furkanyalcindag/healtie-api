@@ -11,5 +11,7 @@ public class ProductDTO extends BaseDTO {
     private float height;
     private float price;
     private float totalPrice;
+    private String description;
+    private String name;
 
 }

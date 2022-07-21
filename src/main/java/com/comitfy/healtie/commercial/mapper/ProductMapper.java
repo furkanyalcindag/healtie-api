@@ -23,6 +23,8 @@ public class ProductMapper implements BaseMapper<ProductDTO, ProductRequestDTO, 
         productDTO.setWidth(entity.getWidth());
         productDTO.setPrice(entity.getPrice());
         productDTO.setUuid(entity.getUuid());
+        productDTO.setDescription(entity.getDescription());
+        productDTO.setName(entity.getName());
 
         productDTO.setTotalPrice((entity.getPrice()) + ((entity.getPrice() * (entity.getTaxRatio()) / 100)));
 
@@ -36,6 +38,8 @@ public class ProductMapper implements BaseMapper<ProductDTO, ProductRequestDTO, 
         product.setHeight(dto.getHeight());
         product.setWidth(dto.getWidth());
         product.setPrice(dto.getPrice());
+        product.setDescription(dto.getDescription());
+        product.setName(dto.getName());
 
         return product;
 
@@ -48,6 +52,8 @@ public class ProductMapper implements BaseMapper<ProductDTO, ProductRequestDTO, 
         product.setHeight(dto.getHeight());
         product.setWidth(dto.getWidth());
         product.setPrice(dto.getPrice());
+        product.setDescription(dto.getDescription());
+        product.setName(dto.getName());
         product.setTaxRatio(dto.getTaxRatio());
         product.setTotalPrice(dto.getPrice()+(dto.getPrice()*(dto.getTaxRatio())/100));
 
@@ -62,6 +68,8 @@ public class ProductMapper implements BaseMapper<ProductDTO, ProductRequestDTO, 
         product.setWidth(dto.getWidth());
         product.setPrice(dto.getPrice());
         product.setTaxRatio(dto.getTaxRatio());
+        product.setDescription(dto.getDescription());
+        product.setName(dto.getName());
 
         return product;
     }

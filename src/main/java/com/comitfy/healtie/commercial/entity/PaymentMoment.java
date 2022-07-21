@@ -38,19 +38,15 @@ public class PaymentMoment extends BaseEntity {
     private PaymentTypeEnum paymentTypeEnum;
 
     @Column
-    private Date orderDate;
+    private LocalDate orderDate;
 
     @Column
     private LocalDate deliveryDate;
 
-/*    @Column
-    private Float totalPrice;*/
 
     @Column
     private Float paidAmount;
 
-/*    @Column
-    private Float remainingMoney;*/
 
     @Column
     @Enumerated(EnumType.STRING)

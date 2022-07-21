@@ -14,10 +14,16 @@ import com.comitfy.healtie.commercial.repository.OrderRepository;
 import com.comitfy.healtie.commercial.repository.ProductRepository;
 import com.comitfy.healtie.commercial.specification.OrderSpecification;
 import com.comitfy.healtie.userModule.entity.User;
+import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -63,6 +69,8 @@ public class OrderService extends BaseService<OrderDTO, OrderRequestDTO, Order, 
             order.setOrderStatusEnum(OrderStatusEnum.ON_HOLD);
             order.setCardStatusEnum(CardStatusEnum.APPROVED);
             order.setRemainingMoney(order.getTotalPrice());
+            order.setOrderDate(LocalDate.from(LocalDateTime.now()));
+
 
             if (order.getRemainingMoney() == 0) {
                 order.setPaymentStatusEnum(PaymentStatusEnum.PAID);
@@ -79,7 +87,6 @@ public class OrderService extends BaseService<OrderDTO, OrderRequestDTO, Order, 
         } else return null;
     }
 
-
     public OrderStatusRequestDTO updateOrderStatusEnum(OrderStatusRequestDTO dto, UUID id) {
         Optional<Order> order = orderRepository.findByUuid(id);
         if (order.isPresent()) {
@@ -93,38 +100,14 @@ public class OrderService extends BaseService<OrderDTO, OrderRequestDTO, Order, 
 
     }
 
+    public PageDTO<OrderDTO> getOrderByUser(int page,int size,User user){
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("orderDate")));
+
+      return getMapper().pageEntityToPageDTO(orderRepository.findAll(pageable));
+
+    }
 
 
-/*    public OrderRequestDTO saveOrderPayment(UUID orderId, OrderRequestDTO dto, User user) {
-        Optional<Orders> orders = orderRepository.findByUuid(orderId);
-        if (orderId != null) {
-
-            Orders orders1 = getMapper().requestDTOToEntity(dto);
-            orders1.setProductUUID(orders.get().getProductUUID());
-            orders1.setUserUUID(user.getUuid());
-            orders1.setNetPrice(orders.get().getNetPrice());
-            orders1.setTaxRatio(orders.get().getTaxRatio());
-            orders1.setPaidAmount(dto.getPaidAmount());
-            orders1.setTotalPrice(orders.get().getTotalPrice());
-            orders1.setOrderDate(orders.get().getOrderDate());
-            orders1.setCheckingTypeEnum(orders.get().getCheckingTypeEnum());
-
-            orders1.setRemainingMoney(orders.get().getRemainingMoney() - orders1.getPaidAmount());
-
-            if (orders1.getRemainingMoney() == 0) {
-                orders1.setPaymentStatusEnum(PaymentStatusEnum.PAID);
-            } else if (orders1.getRemainingMoney() < orders.get().getTotalPrice()) {
-                orders1.setPaymentStatusEnum(PaymentStatusEnum.PARTIALLY_PAID);
-            } else {
-                orders1.setPaymentStatusEnum(PaymentStatusEnum.UNPAID);
-            }
-
-            orderRepository.save(orders1);
-            return dto;
-        } else {
-            return null;
-        }
-    }*/
 }
 
 

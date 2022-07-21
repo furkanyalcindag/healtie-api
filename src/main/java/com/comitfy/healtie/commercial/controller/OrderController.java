@@ -11,6 +11,7 @@ import com.comitfy.healtie.commercial.service.OrderService;
 import com.comitfy.healtie.commercial.service.ProductService;
 import com.comitfy.healtie.commercial.specification.OrderSpecification;
 import com.comitfy.healtie.userModule.entity.User;
+import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseCrudController;
 import com.comitfy.healtie.util.common.HelperService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,4 +71,12 @@ public class OrderController extends BaseCrudController<OrderDTO, OrderRequestDT
             return new ResponseEntity<>("The object was updated", HttpStatus.OK);
         }
     }
+
+    @GetMapping("/user-api")
+    public ResponseEntity<PageDTO<OrderDTO>> getOrderByUser(@RequestParam int pageNumber, @RequestParam int pageSize) {
+        User user = helperService.getUserFromSession();
+        PageDTO<OrderDTO> dto = orderService.getOrderByUser(pageNumber, pageSize, user);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
 }

@@ -16,15 +16,9 @@ public class PaymentMomentMapper implements BaseMapper<PaymentMomentDTO, Payment
     @Override
     public PaymentMomentDTO entityToDTO(PaymentMoment entity) {
         PaymentMomentDTO paymentMomentDTO = new PaymentMomentDTO();
-        paymentMomentDTO.setUserUUID(entity.getUserUUID());
-        paymentMomentDTO.setOrderUUID(entity.getOrderUUID());
-        paymentMomentDTO.setOrderDate(entity.getOrderDate());
-        paymentMomentDTO.setDeliveryDate(entity.getDeliveryDate());
-        paymentMomentDTO.setPaidAmount(entity.getPaidAmount());
-      //  paymentMomentDTO.setTotalPrice(entity.getTotalPrice());
-        paymentMomentDTO.setPaymentTypeEnum(entity.getPaymentTypeEnum());
-      //  paymentMomentDTO.setRemainingMoney(entity.getRemainingMoney());
 
+        paymentMomentDTO.setPaidAmount(entity.getPaidAmount());
+        paymentMomentDTO.setPaymentTypeEnum(entity.getPaymentTypeEnum());
         paymentMomentDTO.setUuid(entity.getUuid());
         return paymentMomentDTO;
     }
@@ -32,14 +26,8 @@ public class PaymentMomentMapper implements BaseMapper<PaymentMomentDTO, Payment
     @Override
     public PaymentMoment dtoToEntity(PaymentMomentDTO dto) {
         PaymentMoment paymentMoment = new PaymentMoment();
-        paymentMoment.setUserUUID(dto.getUserUUID());
-        paymentMoment.setOrderUUID(dto.getOrderUUID());
-        paymentMoment.setOrderDate(dto.getOrderDate());
-        paymentMoment.setDeliveryDate(dto.getDeliveryDate());
         paymentMoment.setPaidAmount(dto.getPaidAmount());
-      //  paymentMoment.setTotalPrice(dto.getTotalPrice());
         paymentMoment.setPaymentTypeEnum(dto.getPaymentTypeEnum());
-      //  paymentMoment.setRemainingMoney(dto.getRemainingMoney());
         return paymentMoment;
 
     }
@@ -47,28 +35,16 @@ public class PaymentMomentMapper implements BaseMapper<PaymentMomentDTO, Payment
     @Override
     public PaymentMoment requestDTOToEntity(PaymentMomentRequestDTO dto) {
         PaymentMoment paymentMoment = new PaymentMoment();
-        paymentMoment.setUserUUID(dto.getUserUUID());
-        paymentMoment.setOrderUUID(dto.getOrderUUID());
-        paymentMoment.setOrderDate(dto.getOrderDate());
-        paymentMoment.setDeliveryDate(dto.getDeliveryDate());
         paymentMoment.setPaidAmount(dto.getPaidAmount());
-      //  paymentMoment.setTotalPrice(dto.getTotalPrice());
         paymentMoment.setPaymentTypeEnum(dto.getPaymentTypeEnum());
-      //  paymentMoment.setRemainingMoney(dto.getRemainingMoney());
+
         return paymentMoment;
     }
 
     @Override
     public PaymentMoment requestDTOToExistEntity(PaymentMoment paymentMoment, PaymentMomentRequestDTO dto) {
-
-        paymentMoment.setUserUUID(dto.getUserUUID());
-        paymentMoment.setOrderUUID(dto.getOrderUUID());
-        paymentMoment.setOrderDate(dto.getOrderDate());
-        paymentMoment.setDeliveryDate(dto.getDeliveryDate());
         paymentMoment.setPaidAmount(dto.getPaidAmount());
-      //  paymentMoment.setTotalPrice(dto.getTotalPrice());
         paymentMoment.setPaymentTypeEnum(dto.getPaymentTypeEnum());
-      //  paymentMoment.setRemainingMoney(dto.getRemainingMoney());
         return paymentMoment;
     }
 

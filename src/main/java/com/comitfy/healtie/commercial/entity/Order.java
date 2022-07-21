@@ -30,7 +30,7 @@ public class Order extends BaseEntity {
     private UUID productUUID;
 
     @Column
-    private Date orderDate;
+    private LocalDate orderDate;
 
     @Column
     private LocalDate deliveryDate;

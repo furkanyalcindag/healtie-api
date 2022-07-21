@@ -24,9 +24,14 @@ public class OrderMapper implements BaseMapper<OrderDTO, OrderRequestDTO, Order>
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setUserUUID(entity.getUserUUID());
         orderDTO.setProductUUID(entity.getProductUUID());
+        orderDTO.setTaxRatio(entity.getTaxRatio());
+        orderDTO.setNetPrice(entity.getNetPrice());
+        orderDTO.setTotalPrice(entity.getTotalPrice());
         orderDTO.setOrderDate(entity.getCreationDate());
         orderDTO.setDeliveryDate(entity.getDeliveryDate());
         orderDTO.setOrderDate(entity.getCreationDate());
+        orderDTO.setCheckingTypeEnum(entity.getCheckingTypeEnum());
+        orderDTO.setPaymentStatusEnum(entity.getPaymentStatusEnum());
         orderDTO.setOrderStatusEnum(OrderStatusEnum.ON_HOLD);
         orderDTO.setCardStatusEnum(CardStatusEnum.APPROVED);
 
@@ -39,7 +44,7 @@ public class OrderMapper implements BaseMapper<OrderDTO, OrderRequestDTO, Order>
         Order order = new Order();
         order.setUserUUID(dto.getUserUUID());
         order.setProductUUID(dto.getProductUUID());
-        order.setOrderDate(dto.getOrderDate());
+
         order.setDeliveryDate(dto.getDeliveryDate());
         order.setNetPrice(dto.getNetPrice());
         order.setTaxRatio(order.getTaxRatio());
@@ -54,12 +59,6 @@ public class OrderMapper implements BaseMapper<OrderDTO, OrderRequestDTO, Order>
     @Override
     public Order requestDTOToEntity(OrderRequestDTO dto) {
         Order order = new Order();
-        order.setUserUUID(dto.getUserUUID());
-        order.setProductUUID(dto.getProductUUID());
-        order.setOrderDate(dto.getOrderDate());
-        order.setNetPrice(dto.getNetPrice());
-        order.setTaxRatio(order.getTaxRatio());
-        order.setTotalPrice(dto.getTotalPrice());
 
         return order;
     }
@@ -67,11 +66,6 @@ public class OrderMapper implements BaseMapper<OrderDTO, OrderRequestDTO, Order>
     @Override
     public Order requestDTOToExistEntity(Order order, OrderRequestDTO dto) {
 
-        order.setUserUUID(dto.getUserUUID());
-        order.setProductUUID(dto.getProductUUID());
-        order.setNetPrice(dto.getNetPrice());
-        order.setTaxRatio(order.getTaxRatio());
-        order.setTotalPrice(dto.getTotalPrice());
         return order;
     }
 

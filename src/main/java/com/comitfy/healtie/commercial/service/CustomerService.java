@@ -51,6 +51,7 @@ public class CustomerService extends BaseService<CustomerDTO, CustomerRequestDTO
         Optional<User> user = userRepository.findByUuid(id);
         if (user.isPresent()) {
             Customer customer = getMapper().requestDTOToEntity(dto);
+            customer.setUser(user.get());
             customerRepository.save(customer);
 
             return dto;
@@ -61,7 +62,7 @@ public class CustomerService extends BaseService<CustomerDTO, CustomerRequestDTO
     }
 
 
-    public CustomerRequestDTO updateCustomer(UUID id, CustomerRequestDTO dto, User user) {
+    public CustomerRequestDTO updateCustomer(UUID id, CustomerRequestDTO dto,User user) {
         Optional<Customer> customer = customerRepository.findByUuid(id);
         if (customer.isPresent()) {
             Customer customer1 = customerMapper.requestDTOToExistEntity(customer.get(), dto);

@@ -10,7 +10,7 @@ import java.util.UUID;
 @Data
 public class OrderRequestDTO extends BaseDTO {
 
-    private UUID userUUID;
+/*    private UUID userUUID;
     private UUID productUUID;
 
     private Date orderDate;
@@ -21,7 +21,7 @@ public class OrderRequestDTO extends BaseDTO {
 
     private Float totalPrice;
 
-    private Float taxRatio;
+    private Float taxRatio;*/
 
 
 

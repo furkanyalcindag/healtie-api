@@ -11,6 +11,8 @@ import com.comitfy.healtie.commercial.repository.PaymentMomentRepository;
 import com.comitfy.healtie.commercial.specification.PaymentMomentSpecification;
 import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.common.BaseService;
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+
 public class PaymentMomentService extends BaseService<PaymentMomentDTO, PaymentMomentRequestDTO, PaymentMoment, PaymentMomentRepository, PaymentMomentMapper, PaymentMomentSpecification> {
 
     Logger log = LoggerFactory.getLogger(PaymentMomentService.class);
@@ -53,16 +56,13 @@ public class PaymentMomentService extends BaseService<PaymentMomentDTO, PaymentM
 
     public PaymentMomentRequestDTO saveOrderPayment(UUID orderId, PaymentMomentRequestDTO dto, User user) {
 
-
-        if (orderId != null) {
-
-            Optional<Order> orders = orderRepository.findByUuid(orderId);
-
+        Optional<Order> orders = orderRepository.findByUuid(orderId);
+        if (orders.isPresent()) {
 
             PaymentMoment paymentMoment = getMapper().requestDTOToEntity(dto);
             paymentMoment.setOrderUUID(orderId);
             paymentMoment.setUserUUID(user.getUuid());
-            paymentMoment.setCheckingTypeEnum(dto.getCheckingTypeEnum());
+            paymentMoment.setCheckingTypeEnum(orders.get().getCheckingTypeEnum());
             paymentMoment.setOrderDate(orders.get().getOrderDate());
 
             if (dto.getPaidAmount() > orders.get().getRemainingMoney()) {
@@ -88,8 +88,8 @@ public class PaymentMomentService extends BaseService<PaymentMomentDTO, PaymentM
             return dto;
 
         } else {
-            log.error("OrderId is null.");
-            return null;
+            log.info("OrderId is null.");
+          return null;
         }
     }
 

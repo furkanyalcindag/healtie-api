@@ -14,6 +14,8 @@ public class ProductRequestDTO extends BaseDTO {
     private float height;
     private float price;
     private float taxRatio;
+    private String description;
+    private String name;
 
 
 
