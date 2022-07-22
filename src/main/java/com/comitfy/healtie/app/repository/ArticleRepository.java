@@ -16,9 +16,6 @@ import java.util.UUID;
 @Repository
 public interface ArticleRepository extends BaseWithMultiLanguageRepository<Article> {
 
-    // Page<Article> findAllByDoctorAndLanguageEnum(Pageable pageable, Doctor doctor, LanguageEnum languageEnum);
-
-    //   Page<Article> findAllByDoctor(Pageable pageable, Doctor doctor);
 
     Page<Article> findAllByUser(Pageable pageable, User user,LanguageEnum languageEnum);
 

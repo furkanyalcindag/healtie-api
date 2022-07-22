@@ -5,7 +5,7 @@ import com.comitfy.healtie.commercial.dto.request.CustomerRequestDTO;
 import com.comitfy.healtie.commercial.entity.Customer;
 import com.comitfy.healtie.commercial.mapper.CustomerMapper;
 import com.comitfy.healtie.commercial.repository.CustomerRepository;
-import com.comitfy.healtie.commercial.service.AdvertisementService;
+import com.comitfy.healtie.commercial.service.ProductService;
 import com.comitfy.healtie.commercial.service.CustomerService;
 import com.comitfy.healtie.commercial.specification.CustomerSpecification;
 import com.comitfy.healtie.userModule.entity.User;
@@ -32,7 +32,7 @@ public class CustomerController extends BaseCrudController<CustomerDTO, Customer
     HelperService helperService;
 
     @Autowired
-    AdvertisementService advertisementService;
+    ProductService productService;
 
 
     @Override
