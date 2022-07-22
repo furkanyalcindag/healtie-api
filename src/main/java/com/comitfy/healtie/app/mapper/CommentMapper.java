@@ -28,6 +28,8 @@ public class CommentMapper implements BaseMapper<CommentDTO, CommentRequestDTO, 
         CommentDTO commentDTO = new CommentDTO();
         commentDTO.setContent(entity.getContent());
         commentDTO.setUuid(entity.getUuid());
+        commentDTO.setCreationDateTime(entity.getCreationDate());
+
 
         if (entity.getUserLikes() != null) {
             commentDTO.setLikeCount(entity.getUserLikes().size());
@@ -35,6 +37,9 @@ public class CommentMapper implements BaseMapper<CommentDTO, CommentRequestDTO, 
         if (entity.getUser() != null) {
             commentDTO.setUserName(entity.getUser().getFirstName() + " " + entity.getUser().getLastName());
         }
+   /*     if (entity.getParent() == null) {
+            commentDTO.setReplyCount(entity.getArticle().getCommentList().size()-1);
+        }*/
 
         return commentDTO;
     }

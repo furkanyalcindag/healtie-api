@@ -1,9 +1,10 @@
 package com.comitfy.healtie.app.mapper;
 
 import com.comitfy.healtie.app.dto.DoctorDTO;
-import com.comitfy.healtie.app.dto.requestDTO.DoctorRequestDTO;
+import com.comitfy.healtie.app.dto.requestDTO.*;
 import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.app.repository.DoctorRepository;
+import com.comitfy.healtie.app.service.UserInfoService;
 import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.userModule.repository.UserRepository;
 import com.comitfy.healtie.util.PageDTO;
@@ -28,6 +29,9 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    UserInfoService userInfoService;
+
     @Override
     public DoctorDTO entityToDTO(Doctor entity) {
         DoctorDTO doctorDTO = new DoctorDTO();
@@ -40,14 +44,22 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
         doctorDTO.setBranch(entity.getBranch());
         doctorDTO.setAbout(entity.getAbout());
         doctorDTO.setLanguageEnum(entity.getLanguageEnum());
+        doctorDTO.setArticleLikeCount(userInfoService.getLikeCountOfArticleByUser(entity.getUser().getUuid()));
+
 
         doctorDTO.setFirstName(entity.getUser().getFirstName());
         doctorDTO.setLastName((entity.getUser().getLastName()));
         doctorDTO.setEmail(entity.getUser().getEmail());
+        doctorDTO.setGenderEnum(entity.getUser().getGenderEnum());
+        doctorDTO.setAgeRangeEnum(entity.getUser().getAgeRangeEnum());
+        doctorDTO.setPhone(entity.getUser().getPhotoLink());
+        doctorDTO.setUserName(entity.getUser().getEmail());
 
-        if (entity.getArticleList() != null) {
+
+  /*      if (entity.getArticleList() != null) {
             doctorDTO.setArticleCount(entity.getArticleList().size());
-        }
+        }*/
+
         return doctorDTO;
     }
 
@@ -84,9 +96,11 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
         user.setLastName(dto.getLastName());
         user.setEmail(dto.getEmail());
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
-
+        user.setGenderEnum(dto.getGenderEnum());
+        user.setAgeRangeEnum(dto.getAgeRangeEnum());
+        user.setPhotoLink(dto.getPhotoLink());
+        user.setUsername(dto.getEmail());
         doctor.setUser(user);
-
 
         return doctor;
     }
@@ -108,8 +122,54 @@ public class DoctorMapper implements BaseMapper<DoctorDTO, DoctorRequestDTO, Doc
         doctor.getUser().setLastName(dto.getLastName());
         doctor.getUser().setEmail(dto.getEmail());
         doctor.getUser().setPassword(passwordEncoder.encode(dto.getPassword()));
+        doctor.getUser().setGenderEnum(dto.getGenderEnum());
+        doctor.getUser().setAgeRangeEnum(dto.getAgeRangeEnum());
+        doctor.getUser().setPhotoLink(dto.getPhotoLink());
+
 
         return doctor;
+    }
+
+    public Doctor requestDTOToExistEntityForTitle(Doctor doctor, DoctorTitleRequestDTO dto) {
+        doctor.setTitle(dto.getTitle());
+        return doctor;
+
+    }
+
+    public Doctor requestDTOToExistEntityForDiplomaNo(Doctor doctor, DoctorDiplomaNoRequestDTO dto) {
+        doctor.setDiplomaNo(dto.getDiplomaNo());
+        return doctor;
+
+    }
+
+    public Doctor requestDTOToExistEntityForAddress(Doctor doctor, DoctorAddressRequestDTO dto) {
+        doctor.setAddress(dto.getAddress());
+        return doctor;
+
+    }
+
+    public Doctor requestDTOToExistEntityForPhone(Doctor doctor, DoctorPhoneRequestDTO dto) {
+        doctor.setPhone(dto.getPhone());
+        return doctor;
+
+    }
+
+    public Doctor requestDTOToExistEntityForClinicName(Doctor doctor, DoctorClinicNameRequestDTO dto) {
+        doctor.setClinicName(dto.getClinicName());
+        return doctor;
+
+    }
+
+    public Doctor requestDTOToExistEntityForAbout(Doctor doctor, DoctorAboutRequestDTO dto) {
+        doctor.setAbout(dto.getAbout());
+        return doctor;
+
+    }
+
+    public Doctor requestDTOToExistEntityForBranch(Doctor doctor, DoctorBranchRequestDTO dto) {
+        doctor.setBranch(dto.getBranch());
+        return doctor;
+
     }
 
     @Override

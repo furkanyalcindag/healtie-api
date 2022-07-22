@@ -1,5 +1,7 @@
 package com.comitfy.healtie.app.dto;
 
+import com.comitfy.healtie.app.model.enums.AgeRangeEnum;
+import com.comitfy.healtie.app.model.enums.GenderEnum;
 import com.comitfy.healtie.app.model.enums.LanguageEnum;
 import com.comitfy.healtie.util.common.BaseDTO;
 import lombok.Data;
@@ -18,8 +20,13 @@ public class DoctorDTO extends BaseDTO {
     private String firstName;
     private String lastName;
     private String email;
+    private String photoLink;
+    private String userName;
 
-    private long articleCount;
+    private AgeRangeEnum ageRangeEnum;
+    private GenderEnum genderEnum;
+
+    //private long articleCount;
     private long articleLikeCount;
 
 }

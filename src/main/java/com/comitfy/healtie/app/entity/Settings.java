@@ -25,4 +25,7 @@ public class Settings extends BaseEntity {
     @Column
     private String value;
 
+    @Column
+    private boolean isCurrent;
+
 }

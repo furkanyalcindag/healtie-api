@@ -3,7 +3,9 @@ package com.comitfy.healtie.app.mapper;
 import com.comitfy.healtie.app.dto.CategoryDTO;
 import com.comitfy.healtie.app.dto.requestDTO.CategoryRequestDTO;
 import com.comitfy.healtie.app.entity.Category;
+import com.comitfy.healtie.app.repository.ArticleRepository;
 import com.comitfy.healtie.app.repository.CategoryRepository;
+import com.comitfy.healtie.app.service.CategoryService;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,12 @@ public class CategoryMapper implements BaseMapper<CategoryDTO, CategoryRequestDT
     @Autowired
     CategoryRepository categoryRepository;
 
+    @Autowired
+    CategoryService categoryService;
+
+    @Autowired
+    ArticleRepository articleRepository;
+
     @Override
     public CategoryDTO entityToDTO(Category entity) {
 
@@ -26,6 +34,12 @@ public class CategoryMapper implements BaseMapper<CategoryDTO, CategoryRequestDT
         categoryDTO.setUuid(entity.getUuid());
         categoryDTO.setLanguage(entity.getLanguageEnum().name());
         //categoryDTO.setParentList(entity.getParent());
+    /*    if (entity.getArticleList() != null) {
+            categoryDTO.setArticleCount(entity.getArticleList().size());
+        }*/
+        if (entity.getArticleList() != null) {
+            categoryDTO.setArticleCount(articleRepository.getCountOfArticleByCategory(entity.getUuid()));
+        }
 
         return categoryDTO;
     }

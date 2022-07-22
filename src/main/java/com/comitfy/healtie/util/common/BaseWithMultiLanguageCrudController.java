@@ -72,8 +72,9 @@ public abstract class BaseWithMultiLanguageCrudController<DTO extends BaseDTO, R
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@RequestHeader(value = "accept-language", required = true) String acceptLanguage, @PathVariable UUID id) {
         DTO optional = getService().findByUUID(id);
+        User user = helperService.getUserFromSession();
 
-        if (optional == null) {
+        if (optional == null || user==null) {
 
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         } else {

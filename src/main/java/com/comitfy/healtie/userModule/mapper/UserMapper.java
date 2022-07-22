@@ -2,6 +2,9 @@ package com.comitfy.healtie.userModule.mapper;
 
 import com.comitfy.healtie.app.service.UserInfoService;
 import com.comitfy.healtie.userModule.dto.UserDTO;
+import com.comitfy.healtie.userModule.dto.requestDTO.UserAgeRangeRequestDTO;
+import com.comitfy.healtie.userModule.dto.requestDTO.UserGenderRequestDTO;
+import com.comitfy.healtie.userModule.dto.requestDTO.UserNameRequestDTO;
 import com.comitfy.healtie.userModule.dto.requestDTO.UserRequestDTO;
 import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.PageDTO;
@@ -23,6 +26,7 @@ public class UserMapper implements BaseMapper<UserDTO, UserRequestDTO, User> {
     public UserDTO entityToDTO(User entity) {
 
         UserDTO userDTO = new UserDTO();
+        userDTO.setUsername(entity.getEmail());
         userDTO.setFirstName(entity.getFirstName());
         userDTO.setLastName(entity.getLastName());
         userDTO.setEmail(entity.getEmail());
@@ -30,7 +34,12 @@ public class UserMapper implements BaseMapper<UserDTO, UserRequestDTO, User> {
         userDTO.setUuid(entity.getUuid());
         userDTO.setLikedCount(userService.getLikeCountByUser(entity.getUuid()));
         userDTO.setSavedCount(userService.getSaveCountByUser(entity.getUuid()));
+        userDTO.setGenderEnum(entity.getGenderEnum());
+       userDTO.setAgeRangeEnum(entity.getAgeRangeEnum());
 
+        if (entity.getArticleList() != null) {
+            userDTO.setArticleCount(entity.getArticleList().size());
+        }
         return userDTO;
     }
 
@@ -62,9 +71,32 @@ public class UserMapper implements BaseMapper<UserDTO, UserRequestDTO, User> {
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
         user.setEmail(dto.getEmail());
+        user.setGenderEnum(dto.getGenderEnum());
+        user.setAgeRangeEnum(dto.getAgeRangeEnum());
         //user.setPhotoLink(dto.getPhotoLink());
         return user;
     }
+
+    public User requestDTOToExistEntityforGender(User user, UserGenderRequestDTO dto) {
+        user.setGenderEnum(dto.getGenderEnum());
+
+        return user;
+    }
+
+    public User requestDTOToExistEntityforAgeRange(User user, UserAgeRangeRequestDTO dto) {
+        user.setAgeRangeEnum(dto.getAgeRangeEnum());
+
+        return user;
+    }
+
+    public User requestDTOToExistEntityforName(User user, UserNameRequestDTO dto) {
+
+        user.setFirstName(dto.getFirstName());
+        user.setLastName(dto.getLastName());
+
+        return user;
+    }
+
 
     @Override
     public List<User> dtoListToEntityList(List<UserDTO> userDTOS) {

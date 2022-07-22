@@ -1,10 +1,10 @@
 package com.comitfy.healtie.app.dto;
 
-import com.comitfy.healtie.app.entity.Comment;
 import com.comitfy.healtie.util.common.BaseDTO;
 import lombok.Data;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.util.Date;
 
 
 @Data
@@ -18,6 +18,9 @@ public class CommentDTO extends BaseDTO {
 
     private boolean isLike = Boolean.FALSE;
     private String userName;
+    private Date creationDateTime;
+
+    private long replyCount;
 
 
 }

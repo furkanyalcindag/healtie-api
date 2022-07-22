@@ -20,13 +20,12 @@ public class Comment extends BaseEntity {
 
     @Column
     private String content;
-    @Column
-    private String userName;
 
     @ManyToOne
     private Comment parent;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    //@JoinColumn(nullable = false)
     private User user;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

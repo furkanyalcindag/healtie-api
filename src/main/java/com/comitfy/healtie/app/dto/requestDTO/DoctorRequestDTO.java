@@ -1,6 +1,8 @@
 package com.comitfy.healtie.app.dto.requestDTO;
 
 import com.comitfy.healtie.app.entity.AcademicInfo;
+import com.comitfy.healtie.app.model.enums.AgeRangeEnum;
+import com.comitfy.healtie.app.model.enums.GenderEnum;
 import com.comitfy.healtie.app.model.enums.LanguageEnum;
 import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.common.BaseDTO;
@@ -27,6 +29,10 @@ public class DoctorRequestDTO extends BaseDTO {
     private String lastName;
     private String email;
     private String password;
+    private String photoLink;
+
+    private AgeRangeEnum ageRangeEnum;
+    private GenderEnum genderEnum;
 
 
 }

@@ -1,13 +1,14 @@
 package com.comitfy.healtie.app.service;
 
 import com.comitfy.healtie.app.dto.DoctorDTO;
-import com.comitfy.healtie.app.dto.requestDTO.DoctorRequestDTO;
+import com.comitfy.healtie.app.dto.requestDTO.*;
 import com.comitfy.healtie.app.entity.Doctor;
 import com.comitfy.healtie.app.mapper.DoctorMapper;
 import com.comitfy.healtie.app.model.enums.LanguageEnum;
 import com.comitfy.healtie.app.repository.ArticleRepository;
 import com.comitfy.healtie.app.repository.DoctorRepository;
 import com.comitfy.healtie.app.specification.DoctorSpecification;
+import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.common.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,21 +50,103 @@ public class DoctorService extends BaseService<DoctorDTO, DoctorRequestDTO, Doct
         return doctorSpecification;
     }
 
-
-   /* public PageDTO<DoctorDTO> getDoctorById(UUID id, int page, int size, LanguageEnum languageEnum) {
-        Optional<Doctor> doctor = doctorRepository.findByUuid(id);
-        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+    public DoctorTitleRequestDTO updateTitle(DoctorTitleRequestDTO dto, User user) {
+        Optional<Doctor> doctor = doctorRepository.findByUser(user);
         if (doctor.isPresent()) {
-            PageDTO<DoctorDTO> pageDTO = getMapper().pageEntityToPageDTO(getRepository().findAllByDoctor(pageable, doctor.get()));
-            for (int i = 0; i < pageDTO.getData().size(); i++) {
-                pageDTO.getData().get(i).setArticleLikeCount(getRepository().getCountOfArticles(pageDTO.getData().get(i).getUuid()));
-            }
-            return pageDTO;
+            Doctor doctor1 = doctorMapper.requestDTOToExistEntityForTitle(doctor.get(), dto);
+            doctor1.setTitle(dto.getTitle());
+            doctorRepository.save(doctor1);
+            return dto;
 
         } else {
+
             return null;
         }
-    }*/
+    }
 
+    public DoctorDiplomaNoRequestDTO updateDiplomaNo(DoctorDiplomaNoRequestDTO dto, User user) {
+        Optional<Doctor> doctor = doctorRepository.findByUser(user);
+        if (doctor.isPresent()) {
+            Doctor doctor1 = doctorMapper.requestDTOToExistEntityForDiplomaNo(doctor.get(), dto);
+            doctor1.setDiplomaNo(dto.getDiplomaNo());
+            doctorRepository.save(doctor1);
+            return dto;
+
+        } else {
+
+            return null;
+        }
+    }
+
+    public DoctorAddressRequestDTO updateAddress(DoctorAddressRequestDTO dto, User user) {
+        Optional<Doctor> doctor = doctorRepository.findByUser(user);
+        if (doctor.isPresent()) {
+            Doctor doctor1 = doctorMapper.requestDTOToExistEntityForAddress(doctor.get(), dto);
+            doctor1.setAddress(dto.getAddress());
+            doctorRepository.save(doctor1);
+            return dto;
+
+        } else {
+
+            return null;
+        }
+    }
+
+    public DoctorPhoneRequestDTO updatePhone(DoctorPhoneRequestDTO dto, User user) {
+        Optional<Doctor> doctor = doctorRepository.findByUser(user);
+        if (doctor.isPresent()) {
+            Doctor doctor1 = doctorMapper.requestDTOToExistEntityForPhone(doctor.get(), dto);
+            doctor1.setPhone(dto.getPhone());
+            doctorRepository.save(doctor1);
+            return dto;
+
+        } else {
+
+            return null;
+        }
+    }
+
+    public DoctorClinicNameRequestDTO updateClinicName(DoctorClinicNameRequestDTO dto, User user) {
+        Optional<Doctor> doctor = doctorRepository.findByUser(user);
+        if (doctor.isPresent()) {
+            Doctor doctor1 = doctorMapper.requestDTOToExistEntityForClinicName(doctor.get(), dto);
+            doctor1.setClinicName(dto.getClinicName());
+            doctorRepository.save(doctor1);
+            return dto;
+
+        } else {
+
+            return null;
+        }
+    }
+
+    public DoctorAboutRequestDTO updateAbout(DoctorAboutRequestDTO dto, User user) {
+        Optional<Doctor> doctor = doctorRepository.findByUser(user);
+        if (doctor.isPresent()) {
+            Doctor doctor1 = doctorMapper.requestDTOToExistEntityForAbout(doctor.get(), dto);
+            doctor1.setAbout(dto.getAbout());
+            doctorRepository.save(doctor1);
+            return dto;
+
+        } else {
+
+            return null;
+        }
+    }
+
+    public DoctorBranchRequestDTO updateBranch(DoctorBranchRequestDTO dto, User user) {
+        Optional<Doctor> doctor = doctorRepository.findByUser(user);
+        if (doctor.isPresent()) {
+            Doctor doctor1 = doctorMapper.requestDTOToExistEntityForBranch(doctor.get(), dto);
+            doctor1.setBranch(dto.getBranch());
+            doctorRepository.save(doctor1);
+            return dto;
+
+        } else {
+
+            return null;
+        }
+    }
 
 }
+

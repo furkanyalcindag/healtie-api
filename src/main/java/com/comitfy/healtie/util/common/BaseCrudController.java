@@ -1,8 +1,10 @@
 package com.comitfy.healtie.util.common;
 
 import com.comitfy.healtie.app.model.enums.LanguageEnum;
+import com.comitfy.healtie.userModule.entity.User;
 import com.comitfy.healtie.util.PageDTO;
 import com.comitfy.healtie.util.dbUtil.BaseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -16,6 +18,8 @@ public abstract class BaseCrudController<DTO extends BaseDTO, RequestDTO extends
         Specifitation extends BaseSpecification<Entity>,
         Service extends BaseService<DTO, RequestDTO, Entity, Repository, Mapper,Specifitation>> {
 
+    @Autowired
+    HelperService helperService;
 
     protected abstract Service getService();
 
@@ -65,8 +69,8 @@ public abstract class BaseCrudController<DTO extends BaseDTO, RequestDTO extends
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@RequestHeader(value = "accept-language", required = true) String acceptLanguage, @PathVariable UUID id) {
         DTO optional = getService().findByUUID(id);
-
-        if (optional == null) {
+        User user=helperService.getUserFromSession();
+        if (optional == null ||user==null) {
 
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         } else {
