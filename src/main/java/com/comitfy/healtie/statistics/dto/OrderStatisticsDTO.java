@@ -1,4 +1,4 @@
-package com.comitfy.healtie.commercial.dto;
+package com.comitfy.healtie.statistics.dto;
 
 import com.comitfy.healtie.util.common.BaseDTO;
 import lombok.Data;
